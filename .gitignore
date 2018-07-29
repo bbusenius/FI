@@ -1,0 +1,8 @@
+.DS_Store
+*.pyc
+*.swp
+/dist/
+/*.egg-info
+/.eggs
+/build
+/docs/source/_build_html/_static/*.xmp
