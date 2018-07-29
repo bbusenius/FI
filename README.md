@@ -1,6 +1,6 @@
 # FI
 
-FI calculations at your fingertips is a library of common functions used in financial independence (FI, FIRE) calculations. All functions can be used in a python application or run from the command-line. If you're a nerdy follower of people like[Mr. Money Mustache](http://www.mrmoneymustache.com/), [ChooseFI](https://www.choosefi.com/), [Paula Pant](https://affordanything.com/a), [GoCurryCracker](https://www.gocurrycracker.com/), [Mad FIentist](https://www.madfientist.com/) and other life-optimizers, this library might be something you'd like.
+FI calculations at your fingertips is a library of common functions used in financial independence (FI, FIRE) calculations. All functions can be used in a python application or run from the command-line. If you're a nerdy follower of people like [Mr. Money Mustache](http://www.mrmoneymustache.com/), [ChooseFI](https://www.choosefi.com/), [Paula Pant](https://affordanything.com/a), [GoCurryCracker](https://www.gocurrycracker.com/), [Mad FIentist](https://www.madfientist.com/) and other life-optimizers, this library might be something you'd like.
 
 ## Installation
 
