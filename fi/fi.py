@@ -138,4 +138,5 @@ def take_home_pay(gross_pay, employer_match, taxes_and_fees):
     Returns:
         Your monthly take-home pay.
     """
-    return (Decimal(gross_pay) + Decimal(employer_match)) - Decimal(sum(taxes_and_fees))
+    taxes_and_fees = [Decimal(item) for item in taxes_and_fees]
+    return (Decimal(gross_pay) + Decimal(employer_match)) - sum(taxes_and_fees)
