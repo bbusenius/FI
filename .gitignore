@@ -5,4 +5,7 @@
 /*.egg-info
 /.eggs
 /build
+_build
+_static
+_templates
 /docs/source/_build_html/_static/*.xmp

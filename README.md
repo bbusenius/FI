@@ -60,3 +60,13 @@ You will need to re-run this command every time you make changes before you can 
 ```
 python -m unittest tests.test_fi
 ```
+
+### Documentation
+
+Documentation is automatically generated from docstrings using [Sphinx](https://docs.readthedocs.io/en/latest/getting_started.html#write-your-docs).
+
+```
+cd docs/
+sphinx-apidoc -o source/ ../fi
+make html
+```
