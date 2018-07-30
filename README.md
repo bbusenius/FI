@@ -27,7 +27,9 @@ The following functions are packaged in this library:
 - **savings_rate**
 - **take_home_pay**
 
-All functions can be used in a python application or run from the command-line. 
+All functions can be used in a python application or run from the command-line.
+
+[Full API](https://fi.readthedocs.io/en/latest/source/fi.html)
 
 ### Running from the command-line
 
