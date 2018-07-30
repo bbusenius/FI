@@ -19,6 +19,7 @@ setup(
             'rule_of_72 = fi_commands:run_rule_of_72',
             'take_home_pay = fi_commands:run_take_home_pay',
             'savings_rate = fi_commands:run_savings_rate',
+            'spending_from_savings = fi_commands:run_spending_from_savings',
         ],
     },
     url='https://github.com/bbusenius/FI',

@@ -116,6 +116,25 @@ def run_savings_rate():
     print(fi.savings_rate(args.take_home_pay, args.spending))
 
 
+def run_spending_from_savings():
+    """
+    Calculate your spending based on your take home pay and how much
+    you save. This is useful if you use what Paula Pant calls the anti-budget,
+    instead of tracking your spending in detail. This number can be used as
+    input for the savings_rate function.
+    """
+    description = run_spending_from_savings.__doc__
+    parser = argparse.ArgumentParser(prog='spending_from_savings',
+                                     description=description,
+                                     epilog="example use: spending_from_savings 5000 2750")
+    parser.add_argument(
+        'take_home_pay', help='float or int, monthly take-home pay')
+    parser.add_argument(
+        'savings', help='float or int, amount of money saved')
+    args = parser.parse_args()
+    print(fi.spending_from_savings(args.take_home_pay, args.savings))
+
+
 def run_take_home_pay():
     """
     Calculate net take-home pay including employer retirement savings match

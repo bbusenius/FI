@@ -25,6 +25,7 @@ The following functions are packaged in this library:
 - **future_value**
 - **rule_of_72**
 - **savings_rate**
+- **spending_from_savings**
 - **take_home_pay**
 
 All functions can be used in a python application or run from the command-line.

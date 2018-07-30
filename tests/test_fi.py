@@ -57,6 +57,22 @@ class test_fi(unittest.TestCase):
         self.assertEqual(val9, float('inf'), 'The money will never double')
         self.assertEqual(val10, float('inf'), 'The money will never double')
 
+    def test_savings_rate(self):
+        TWOPLACES = Decimal('0.01')
+        val1 = fi.savings_rate(13839.0, 8919.0)
+        val2 = fi.savings_rate(600, 300)
+        val1 = val1.quantize(TWOPLACES)
+        self.assertEqual(val1, Decimal(35.55).quantize(TWOPLACES), 'The savings rate should be approximately 35.55%, returned ' + str(val1))
+        self.assertEqual(val2, 50, "The savings rate should be 50%, returned " + str(val2))
+
+    def test_spending_from_savings(self):
+        val1 = fi.spending_from_savings(100, 50)
+        val2 = fi.spending_from_savings(100, 0)
+        val3 = fi.spending_from_savings(100, 100)
+        self.assertEqual(val1, 50, 'Spending should be 50, returned ' + str(val1))
+        self.assertEqual(val2, 100, 'Spending should be 100, returned ' + str(val2))
+        self.assertEqual(val3, 0, 'Spending should be 0, returned ' + str(val3))
+
     # Test take_home_pay
     # http://www.mrmoneymustache.com/2015/01/26/calculating-net-worth/
     # (There are rounding differences)
@@ -74,15 +90,6 @@ class test_fi(unittest.TestCase):
         val1 = fi.take_home_pay(8620, 300, [1724, 689, 200]) * Decimal(2.16)
         val1 = val1.quantize(TWOPLACES)
         self.assertEqual(val1, Decimal(13623.12).quantize(TWOPLACES), 'Take-home pay should be $13,623.12 per month, returned ' + str(val1))
-
-    # Test savings_rate
-    def test_savings_rate(self):
-        TWOPLACES = Decimal('0.01')
-        val1 = fi.savings_rate(13839.0, 8919.0)
-        val2 = fi.savings_rate(600, 300)
-        val1 = val1.quantize(TWOPLACES)
-        self.assertEqual(val1, Decimal(35.55).quantize(TWOPLACES), 'The savings rate should be approximately 35.55%, returned ' + str(val1))
-        self.assertEqual(val2, 50, "The savings rate should be 50%, returned " + str(val2))
 
 
 # Run all tests

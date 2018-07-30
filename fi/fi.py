@@ -122,6 +122,24 @@ def savings_rate(take_home_pay, spending):
         return Decimal(0)
 
 
+def spending_from_savings(take_home_pay, savings):
+    """
+    Calculate your spending based on your take home pay and how much
+    you save. This is useful if you use what Paula Pant calls the anti-budget,
+    instead of tracking your spending in detail. This number can be used as
+    input for the savings_rate function.
+
+    Args:
+        take_home_pay: float or int, monthly take-home pay
+
+        savings: the amount of money saved towards FI
+
+    Returns:
+        Decimal, the amount of money spent
+    """
+    return Decimal(take_home_pay) - Decimal(savings)
+
+
 def take_home_pay(gross_pay, employer_match, taxes_and_fees):
     """
     Calculate net take-home pay including employer retirement savings match
