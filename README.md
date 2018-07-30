@@ -48,6 +48,21 @@ coast_fi 800000 .07 62 40
 
 Other functions are run in a similar way. Use `-h` or `--help` to see all the options.
 
+### Advanced use from the command-line
+
+By using variables and backticks, commands can be combined to produce more robust output. The following example shows how to calculate savings rate from money saved rather than money spent.
+
+```
+THP="$(take_home_pay 5215.71 417.27 514.09)"
+savings_rate "${THP}" `spending_from_savings "${THP}" 2600`
+```
+
+Another useful example might be to calculate CoastFI using your "retire today" number, a projected inflation rate and a future value calculation.
+
+```
+coast_fi `future_value 800000 .03 1 22` .07 62 40
+```
+
 ## Developers
 
 ### Installation for developers
