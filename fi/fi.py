@@ -18,6 +18,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE. <https://opensource.org/licenses/MIT/>
 
+import numpy
 from decimal import Decimal
 
 
@@ -44,6 +45,31 @@ def coast_fi(target_fi_num, eiar, retirement_age, current_age):
         CoastFI number, Decimal
     """
     return Decimal(target_fi_num) / (Decimal(1) + Decimal(eiar)) ** (Decimal(retirement_age) - Decimal(current_age))
+
+
+def fi_age(eiar, awa, stash, fi_num, ca):
+    """
+    Calculate the age at which you will reach FIRE.
+
+    Args:
+        eiar: Expected inflation adjusted return e.g. .07 (7%)
+
+        awa: annual withdrawl amount, the amount of money you will
+        withdraw each year.
+
+        stash: invested assests, the amount of money you have
+        currently saved and invested for FI.
+
+        fi_num: the number you need to reach FI.
+
+        ca: your current age.
+
+    Returns:
+        FI age, int, the future age when you will FIRE.
+    """
+    fi_num = fi_num * -1
+    with numpy.errstate(divide='ignore'):
+        return int(numpy.nper(eiar, awa, stash, fi_num) + ca)
 
 
 def future_value(present_value, annual_rate, periods_per_year, years):

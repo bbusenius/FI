@@ -47,6 +47,25 @@ def run_coast_fi():
                       args.retirement_age, args.current_age))
 
 
+def run_fi_age():
+    """
+    Calculate the age at which you will reach FIRE.
+    """
+    description = run_fi_age.__doc__
+    parser = argparse.ArgumentParser(prog='fi_age',
+                                     description=description,
+                                     epilog='Example use: fi_age .07, 30000, 200000, 800000, 40')
+    parser.add_argument('eiar', help='expected inflation adjusted return e.g. .07')
+    parser.add_argument('awa', help='annual withdrawl amount, the amount of money you will withdraw each year')
+    parser.add_argument('stash', help='invested assests, the amount of money you have currently saved and invested for FI')
+    parser.add_argument('fi_num', help='the number you need to reach FI')
+    parser.add_argument('ca', help='your current age')
+
+    args = parser.parse_args()
+
+    print(fi.fi_age(float(args.eiar), float(args.awa), float(args.stash), float(args.fi_num), float(args.ca)))
+
+
 def run_future_value():
     """
     Calculates the future value of money invested at an interest rate,

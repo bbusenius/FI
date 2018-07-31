@@ -15,6 +15,7 @@ setup(
     entry_points={
         'console_scripts': [
             'coast_fi = fi_commands:run_coast_fi',
+            'fi_age = fi_commands:run_fi_age',
             'future_value = fi_commands:run_future_value',
             'rule_of_72 = fi_commands:run_rule_of_72',
             'take_home_pay = fi_commands:run_take_home_pay',
@@ -24,6 +25,10 @@ setup(
     },
     url='https://github.com/bbusenius/FI',
     license='MIT, see LICENSE.txt',
+    include_package_data=True,
+    install_requires=[
+        'numpy',
+    ],
     test_suite='tests',
     zip_safe=False
 )

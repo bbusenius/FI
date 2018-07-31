@@ -21,6 +21,14 @@ class test_fi(unittest.TestCase):
         self.assertEqual(
             val2, 2000000, 'Should return the target FI number if interest is 0')
 
+    def test_fi_age(self):
+        current_age = 20
+        years_to_double = fi.rule_of_72(8)
+        interest = .08
+        val1 = fi.fi_age(interest, 0, 400000, 800000, current_age)
+
+        self.assertEqual(val1, current_age + years_to_double, 'Without making payments, the money should double in 9 years')
+
     def test_future_value(self):
         val1 = fi.future_value(2, .5, 1, 1)
         val2 = fi.future_value(2, .5, 1, 2)
