@@ -51,7 +51,9 @@ def run_coast_fi():
     """
     Calculate your CoastFI number. The number at which you
     can coast to FI without contributing any more to your
-    retirement accounts.
+    retirement accounts. Credit: eseligsohn
+    https://www.reddit.com/r/financialindependence/comments/92d35t/
+    what_is_this_coast_number_people_are_talking_about/e34uuxh/
     """
     description = run_coast_fi.__doc__
     parser = argparse.ArgumentParser(prog='coast_fi',
@@ -97,7 +99,9 @@ def run_cost_per_use():
 
 def run_fi_age():
     """
-    Calculate the age at which you will reach FIRE.
+    Calculate the age at which you will reach FIRE. Credit: eseligsohn
+    https://www.reddit.com/r/financialindependence/comments/92d35t/
+    what_is_this_coast_number_people_are_talking_about/e36titl/
     """
     description = run_fi_age.__doc__
     parser = argparse.ArgumentParser(prog='fi_age',

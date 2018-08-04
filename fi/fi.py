@@ -94,6 +94,10 @@ def fi_age(eiar, awa, stash, fi_num, ca):
     """
     Calculate the age at which you will reach FIRE.
 
+    Credit: eseligsohn
+    https://www.reddit.com/r/financialindependence/comments/92d35t/
+    what_is_this_coast_number_people_are_talking_about/e36titl/
+
     Args:
         eiar: Expected inflation adjusted return e.g. .07 (7%)
 
