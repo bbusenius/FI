@@ -14,7 +14,9 @@ setup(
     ],
     entry_points={
         'console_scripts': [
+            'annual_cost = fi_commands:run_annual_cost',
             'coast_fi = fi_commands:run_coast_fi',
+            'cost_per_use = fi_commands:run_cost_per_use',
             'fi_age = fi_commands:run_fi_age',
             'future_value = fi_commands:run_future_value',
             'rule_of_72 = fi_commands:run_rule_of_72',

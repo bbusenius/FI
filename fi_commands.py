@@ -24,6 +24,29 @@ from decimal import Decimal
 import fi
 
 
+def run_annual_cost():
+    """
+    Calculate the depreciation schedule of things bought.
+
+    Credit: Early Retirement Extreme by Jacob Lund Fisker
+    http://a.co/4vgBczW
+    """
+    description = run_annual_cost.__doc__
+    parser = argparse.ArgumentParser(prog='annual_cost',
+                                     description=description,
+                                     epilog='Example use: annual_cost 75 70 2.5')
+    parser.add_argument(
+        'your_cost', help='int or float, amount paid')
+    parser.add_argument(
+        'used_price', help='int or float, amount you can sell it for')
+    parser.add_argument('years_in_service',
+                        help='int or float, number of years you\'ve used it')
+
+    args = parser.parse_args()
+
+    print(fi.annual_cost(args.your_cost, args.used_price, args.years_in_service))
+
+
 def run_coast_fi():
     """
     Calculate your CoastFI number. The number at which you
@@ -47,6 +70,31 @@ def run_coast_fi():
                       args.retirement_age, args.current_age))
 
 
+def run_cost_per_use():
+    """
+    Calculate how much something has costed while considering
+    how many times it has been used. Wrapper function for
+    annual_cost.
+
+    Credit: Early Retirement Extreme by Jacob Lund Fisker
+    http://a.co/4vgBczW
+    """
+    description = run_cost_per_use.__doc__
+    parser = argparse.ArgumentParser(prog='cost_per_use',
+                                     description=description,
+                                     epilog='Example use: cost_per_use 75 15 15')
+    parser.add_argument(
+        'your_cost', help='int or float, amount paid')
+    parser.add_argument(
+        'used_price', help='int or float, amount you can sell it for')
+    parser.add_argument('times_used',
+                        help='int or float, number of times you\'ve used it')
+
+    args = parser.parse_args()
+
+    print(fi.cost_per_use(args.your_cost, args.used_price, args.times_used))
+
+
 def run_fi_age():
     """
     Calculate the age at which you will reach FIRE.
@@ -55,15 +103,19 @@ def run_fi_age():
     parser = argparse.ArgumentParser(prog='fi_age',
                                      description=description,
                                      epilog='Example use: fi_age .07, 30000, 200000, 800000, 40')
-    parser.add_argument('eiar', help='expected inflation adjusted return e.g. .07')
-    parser.add_argument('awa', help='annual withdrawl amount, the amount of money you will withdraw each year')
-    parser.add_argument('stash', help='invested assests, the amount of money you have currently saved and invested for FI')
+    parser.add_argument(
+        'eiar', help='expected inflation adjusted return e.g. .07')
+    parser.add_argument(
+        'awa', help='annual withdrawl amount, the amount of money you will withdraw each year')
+    parser.add_argument(
+        'stash', help='invested assests, the amount of money you have currently saved and invested for FI')
     parser.add_argument('fi_num', help='the number you need to reach FI')
     parser.add_argument('ca', help='your current age')
 
     args = parser.parse_args()
 
-    print(fi.fi_age(float(args.eiar), float(args.awa), float(args.stash), float(args.fi_num), float(args.ca)))
+    print(fi.fi_age(float(args.eiar), float(args.awa), float(
+        args.stash), float(args.fi_num), float(args.ca)))
 
 
 def run_future_value():

@@ -18,8 +18,29 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE. <https://opensource.org/licenses/MIT/>
 
-import numpy
 from decimal import Decimal
+
+import numpy
+
+
+def annual_cost(your_cost, used_price, years_in_service):
+    """
+    Calculate the depreciation schedule of things bought.
+
+    Credit: Early Retirement Extreme by Jacob Lund Fisker
+    http://a.co/4vgBczW
+
+    Args:
+        your_cost: int or float, amount paid
+
+        used_price: int or float, amount you can sell it for
+
+        years_in_service : int or float, number of years you've used it
+
+    Returns:
+        The amount something has costed per year, Decimal
+    """
+    return (Decimal(your_cost) - Decimal(used_price)) / Decimal(years_in_service)
 
 
 def coast_fi(target_fi_num, eiar, retirement_age, current_age):
@@ -45,6 +66,28 @@ def coast_fi(target_fi_num, eiar, retirement_age, current_age):
         CoastFI number, Decimal
     """
     return Decimal(target_fi_num) / (Decimal(1) + Decimal(eiar)) ** (Decimal(retirement_age) - Decimal(current_age))
+
+
+def cost_per_use(your_cost, used_price, times_used):
+    """
+    Calculate how much something has costed while considering
+    how many times it has been used. Wrapper function for
+    annual_cost.
+
+    Credit: Early Retirement Extreme by Jacob Lund Fisker
+    http://a.co/4vgBczW
+
+    Args:
+        your_cost: int or float, amount paid
+
+        used_price: int or float, amount you can sell it for
+
+        times_used : int or float, number of times you've used it
+
+    Returns:
+        The amount something has costed per use, Decimal
+    """
+    return annual_cost(your_cost, used_price, times_used)
 
 
 def fi_age(eiar, awa, stash, fi_num, ca):

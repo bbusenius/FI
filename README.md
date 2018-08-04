@@ -21,7 +21,9 @@ Pass the -e flag to retain the editable source.
 
 The following functions are packaged in this library:
 
+- **annual_cost**
 - **coast_fi**
+- **cost_per_use**
 - **fi_age**
 - **future_value**
 - **rule_of_72**
