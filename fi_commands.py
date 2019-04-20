@@ -110,7 +110,7 @@ def run_fi_age():
     parser.add_argument(
         'eiar', help='expected inflation adjusted return e.g. .07')
     parser.add_argument(
-        'awa', help='annual withdrawl amount, the amount of money you will withdraw each year')
+        'asa', help='annual savings amount, the amount of money you will save towards FI each year')
     parser.add_argument(
         'stash', help='invested assests, the amount of money you have currently saved and invested for FI')
     parser.add_argument('fi_num', help='the number you need to reach FI')
@@ -118,7 +118,7 @@ def run_fi_age():
 
     args = parser.parse_args()
 
-    print(fi.fi_age(float(args.eiar), float(args.awa), float(
+    print(fi.fi_age(float(args.eiar), float(args.asa), float(
         args.stash), float(args.fi_num), float(args.ca)))
 
 

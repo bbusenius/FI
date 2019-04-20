@@ -90,7 +90,7 @@ def cost_per_use(your_cost, used_price, times_used):
     return annual_cost(your_cost, used_price, times_used)
 
 
-def fi_age(eiar, awa, stash, fi_num, ca):
+def fi_age(eiar, asa, stash, fi_num, ca):
     """
     Calculate the age at which you will reach FIRE.
 
@@ -101,8 +101,8 @@ def fi_age(eiar, awa, stash, fi_num, ca):
     Args:
         eiar: Expected inflation adjusted return e.g. .07 (7%)
 
-        awa: annual withdrawl amount, the amount of money you will
-        withdraw each year.
+        asa: annual savings amount, the amount of money you will
+        save towards FI each year.
 
         stash: invested assests, the amount of money you have
         currently saved and invested for FI.
@@ -116,7 +116,7 @@ def fi_age(eiar, awa, stash, fi_num, ca):
     """
     fi_num = fi_num * -1
     with numpy.errstate(divide='ignore'):
-        return int(numpy.nper(eiar, awa, stash, fi_num) + ca)
+        return int(numpy.nper(eiar, asa, stash, fi_num) + ca)
 
 
 def future_value(present_value, annual_rate, periods_per_year, years):
