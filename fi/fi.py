@@ -18,9 +18,11 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE. <https://opensource.org/licenses/MIT/>
 
-from decimal import Decimal
+from decimal import ROUND_HALF_UP, Decimal
 
 import numpy
+
+CENTS = Decimal('0.01')
 
 
 def annual_cost(your_cost, used_price, years_in_service):
@@ -150,6 +152,49 @@ def future_value(present_value, annual_rate, periods_per_year, years):
     return Decimal(present_value) * (1 + rate_per_period) ** periods
 
 
+def redeem_points(points, rate=0.01):
+    """
+    Calculates the value of travel rewards points based on a conversion
+    rate. The default rate is 0.01 which is the cash value of awards
+    points for most cards.
+
+    Args:
+        points: int, the number of awards points to be redeemed.
+
+        rate: float, defaults to 0.01 which is the exchange rate
+        for most points to cash (1 cent per point).
+
+    Returns:
+        Decimal, dollar amount the points are worth.
+    """
+    return Decimal(points * rate).quantize(CENTS, ROUND_HALF_UP)
+
+
+def redeem_chase_points(points):
+    """
+    Calculates the value of Chase Ultimate Rewards points for different
+    exchange scenarios. Based on the ChooseFI Sweet Redemption article:
+    https://www.choosefi.com/travel-rewards-part-3-sweet-redemption/
+
+    Args:
+        points: int, number of Ultimate Rewards points being redeemed.
+
+    Returns:
+        dict containing common Chase Ultimate Rewards redemption scenarios
+        where cv = cash value, spp = sapphire preferred portal, srp = sapphire
+        reserved portal and tpe = target partner exchange (the guideline for
+        direct transfer of pints to Chase Ultimate Reward partners such as
+        United Airlines). tpp is the aspirational goal for an exchange with
+        a partner, not a guarantee.
+    """
+    return {
+        'cv': redeem_points(points),
+        'spp': redeem_points(points, .0125),
+        'srp': redeem_points(points, .015),
+        'tpe': redeem_points(points, .02),
+    }
+
+
 def rule_of_72(interest_rate, accurate=False):
     """
     Calculate the time it will take for money to double
@@ -180,7 +225,7 @@ def savings_rate(take_home_pay, spending):
     """
     Calculate your savings_rate based on take home pay and spending,
     using the formula laid out by Mr. Money Mustache:
-    http://www.mrmoneymustache.com/2015/01/26/calculating-net-worth/
+    http: // www.mrmoneymustache.com/2015/01/26/calculating-net-worth/
 
     Args:
         take_home_pay: float or int, monthly take-home pay
@@ -221,7 +266,7 @@ def take_home_pay(gross_pay, employer_match, taxes_and_fees):
     """
     Calculate net take-home pay including employer retirement savings match
     using the formula laid out by Mr. Money Mustache:
-    http://www.mrmoneymustache.com/2015/01/26/calculating-net-worth/
+    http: // www.mrmoneymustache.com/2015/01/26/calculating-net-worth/
 
     Args:
         gross_pay: float or int, gross monthly pay.

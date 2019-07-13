@@ -32,15 +32,16 @@ def run_annual_cost():
     http://a.co/4vgBczW
     """
     description = run_annual_cost.__doc__
-    parser = argparse.ArgumentParser(prog='annual_cost',
-                                     description=description,
-                                     epilog='Example use: annual_cost 75 70 2.5')
+    parser = argparse.ArgumentParser(
+        prog='annual_cost',
+        description=description,
+        epilog='Example use: annual_cost 75 70 2.5',
+    )
+    parser.add_argument('your_cost', help='int or float, amount paid')
+    parser.add_argument('used_price', help='int or float, amount you can sell it for')
     parser.add_argument(
-        'your_cost', help='int or float, amount paid')
-    parser.add_argument(
-        'used_price', help='int or float, amount you can sell it for')
-    parser.add_argument('years_in_service',
-                        help='int or float, number of years you\'ve used it')
+        'years_in_service', help='int or float, number of years you\'ve used it'
+    )
 
     args = parser.parse_args()
 
@@ -56,20 +57,26 @@ def run_coast_fi():
     what_is_this_coast_number_people_are_talking_about/e34uuxh/
     """
     description = run_coast_fi.__doc__
-    parser = argparse.ArgumentParser(prog='coast_fi',
-                                     description=description,
-                                     epilog="Example use: coast_fi 800000 .07 62 40")
+    parser = argparse.ArgumentParser(
+        prog='coast_fi',
+        description=description,
+        epilog="Example use: coast_fi 800000 .07 62 40",
+    )
     parser.add_argument(
-        'target_fi_num', help='Target FI number. The number you will need invested in order to live off interest')
-    parser.add_argument(
-        'eiar', help='Expected inflation adjusted return e.g. .07')
+        'target_fi_num',
+        help='Target FI number. The number you will need invested in order to live off interest',
+    )
+    parser.add_argument('eiar', help='Expected inflation adjusted return e.g. .07')
     parser.add_argument('retirement_age', help='The age you want to retire')
     parser.add_argument('current_age', help='Your current age')
 
     args = parser.parse_args()
 
-    print(fi.coast_fi(args.target_fi_num, args.eiar,
-                      args.retirement_age, args.current_age))
+    print(
+        fi.coast_fi(
+            args.target_fi_num, args.eiar, args.retirement_age, args.current_age
+        )
+    )
 
 
 def run_cost_per_use():
@@ -82,15 +89,16 @@ def run_cost_per_use():
     http://a.co/4vgBczW
     """
     description = run_cost_per_use.__doc__
-    parser = argparse.ArgumentParser(prog='cost_per_use',
-                                     description=description,
-                                     epilog='Example use: cost_per_use 75 15 15')
+    parser = argparse.ArgumentParser(
+        prog='cost_per_use',
+        description=description,
+        epilog='Example use: cost_per_use 75 15 15',
+    )
+    parser.add_argument('your_cost', help='int or float, amount paid')
+    parser.add_argument('used_price', help='int or float, amount you can sell it for')
     parser.add_argument(
-        'your_cost', help='int or float, amount paid')
-    parser.add_argument(
-        'used_price', help='int or float, amount you can sell it for')
-    parser.add_argument('times_used',
-                        help='int or float, number of times you\'ve used it')
+        'times_used', help='int or float, number of times you\'ve used it'
+    )
 
     args = parser.parse_args()
 
@@ -104,22 +112,34 @@ def run_fi_age():
     what_is_this_coast_number_people_are_talking_about/e36titl/
     """
     description = run_fi_age.__doc__
-    parser = argparse.ArgumentParser(prog='fi_age',
-                                     description=description,
-                                     epilog='Example use: fi_age .07, 30000, 200000, 800000, 40')
+    parser = argparse.ArgumentParser(
+        prog='fi_age',
+        description=description,
+        epilog='Example use: fi_age .07, 30000, 200000, 800000, 40',
+    )
+    parser.add_argument('eiar', help='expected inflation adjusted return e.g. .07')
     parser.add_argument(
-        'eiar', help='expected inflation adjusted return e.g. .07')
+        'asa',
+        help='annual savings amount, the amount of money you will save towards FI each year',
+    )
     parser.add_argument(
-        'asa', help='annual savings amount, the amount of money you will save towards FI each year')
-    parser.add_argument(
-        'stash', help='invested assests, the amount of money you have currently saved and invested for FI')
+        'stash',
+        help='invested assests, the amount of money you have currently saved and invested for FI',
+    )
     parser.add_argument('fi_num', help='the number you need to reach FI')
     parser.add_argument('ca', help='your current age')
 
     args = parser.parse_args()
 
-    print(fi.fi_age(float(args.eiar), float(args.asa), float(
-        args.stash), float(args.fi_num), float(args.ca)))
+    print(
+        fi.fi_age(
+            float(args.eiar),
+            float(args.asa),
+            float(args.stash),
+            float(args.fi_num),
+            float(args.ca),
+        )
+    )
 
 
 def run_future_value():
@@ -129,22 +149,84 @@ def run_future_value():
     calculate the future equivalent of money due to inflation.
     """
     description = run_future_value.__doc__
-    parser = argparse.ArgumentParser(prog='future_value',
-                                     description=description,
-                                     epilog="Example use: future_value 800000 .03 1 20")
+    parser = argparse.ArgumentParser(
+        prog='future_value',
+        description=description,
+        epilog="Example use: future_value 800000 .03 1 20",
+    )
     parser.add_argument(
-        'present_value',
-        help='int or float, the current quantity of money, principal')
+        'present_value', help='int or float, the current quantity of money, principal'
+    )
     parser.add_argument(
         'annual_rate',
-        help='float 0 to 1 e.g., .5 = 50 percent, the interest rate paid out')
+        help='float 0 to 1 e.g., .5 = 50 percent, the interest rate paid out',
+    )
     parser.add_argument(
-        'periods_per_year',
-        help='int, the number of times money is invested per year')
+        'periods_per_year', help='int, the number of times money is invested per year'
+    )
     parser.add_argument('years', help='int, the number of years invested')
     args = parser.parse_args()
-    print(fi.future_value(args.present_value, args.annual_rate,
-                          args.periods_per_year, args.years))
+    print(
+        fi.future_value(
+            args.present_value, args.annual_rate, args.periods_per_year, args.years
+        )
+    )
+
+
+def run_redeem_chase_points():
+    """
+    Calculates the value of Chase Ultimate Rewards points for different
+    exchange scenarios. Based on the ChooseFI Sweet Redemption article:
+    https://www.choosefi.com/travel-rewards-part-3-sweet-redemption/
+    """
+    description = run_redeem_chase_points.__doc__
+    parser = argparse.ArgumentParser(
+        prog='redeem_chase_points',
+        description=description,
+        epilog="Example use: redeem_chase_points 50000",
+    )
+    parser.add_argument('points', help='int, number of points you plan to redeem')
+    args = parser.parse_args()
+    cp = fi.redeem_chase_points(float(args.points))
+    cv = str(cp['cv'])
+    spp = str(cp['spp'])
+    srp = str(cp['srp'])
+    tpe = str(cp['tpe'])
+    print(f'Cash Value ------------------ {cv}')
+    print(f'Sapphire Preferred Portal --- {spp}')
+    print(f'Sapphire Reserved Portal ---- {srp}')
+    print(f'Target Partner Exchange ----- {tpe}*')
+    print()
+    print('* Target Partner Exchange is only a guideline. Shoot for this amount')
+    print('  or better when trading points for miles with a Chase Ultimate')
+    print('  Rewards partner.')
+
+
+def run_redeem_points():
+    """
+    Calculates the value of travel rewards points based on a conversion
+    rate. The default rate is 0.01 which is the cash value of awards
+    points for most cards.
+    """
+    description = run_redeem_points.__doc__
+    parser = argparse.ArgumentParser(
+        prog='redeem_points',
+        description=description,
+        epilog="Example use: redeem_points 50000 -r .0125",
+    )
+    parser.add_argument('points', help='int, number of points you plan to redeem')
+    parser.add_argument(
+        '-r',
+        '--rate',
+        help='float, exchange rate for points. Defaults to 0.01 which is the exchange \
+        rate for cash for the majority of cards (1 cent per point)',
+        action='store',
+    )
+    args = parser.parse_args()
+    if args.rate:
+        print(fi.redeem_points(float(args.points), float(args.rate)))
+    else:
+        print(fi.redeem_points(float(args.points)))
 
 
 def run_rule_of_72():
@@ -155,18 +237,22 @@ def run_rule_of_72():
     Years to double = 72 / Interest Rate
     """
     description = run_rule_of_72.__doc__
-    parser = argparse.ArgumentParser(prog='rule_of_72',
-                                     description=description,
-                                     epilog="Example use: rule_of_72 8 -a")
+    parser = argparse.ArgumentParser(
+        prog='rule_of_72',
+        description=description,
+        epilog="Example use: rule_of_72 8 -a",
+    )
     parser.add_argument(
         'interest_rate',
         help='Integer or floating point number representing the interest rate \
-              at which your money will grow e.g. 7 for 7 percent')
+              at which your money will grow e.g. 7 for 7 percent',
+    )
     parser.add_argument(
         '-a',
         '--accurate',
         help='When set to True the more accurate 69.3 is used instead of 72',
-        action='store_true')
+        action='store_true',
+    )
     args = parser.parse_args()
     if args.accurate:
         print(fi.rule_of_72(float(args.interest_rate), True))
@@ -181,11 +267,12 @@ def run_savings_rate():
     http://www.mrmoneymustache.com/2015/01/26/calculating-net-worth/
     """
     description = run_savings_rate.__doc__
-    parser = argparse.ArgumentParser(prog='savings_rate',
-                                     description=description,
-                                     epilog="Example use: savings_rate 13839 8919")
-    parser.add_argument(
-        'take_home_pay', help='float or int, monthly take-home pay')
+    parser = argparse.ArgumentParser(
+        prog='savings_rate',
+        description=description,
+        epilog="Example use: savings_rate 13839 8919",
+    )
+    parser.add_argument('take_home_pay', help='float or int, monthly take-home pay')
     parser.add_argument('spending', help='float or int, monthly spending')
     args = parser.parse_args()
     print(fi.savings_rate(args.take_home_pay, args.spending))
@@ -199,13 +286,13 @@ def run_spending_from_savings():
     input for the savings_rate function.
     """
     description = run_spending_from_savings.__doc__
-    parser = argparse.ArgumentParser(prog='spending_from_savings',
-                                     description=description,
-                                     epilog="example use: spending_from_savings 5000 2750")
-    parser.add_argument(
-        'take_home_pay', help='float or int, monthly take-home pay')
-    parser.add_argument(
-        'savings', help='float or int, amount of money saved')
+    parser = argparse.ArgumentParser(
+        prog='spending_from_savings',
+        description=description,
+        epilog="example use: spending_from_savings 5000 2750",
+    )
+    parser.add_argument('take_home_pay', help='float or int, monthly take-home pay')
+    parser.add_argument('savings', help='float or int, amount of money saved')
     args = parser.parse_args()
     print(fi.spending_from_savings(args.take_home_pay, args.savings))
 
@@ -217,14 +304,19 @@ def run_take_home_pay():
     http://www.mrmoneymustache.com/2015/01/26/calculating-net-worth/
     """
     description = run_take_home_pay.__doc__
-    parser = argparse.ArgumentParser(prog='rule_of_72',
-                                     description=description,
-                                     epilog="Example use: take_home_pay 1500 1000 '250 250'")
+    parser = argparse.ArgumentParser(
+        prog='rule_of_72',
+        description=description,
+        epilog="Example use: take_home_pay 1500 1000 '250 250'",
+    )
     parser.add_argument('gross_pay', help='float or int, gross monthly pay')
     parser.add_argument(
-        'employer_match', help='float or int, the 401(k) match from your employer')
+        'employer_match', help='float or int, the 401(k) match from your employer'
+    )
     parser.add_argument(
-        'taxes_and_fees', help='list, taxes and fees that are deducted from your paycheck')
+        'taxes_and_fees',
+        help='list, taxes and fees that are deducted from your paycheck',
+    )
     args = parser.parse_args()
     taxes = [Decimal(item) for item in args.taxes_and_fees.split(' ')]
     print(fi.take_home_pay(args.gross_pay, args.employer_match, taxes))

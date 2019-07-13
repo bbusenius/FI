@@ -12,36 +12,39 @@ TWOPLACES = Decimal('0.01')
 
 
 class test_fi(unittest.TestCase):
-
     def test_annual_cost(self):
         # Examples from Early Retirement Extreme
         val1 = fi.annual_cost(75, 70, 2.5)
         val2 = fi.annual_cost(300, 100, 3)
 
-        self.assertEqual(val1, Decimal(
-            2), 'Should return 2, returned ' + str(val1))
-        self.assertEqual(round(val2.quantize(TWOPLACES)), Decimal(
-            67), 'Should return 67, returned ' + str(val2))
+        self.assertEqual(val1, Decimal(2), 'Should return 2, returned ' + str(val1))
+        self.assertEqual(
+            round(val2.quantize(TWOPLACES)),
+            Decimal(67),
+            'Should return 67, returned ' + str(val2),
+        )
 
     def test_coast_fi(self):
         val1 = fi.coast_fi(2000000, .07, 62, 31)
         val2 = fi.coast_fi(2000000, 0, 62, 31)
 
         # https://www.reddit.com/r/financialindependence/comments/92d35t/what_is_this_coast_number_people_are_talking_about/e34uuxh/
-        self.assertEqual(int(val1), 245546,
-                         'Should return the value from reddit thread')
         self.assertEqual(
-            val2, 2000000, 'Should return the target FI number if interest is 0')
+            int(val1), 245546, 'Should return the value from reddit thread'
+        )
+        self.assertEqual(
+            val2, 2000000, 'Should return the target FI number if interest is 0'
+        )
 
     def test_cost_per_use(self):
         # Example from Early Retirement Extreme
         args = (75, 15, 15)
         val1 = fi.cost_per_use(*args)
 
-        self.assertEqual(val1, Decimal(
-            4), 'Should return 4, returned ' + str(val1))
-        self.assertEqual(val1, fi.annual_cost(*args),
-                         'Should return the same as annual_cost')
+        self.assertEqual(val1, Decimal(4), 'Should return 4, returned ' + str(val1))
+        self.assertEqual(
+            val1, fi.annual_cost(*args), 'Should return the same as annual_cost'
+        )
 
     def test_fi_age(self):
         current_age = 20
@@ -49,14 +52,16 @@ class test_fi(unittest.TestCase):
         interest = .08
         val1 = fi.fi_age(interest, 0, 400000, 800000, current_age)
 
-        self.assertEqual(val1, current_age + years_to_double,
-                         'Without making payments, the money should double in 9 years')
+        self.assertEqual(
+            val1,
+            current_age + years_to_double,
+            'Without making payments, the money should double in 9 years',
+        )
 
     def test_future_value(self):
         val1 = fi.future_value(2, .5, 1, 1)
         val2 = fi.future_value(2, .5, 1, 2)
-        self.assertEqual(
-            val1, 3, 'The value should be 3, returned ' + str(val1))
+        self.assertEqual(val1, 3, 'The value should be 3, returned ' + str(val1))
         self.assertEqual(val2, 4.5, 'The value should be 4.5, returned')
 
     def test_rule_of_72(self):
@@ -91,21 +96,22 @@ class test_fi(unittest.TestCase):
     def test_savings_rate(self):
         val1 = fi.savings_rate(13839.0, 8919.0)
         val2 = fi.savings_rate(600, 300)
-        self.assertEqual(val1.quantize(TWOPLACES), Decimal(35.55).quantize(
-            TWOPLACES), 'The savings rate should be approximately 35.55%, returned ' + str(val1))
         self.assertEqual(
-            val2, 50, "The savings rate should be 50%, returned " + str(val2))
+            val1.quantize(TWOPLACES),
+            Decimal(35.55).quantize(TWOPLACES),
+            'The savings rate should be approximately 35.55%, returned ' + str(val1),
+        )
+        self.assertEqual(
+            val2, 50, "The savings rate should be 50%, returned " + str(val2)
+        )
 
     def test_spending_from_savings(self):
         val1 = fi.spending_from_savings(100, 50)
         val2 = fi.spending_from_savings(100, 0)
         val3 = fi.spending_from_savings(100, 100)
-        self.assertEqual(
-            val1, 50, 'Spending should be 50, returned ' + str(val1))
-        self.assertEqual(
-            val2, 100, 'Spending should be 100, returned ' + str(val2))
-        self.assertEqual(
-            val3, 0, 'Spending should be 0, returned ' + str(val3))
+        self.assertEqual(val1, 50, 'Spending should be 50, returned ' + str(val1))
+        self.assertEqual(val2, 100, 'Spending should be 100, returned ' + str(val2))
+        self.assertEqual(val3, 0, 'Spending should be 0, returned ' + str(val3))
 
     # Test take_home_pay
     # http://www.mrmoneymustache.com/2015/01/26/calculating-net-worth/
@@ -120,8 +126,32 @@ class test_fi(unittest.TestCase):
         # There are 2.16 pay periods in a month
         val1 = fi.take_home_pay(8620, 300, [1724, 689, 200]) * Decimal(2.16)
         val1 = val1.quantize(TWOPLACES)
-        self.assertEqual(val1, Decimal(13623.12).quantize(
-            TWOPLACES), 'Take-home pay should be $13,623.12 per month, returned ' + str(val1))
+        self.assertEqual(
+            val1,
+            Decimal(13623.12).quantize(TWOPLACES),
+            'Take-home pay should be $13,623.12 per month, returned ' + str(val1),
+        )
+
+    def test_redeem_points(self):
+        points = 50000
+        val1 = fi.redeem_points(points)
+        val2 = fi.redeem_points(points, .0125)
+        val3 = fi.redeem_points(points, .015)
+        self.assertEqual(val1, Decimal(500))
+        self.assertEqual(val2, Decimal(625))
+        self.assertEqual(val3, Decimal(750))
+
+    def test_redeem_chase_points(self):
+        points = 50000
+        cp = fi.redeem_chase_points(points)
+        val1 = cp['cv']
+        val2 = cp['spp']
+        val3 = cp['srp']
+        val4 = cp['tpe']
+        self.assertEqual(val1, Decimal(500))
+        self.assertEqual(val2, Decimal(625))
+        self.assertEqual(val3, Decimal(750))
+        self.assertEqual(val4, Decimal(1000))
 
 
 # Run all tests

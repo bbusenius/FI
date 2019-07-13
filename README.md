@@ -26,6 +26,8 @@ The following functions are packaged in this library:
 - **cost_per_use**
 - **fi_age**
 - **future_value**
+- **redeem_points**
+- **redeem_chase_points**
 - **rule_of_72**
 - **savings_rate**
 - **spending_from_savings**
