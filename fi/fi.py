@@ -65,7 +65,9 @@ def coast_fi(target_fi_num, eiar, retirement_age, current_age):
     Returns:
         CoastFI number, Decimal
     """
-    return Decimal(target_fi_num) / (Decimal(1) + Decimal(eiar)) ** (Decimal(retirement_age) - Decimal(current_age))
+    return Decimal(target_fi_num) / (Decimal(1) + Decimal(eiar)) ** (
+        Decimal(retirement_age) - Decimal(current_age)
+    )
 
 
 def cost_per_use(your_cost, used_price, times_used):
@@ -151,13 +153,13 @@ def future_value(present_value, annual_rate, periods_per_year, years):
 def rule_of_72(interest_rate, accurate=False):
     """
     Calculate the time it will take for money to double
-    based on a given interest rate: 
+    based on a given interest rate:
 
     Years to double = 72 / Interest Rate
 
     Args:
         interest_rate: integer or floating point number
-        written with the decimal moved two places to the 
+        written with the decimal moved two places to the
         left, e.g. 7 for 7%
 
         accurate: Boolean, when set to True the more accurate
@@ -190,8 +192,10 @@ def savings_rate(take_home_pay, spending):
     """
 
     try:
-        return ((Decimal(take_home_pay) - Decimal(spending)) / (Decimal(take_home_pay))) * Decimal(100)
-    except(ZeroDivisionError):
+        return (
+            (Decimal(take_home_pay) - Decimal(spending)) / (Decimal(take_home_pay))
+        ) * Decimal(100)
+    except (ZeroDivisionError):
         return Decimal(0)
 
 
