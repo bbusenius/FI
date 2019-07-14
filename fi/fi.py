@@ -45,6 +45,24 @@ def annual_cost(your_cost, used_price, years_in_service):
     return (Decimal(your_cost) - Decimal(used_price)) / Decimal(years_in_service)
 
 
+def average_daily_spend(money_spent, num_days):
+    """
+    Calculate the average amount of money spent per day over
+    a given number of days.
+
+    Args:
+        money_spent: float or Decimal, the amount of money
+        spent.
+
+        num_days: int, the number of days during which the
+        spending occurred.
+
+    Returns:
+        Decimal, the amount of money spent per day.
+    """
+    return Decimal(money_spent / num_days).quantize(CENTS, ROUND_HALF_UP)
+
+
 def coast_fi(target_fi_num, eiar, retirement_age, current_age):
     """
     Calculate the amount of money your would need to "coast to FI" if

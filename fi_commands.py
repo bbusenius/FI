@@ -48,6 +48,27 @@ def run_annual_cost():
     print(fi.annual_cost(args.your_cost, args.used_price, args.years_in_service))
 
 
+def run_average_daily_spend():
+    """
+    Calculate the average amount of money spent per day over
+    a given number of days.
+    """
+    description = run_average_daily_spend.__doc__
+    parser = argparse.ArgumentParser(
+        prog='average_daily_spend',
+        description=description,
+        epilog='Example use: average_daily_spend 100 10',
+    )
+    parser.add_argument(
+        'money_spent', help='float or Decimal, the amount of money spent'
+    )
+    parser.add_argument(
+        'num_days', help='int, the number of days during which the spending occurred'
+    )
+    args = parser.parse_args()
+    print(fi.average_daily_spend(Decimal(args.money_spent), int(args.num_days)))
+
+
 def run_coast_fi():
     """
     Calculate your CoastFI number. The number at which you

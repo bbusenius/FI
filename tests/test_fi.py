@@ -153,6 +153,14 @@ class test_fi(unittest.TestCase):
         self.assertEqual(val3, Decimal(750))
         self.assertEqual(val4, Decimal(1000))
 
+    def test_average_daily_spend(self):
+        val1 = fi.average_daily_spend(100, 10)
+        val2 = fi.average_daily_spend(2100, 30)
+        val3 = fi.average_daily_spend(1000000, 25)
+        self.assertEqual(val1, 10)
+        self.assertEqual(val2, 70)
+        self.assertEqual(val3, 40000)
+
 
 # Run all tests
 if __name__ == '__main__':
