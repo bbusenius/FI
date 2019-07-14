@@ -69,6 +69,39 @@ def run_average_daily_spend():
     print(fi.average_daily_spend(Decimal(args.money_spent), int(args.num_days)))
 
 
+def run_buy_a_day_of_freedom():
+    """
+    Calculate how much it costs to buy a day of freedom based
+    on your annual spend and your safe withdrawl rate. Every time
+    you save this amount of money, you've covered 1 more day. Once
+    you have 365 days, you are financially independent. Credit:
+    https://www.reddit.com/r/leanfire/comments/caka4t/weekly_leanfire
+    _discussion_july_08_2019/etfdwg1/
+    """
+    description = run_buy_a_day_of_freedom.__doc__
+    parser = argparse.ArgumentParser(
+        prog='buy_a_day_of_freedom',
+        description=description,
+        epilog='Example use: buy_a_day_of_freedom 40000',
+    )
+    parser.add_argument(
+        'annual_spend',
+        help='float, the amount of money you plan to spend in retirement',
+    )
+    parser.add_argument(
+        '-r',
+        '--rate',
+        help='float, your planned safe withdrawl rate. Defaults to 0.04 (4%)',
+        action='store',
+    )
+    args = parser.parse_args()
+    annual_spend = float(args.annual_spend)
+    if args.rate:
+        print(fi.buy_a_day_of_freedom(annual_spend, float(args.rate)))
+    else:
+        print(fi.buy_a_day_of_freedom(annual_spend))
+
+
 def run_coast_fi():
     """
     Calculate your CoastFI number. The number at which you

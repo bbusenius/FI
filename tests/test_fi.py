@@ -4,7 +4,7 @@ Every method should start with "test".
 """
 
 import unittest
-from decimal import Decimal
+from decimal import ROUND_HALF_UP, Decimal
 
 import fi
 
@@ -174,6 +174,27 @@ class test_fi(unittest.TestCase):
         self.assertGreater(val4, val1)
         self.assertEqual(val5, 0)
         self.assertEqual(val6, 91.25)
+
+    # Test buy_a_day_of_freedom
+    # Examples from https://www.reddit.com/r/leanfire/comments/caka4t/
+    # weekly_leanfire_discussion_july_08_2019/etfdwg1/
+    def test_buy_a_day_of_freedom(self):
+        annual_rent = 2100 * 12
+        rent_per_day = Decimal(annual_rent / 365)
+        val1 = fi.buy_a_day_of_freedom(25200, .04)
+        val2 = fi.buy_a_day_of_freedom(12000, .04)
+        val3 = fi.buy_a_day_of_freedom(27375, .04)
+        val4 = fi.buy_a_day_of_freedom(36500)
+        self.assertEqual(
+            val1, Decimal(rent_per_day / Decimal(.04)).quantize(fi.CENTS, ROUND_HALF_UP)
+        )
+        self.assertEqual(
+            val2, Decimal((12000 / 365) / .04).quantize(fi.CENTS, ROUND_HALF_UP)
+        )
+        self.assertEqual(
+            val3, Decimal((27375 / 365) / .04).quantize(fi.CENTS, ROUND_HALF_UP)
+        )
+        self.assertEqual(val4, Decimal(2500))
 
 
 # Run all tests

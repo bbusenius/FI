@@ -63,6 +63,31 @@ def average_daily_spend(money_spent, num_days):
     return money_spent / num_days
 
 
+def buy_a_day_of_freedom(annual_spend, swr=.04):
+    """
+    Calculate how much it costs to buy a day of freedom based
+    on your annual spend and your safe withdrawl rate. Every time
+    you save this amount of money, you've covered 1 more day. Once
+    you have 365 days, you are financially independent. Credit:
+    https://www.reddit.com/r/leanfire/comments/caka4t/weekly_leanfire
+    _discussion_july_08_2019/etfdwg1/
+
+    Args:
+        annual_spend: float, the amount of money you plan to spend
+        in retirement.
+
+        swr: float, your planned safe withdrawl rate.
+        Defaults to 0.04 (4%).
+
+    Returns:
+        Decimal, the amount of money that buys you 1 day of
+        freedom when saved.
+    """
+    return Decimal(average_daily_spend(annual_spend, 365) / swr).quantize(
+        CENTS, ROUND_HALF_UP
+    )
+
+
 def coast_fi(target_fi_num, eiar, retirement_age, current_age):
     """
     Calculate the amount of money your would need to "coast to FI" if

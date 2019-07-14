@@ -23,6 +23,7 @@ The following functions are packaged in this library:
 
 - **annual_cost**
 - **average_daily_spend**
+- **buy_a_day_of_freedom**
 - **coast_fi**
 - **cost_per_use**
 - **days_covered_by_fi**

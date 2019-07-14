@@ -14,6 +14,7 @@ setup(
         'console_scripts': [
             'annual_cost = fi_commands:run_annual_cost',
             'average_daily_spend = fi_commands:run_average_daily_spend',
+            'buy_a_day_of_freedom = fi_commands:run_buy_a_day_of_freedom',
             'coast_fi = fi_commands:run_coast_fi',
             'cost_per_use = fi_commands:run_cost_per_use',
             'days_covered_by_fi = fi_commands:run_days_covered_by_fi',
