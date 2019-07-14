@@ -16,6 +16,7 @@ setup(
             'average_daily_spend = fi_commands:run_average_daily_spend',
             'coast_fi = fi_commands:run_coast_fi',
             'cost_per_use = fi_commands:run_cost_per_use',
+            'days_covered_by_fi = fi_commands:run_days_covered_by_fi',
             'fi_age = fi_commands:run_fi_age',
             'future_value = fi_commands:run_future_value',
             'redeem_chase_points = fi_commands:run_redeem_chase_points',

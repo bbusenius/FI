@@ -25,6 +25,7 @@ The following functions are packaged in this library:
 - **average_daily_spend**
 - **coast_fi**
 - **cost_per_use**
+- **days_covered_by_fi**
 - **fi_age**
 - **future_value**
 - **redeem_points**

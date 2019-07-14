@@ -161,6 +161,20 @@ class test_fi(unittest.TestCase):
         self.assertEqual(val2, 70)
         self.assertEqual(val3, 40000)
 
+    def test_days_covered_by_fi(self):
+        val1 = fi.days_covered_by_fi(40000, 500000)
+        val2 = fi.days_covered_by_fi(30000, 750000)
+        val3 = fi.days_covered_by_fi(40000, 500000, .03)
+        val4 = fi.days_covered_by_fi(40000, 500000, .05)
+        val5 = fi.days_covered_by_fi(40000, 0)
+        val6 = fi.days_covered_by_fi(40000, 500000, .02)
+        self.assertEqual(val1, 182.5)
+        self.assertEqual(val2, 365)
+        self.assertLess(val3, val1)
+        self.assertGreater(val4, val1)
+        self.assertEqual(val5, 0)
+        self.assertEqual(val6, 91.25)
+
 
 # Run all tests
 if __name__ == '__main__':

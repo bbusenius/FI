@@ -58,9 +58,9 @@ def average_daily_spend(money_spent, num_days):
         spending occurred.
 
     Returns:
-        Decimal, the amount of money spent per day.
+        float, the amount of money spent per day.
     """
-    return Decimal(money_spent / num_days).quantize(CENTS, ROUND_HALF_UP)
+    return money_spent / num_days
 
 
 def coast_fi(target_fi_num, eiar, retirement_age, current_age):
@@ -110,6 +110,33 @@ def cost_per_use(your_cost, used_price, times_used):
         The amount something has costed per use, Decimal
     """
     return annual_cost(your_cost, used_price, times_used)
+
+
+def days_covered_by_fi(annual_spend, stash, wr=0.04):
+    """
+    Calculate the number of days per year covered by your savings.
+    This is a way of seeing where you are on your FI journey. For
+    example, 182.5 days would put you at 50% FI. 365 days would put
+    you at 100% FI or full financial independence. Inspired by:
+    https://www.reddit.com/r/leanfire/comments/caka4t/weekly_leanfire
+    _discussion_july_08_2019/etfdwg1/
+
+    Args:
+        annual_spend: float, the amount of money you plan to spend
+        in retirement.
+
+        stash: float, the amount of money you've saved.
+
+        wr: float, your planned safe withdrawl rate. Defaults to
+        0.04 (4%).
+
+    Returns:
+        float, number of days covered by your stash. This is how
+        many days you have already paid for with your savings and
+        the amount of time you could theoretically take off every
+        year if you wanted to.
+    """
+    return (stash * wr) / average_daily_spend(annual_spend, 365)
 
 
 def fi_age(eiar, asa, stash, fi_num, ca):

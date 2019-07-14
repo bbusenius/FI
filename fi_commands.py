@@ -126,6 +126,43 @@ def run_cost_per_use():
     print(fi.cost_per_use(args.your_cost, args.used_price, args.times_used))
 
 
+def run_days_covered_by_fi():
+    """
+    Calculate the number of days per year covered by your savings.
+    This is a way of seeing where you are on your FI journey. For
+    example, 182.5 days would put you at 50% FI. 365 days would put
+    you at 100% FI or full financial independence. Inspired by:
+    https://www.reddit.com/r/leanfire/comments/caka4t/weekly_leanfire
+    _discussion_july_08_2019/etfdwg1/
+    """
+    description = run_days_covered_by_fi.__doc__
+    parser = argparse.ArgumentParser(
+        prog='days_covered_by_fi',
+        description=description,
+        epilog='Example use: days_covered_by_fi 40000 500000 .03',
+    )
+    parser.add_argument(
+        'annual_spend',
+        help='float, the amount of money you plan to spend in retirement',
+    )
+    parser.add_argument('stash', help='float, the amount of money you\'ve saved')
+    parser.add_argument(
+        '-r',
+        '--rate',
+        help='float, your planned safe withdrawl rate. Defaults to 0.04 (4%)',
+        action='store',
+    )
+    args = parser.parse_args()
+    if args.rate:
+        print(
+            fi.days_covered_by_fi(
+                float(args.annual_spend), float(args.stash), float(args.rate)
+            )
+        )
+    else:
+        print(fi.days_covered_by_fi(float(args.annual_spend), float(args.stash)))
+
+
 def run_fi_age():
     """
     Calculate the age at which you will reach FIRE. Credit: eseligsohn
