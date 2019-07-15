@@ -91,7 +91,7 @@ def run_buy_a_day_of_freedom():
     parser.add_argument(
         '-r',
         '--rate',
-        help='float, your planned safe withdrawl rate. Defaults to 0.04 (4%)',
+        help='float, your planned safe withdrawl rate. Defaults to 0.04 (4%%)',
         action='store',
     )
     args = parser.parse_args()
@@ -182,7 +182,7 @@ def run_days_covered_by_fi():
     parser.add_argument(
         '-r',
         '--rate',
-        help='float, your planned safe withdrawl rate. Defaults to 0.04 (4%)',
+        help='float, your planned safe withdrawl rate. Defaults to 0.04 (4%%)',
         action='store',
     )
     args = parser.parse_args()
