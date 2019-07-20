@@ -25,7 +25,7 @@ import numpy
 CENTS = Decimal('0.01')
 
 
-def annual_cost(your_cost, used_price, years_in_service):
+def annual_cost(cost: float, used_price: float, years_in_service: float) -> Decimal:
     """
     Calculate the depreciation schedule of things bought.
 
@@ -33,37 +33,37 @@ def annual_cost(your_cost, used_price, years_in_service):
     http://a.co/4vgBczW
 
     Args:
-        your_cost: int or float, amount paid
+        cost: original amount paid for the object
 
-        used_price: int or float, amount you can sell it for
+        used_price: amount you can sell it for
 
-        years_in_service : int or float, number of years you've used it
+        years_in_service : number of years you've used it
 
     Returns:
-        The amount something has costed per year, Decimal
+        The amount something has costed per year
     """
-    return (Decimal(your_cost) - Decimal(used_price)) / Decimal(years_in_service)
+    return (Decimal(cost) - Decimal(used_price)) / Decimal(years_in_service)
 
 
-def average_daily_spend(money_spent, num_days):
+def average_daily_spend(money_spent: float, num_days: int) -> float:
     """
     Calculate the average amount of money spent per day over
     a given number of days.
 
     Args:
-        money_spent: float or Decimal, the amount of money
+        money_spent: the amount of money
         spent.
 
-        num_days: int, the number of days during which the
+        num_days: the number of days during which the
         spending occurred.
 
     Returns:
-        float, the amount of money spent per day.
+        The amount of money spent per day.
     """
     return money_spent / num_days
 
 
-def buy_a_day_of_freedom(annual_spend, swr=.04):
+def buy_a_day_of_freedom(annual_spend: float, swr: float = .04) -> Decimal:
     """
     Calculate how much it costs to buy a day of freedom based
     on your annual spend and your safe withdrawl rate. Every time
@@ -73,22 +73,21 @@ def buy_a_day_of_freedom(annual_spend, swr=.04):
     _discussion_july_08_2019/etfdwg1/
 
     Args:
-        annual_spend: float, the amount of money you plan to spend
-        in retirement.
+        annual_spend: the amount of money you plan to spend in retirement.
 
-        swr: float, your planned safe withdrawl rate.
-        Defaults to 0.04 (4%).
+        swr: your planned safe withdrawl rate. Defaults to 0.04 (4%).
 
     Returns:
-        Decimal, the amount of money that buys you 1 day of
-        freedom when saved.
+        The amount of money that buys you 1 day of freedom when saved.
     """
     return Decimal(average_daily_spend(annual_spend, 365) / swr).quantize(
         CENTS, ROUND_HALF_UP
     )
 
 
-def coast_fi(target_fi_num, eiar, retirement_age, current_age):
+def coast_fi(
+    target_fi_num: float, eiar: float, retirement_age: float, current_age: float
+) -> Decimal:
     """
     Calculate the amount of money your would need to "coast to FI" if
     your were to stop working but never touch your savings.
@@ -108,14 +107,14 @@ def coast_fi(target_fi_num, eiar, retirement_age, current_age):
         current_age: Your current age.
 
     Returns:
-        CoastFI number, Decimal
+        CoastFI number
     """
     return Decimal(target_fi_num) / (Decimal(1) + Decimal(eiar)) ** (
         Decimal(retirement_age) - Decimal(current_age)
     )
 
 
-def cost_per_use(your_cost, used_price, times_used):
+def cost_per_use(your_cost: float, used_price: float, times_used: float) -> Decimal:
     """
     Calculate how much something has costed while considering
     how many times it has been used. Wrapper function for
@@ -125,19 +124,19 @@ def cost_per_use(your_cost, used_price, times_used):
     http://a.co/4vgBczW
 
     Args:
-        your_cost: int or float, amount paid
+        your_cost: amount paid
 
-        used_price: int or float, amount you can sell it for
+        used_price: amount you can sell it for
 
-        times_used : int or float, number of times you've used it
+        times_used: number of times you've used it
 
     Returns:
-        The amount something has costed per use, Decimal
+        The amount something has costed per use
     """
     return annual_cost(your_cost, used_price, times_used)
 
 
-def days_covered_by_fi(annual_spend, stash, wr=0.04):
+def days_covered_by_fi(annual_spend: float, stash: float, wr: float = 0.04) -> float:
     """
     Calculate the number of days per year covered by your savings.
     This is a way of seeing where you are on your FI journey. For
@@ -147,16 +146,14 @@ def days_covered_by_fi(annual_spend, stash, wr=0.04):
     _discussion_july_08_2019/etfdwg1/
 
     Args:
-        annual_spend: float, the amount of money you plan to spend
-        in retirement.
+        annual_spend: the amount of money you plan to spend in retirement.
 
-        stash: float, the amount of money you've saved.
+        stash: the amount of money you've saved.
 
-        wr: float, your planned safe withdrawl rate. Defaults to
-        0.04 (4%).
+        wr: your planned safe withdrawl rate. Defaults to 0.04 (4%).
 
     Returns:
-        float, number of days covered by your stash. This is how
+        The number of days covered by your stash. This is how
         many days you have already paid for with your savings and
         the amount of time you could theoretically take off every
         year if you wanted to.
@@ -164,7 +161,7 @@ def days_covered_by_fi(annual_spend, stash, wr=0.04):
     return (stash * wr) / average_daily_spend(annual_spend, 365)
 
 
-def fi_age(eiar, asa, stash, fi_num, ca):
+def fi_age(eiar: float, asa: float, stash: float, fi_num: float, ca: int) -> int:
     """
     Calculate the age at which you will reach FIRE.
 
@@ -193,22 +190,25 @@ def fi_age(eiar, asa, stash, fi_num, ca):
         return int(numpy.nper(eiar, asa, stash, fi_num) + ca)
 
 
-def future_value(present_value, annual_rate, periods_per_year, years):
+def future_value(
+    present_value: float, annual_rate: float, periods_per_year: int, years: int
+) -> Decimal:
     """
     Calculates the future value of money invested at an interest rate,
     x times per year, for a given number of years. Can also be used to
     calculate the future equivalent of money due to inflation.
 
     Args:
-        present_value: int or float, the current quantity of money (principal).
+        present_value: the current quantity of money (principal).
 
-        annual_rate: float 0 to 1 e.g., .5 = 50%, the interest rate paid out.
+        annual_rate: number 0 to 1 e.g., .5 = 50%, the interest rate paid out.
 
-        periods_per_year: int, the number of times money is invested per year.
-        years: int, the number of years invested.
+        periods_per_year: the number of times money is invested per year.
+
+        years: the number of years invested.
 
     Returns:
-        Decimal, the future value of the money invested with compound interest.
+        The future value of the money invested with compound interest.
     """
 
     # The nominal interest rate per period (rate) is how much interest you earn
@@ -222,35 +222,35 @@ def future_value(present_value, annual_rate, periods_per_year, years):
     return Decimal(present_value) * (1 + rate_per_period) ** periods
 
 
-def redeem_points(points, rate=0.01):
+def redeem_points(points: int, rate: float = 0.01) -> Decimal:
     """
     Calculates the value of travel rewards points based on a conversion
     rate. The default rate is 0.01 which is the cash value of awards
     points for most cards.
 
     Args:
-        points: int, the number of awards points to be redeemed.
+        points: the number of awards points to be redeemed.
 
-        rate: float, defaults to 0.01 which is the exchange rate
-        for most points to cash (1 cent per point).
+        rate: defaults to 0.01 which is the exchange rate for most points
+        to cash (1 cent per point).
 
     Returns:
-        Decimal, dollar amount the points are worth.
+        Dollar amount the points are worth.
     """
     return Decimal(points * rate).quantize(CENTS, ROUND_HALF_UP)
 
 
-def redeem_chase_points(points):
+def redeem_chase_points(points: int) -> dict:
     """
     Calculates the value of Chase Ultimate Rewards points for different
     exchange scenarios. Based on the ChooseFI Sweet Redemption article:
     https://www.choosefi.com/travel-rewards-part-3-sweet-redemption/
 
     Args:
-        points: int, number of Ultimate Rewards points being redeemed.
+        points: number of Ultimate Rewards points being redeemed.
 
     Returns:
-        dict containing common Chase Ultimate Rewards redemption scenarios
+        A dictionary containing common Chase Ultimate Rewards redemption scenarios
         where cv = cash value, spp = sapphire preferred portal, srp = sapphire
         reserved portal and tpe = target partner exchange (the guideline for
         direct transfer of pints to Chase Ultimate Reward partners such as
@@ -265,23 +265,23 @@ def redeem_chase_points(points):
     }
 
 
-def rule_of_72(interest_rate, accurate=False):
+def rule_of_72(interest_rate: float, accurate: bool = False) -> float:
     """
-    Calculate the time it will take for money to double
-    based on a given interest rate:
+    Calculate the time it will take for money to double based on a given
+    interest rate:
 
     Years to double = 72 / Interest Rate
 
     Args:
-        interest_rate: integer or floating point number
-        written with the decimal moved two places to the
-        left, e.g. 7 for 7%
+        interest_rate: float written with the decimal moved two
+        places to the left, e.g. 7 for 7%
 
         accurate: Boolean, when set to True the more accurate
         69.3 is used instead of 72.
 
     Returns:
-        Years to double, float
+        The number of years it will take for money to double based
+        on an interest rate.
     """
     if interest_rate == 0:
         return float('inf')
@@ -291,16 +291,16 @@ def rule_of_72(interest_rate, accurate=False):
     return 72. / interest_rate
 
 
-def savings_rate(take_home_pay, spending):
+def savings_rate(take_home_pay: float, spending: float) -> Decimal:
     """
     Calculate your savings_rate based on take home pay and spending,
     using the formula laid out by Mr. Money Mustache:
     http: // www.mrmoneymustache.com/2015/01/26/calculating-net-worth/
 
     Args:
-        take_home_pay: float or int, monthly take-home pay
+        take_home_pay: monthly take-home pay
 
-        spending: float or int, monthly spending
+        spending: monthly spending
 
     Returns:
         your monthly savings rate expressed as a percentage.
@@ -314,7 +314,7 @@ def savings_rate(take_home_pay, spending):
         return Decimal(0)
 
 
-def spending_from_savings(take_home_pay, savings):
+def spending_from_savings(take_home_pay: float, savings: float) -> Decimal:
     """
     Calculate your spending based on your take home pay and how much
     you save. This is useful if you use what Paula Pant calls the anti-budget,
@@ -322,28 +322,30 @@ def spending_from_savings(take_home_pay, savings):
     input for the savings_rate function.
 
     Args:
-        take_home_pay: float or int, monthly take-home pay
+        take_home_pay: monthly take-home pay
 
-        savings: the amount of money saved towards FI
+        savings: amount of money saved towards FI
 
     Returns:
-        Decimal, the amount of money spent
+        The amount of money spent
     """
     return Decimal(take_home_pay) - Decimal(savings)
 
 
-def take_home_pay(gross_pay, employer_match, taxes_and_fees):
+def take_home_pay(
+    gross_pay: float, employer_match: float, taxes_and_fees: list
+) -> Decimal:
     """
     Calculate net take-home pay including employer retirement savings match
     using the formula laid out by Mr. Money Mustache:
     http: // www.mrmoneymustache.com/2015/01/26/calculating-net-worth/
 
     Args:
-        gross_pay: float or int, gross monthly pay.
+        gross_pay: gross monthly pay.
 
-        employer_match: float or int, the 401(k) match from your employer.
+        employer_match: the 401(k) match from your employer.
 
-        taxes_and_fees: list, taxes and fees that are deducted from your paycheck.
+        taxes_and_fees: taxes and fees that are deducted from your paycheck.
 
     Returns:
         Your monthly take-home pay.
