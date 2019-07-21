@@ -19,6 +19,7 @@
 # SOFTWARE. <https://opensource.org/licenses/MIT/>
 
 from decimal import ROUND_HALF_UP, Decimal
+from typing import List
 
 import numpy
 
@@ -333,7 +334,7 @@ def spending_from_savings(take_home_pay: float, savings: float) -> Decimal:
 
 
 def take_home_pay(
-    gross_pay: float, employer_match: float, taxes_and_fees: list
+    gross_pay: float, employer_match: float, taxes_and_fees: List[float]
 ) -> Decimal:
     """
     Calculate net take-home pay including employer retirement savings match
@@ -345,7 +346,7 @@ def take_home_pay(
 
         employer_match: the 401(k) match from your employer.
 
-        taxes_and_fees: taxes and fees that are deducted from your paycheck.
+        taxes_and_fees: taxes and fees deducted from your paycheck.
 
     Returns:
         Your monthly take-home pay.
