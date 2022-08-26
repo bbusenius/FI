@@ -22,6 +22,7 @@ from decimal import ROUND_HALF_UP, Decimal
 from typing import List
 
 import numpy
+import numpy_financial as npf
 
 CENTS = Decimal('0.01')
 
@@ -188,7 +189,7 @@ def fi_age(eiar: float, asa: float, stash: float, fi_num: float, ca: int) -> int
     """
     fi_num = fi_num * -1
     with numpy.errstate(divide='ignore'):
-        return int(numpy.nper(eiar, asa, stash, fi_num) + ca)
+        return int(npf.nper(eiar, asa, stash, fi_num) + ca)
 
 
 def future_value(

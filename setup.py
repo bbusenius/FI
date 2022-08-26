@@ -31,7 +31,7 @@ setup(
     url='https://github.com/bbusenius/FI',
     license='MIT, see LICENSE.txt',
     include_package_data=True,
-    install_requires=['numpy'],
+    install_requires=['numpy', 'numpy_financial'],
     test_suite='tests',
     zip_safe=False,
 )
