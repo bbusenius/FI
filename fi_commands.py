@@ -264,6 +264,30 @@ def run_future_value():
     )
 
 
+def run_percent_decrease():
+    """
+    Calculates the percentage of loss from one number to another.
+    """
+    description = run_percent_decrease.__doc__
+    parser = argparse.ArgumentParser(
+        prog='percent_decrease',
+        description=description,
+        epilog="Example use: percent_decrease 10 5",
+    )
+    parser.add_argument(
+        'original_value', help='int or float, the original number'
+    )
+    parser.add_argument(
+        'final_value', help='int or float, the final number after all losses'
+    )
+    args = parser.parse_args()
+    print(
+        fi.percent_decrease(
+            float(args.original_value), float(args.final_value)
+        )
+    )
+
+
 def run_percent_increase():
     """
     Calculates the percentage of growth from one number to another.

@@ -19,6 +19,7 @@
 # SOFTWARE. <https://opensource.org/licenses/MIT/>
 
 from decimal import ROUND_HALF_UP, Decimal
+from math import nan
 from typing import List
 
 import numpy
@@ -224,6 +225,24 @@ def future_value(
     return Decimal(present_value) * (1 + rate_per_period) ** periods
 
 
+def percent_decrease(original_value: float, final_value: float) -> float:
+    """
+    Calculate the percentage of loss from one number to another.
+
+    Args:
+        original_value: int or float, the starting number.
+
+        final_value: int or float, the final number after all losses.
+
+    Returns:
+        The decrease from one number to another expressed as a percentage.
+    """
+    try:
+        return abs(float(((original_value - final_value) / original_value)) * 100)
+    except (ZeroDivisionError):
+        return nan
+
+
 def percent_increase(original_value: float, final_value: float) -> float:
     """
     Calculate the percentage of growth from one number to another.
@@ -239,7 +258,7 @@ def percent_increase(original_value: float, final_value: float) -> float:
     try:
         return float(((final_value - original_value) / abs(original_value)) * 100)
     except (ZeroDivisionError):
-        return float(0)
+        return nan
 
 
 def redeem_points(points: int, rate: float = 0.01) -> Decimal:

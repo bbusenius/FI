@@ -5,6 +5,7 @@ Every method should start with "test".
 
 import unittest
 from decimal import ROUND_HALF_UP, Decimal
+from math import isnan
 
 import fi
 
@@ -64,6 +65,28 @@ class test_fi(unittest.TestCase):
         self.assertEqual(val1, 3, 'The value should be 3, returned ' + str(val1))
         self.assertEqual(val2, 4.5, 'The value should be 4.5, returned')
 
+    def test_percent_decrease(self):
+        val1 = fi.percent_decrease(10, 5)
+        val2 = fi.percent_decrease(10, 8)
+        self.assertEqual(val1, 50, 'This should be a 50% decrease')
+        self.assertEqual(val2, 20, 'This should be a 20% decrease')
+
+        # Example from:
+        # https://www.omnicalculator.com/math/percentage-increase#how-to-calculate-percent-increase
+        val3 = fi.percent_decrease(1445, 1300)
+        self.assertAlmostEqual(val3, 10, 1, 'This should be close to a 10% decrease')
+
+        val4 = fi.percent_decrease(-5, -10)
+        val5 = fi.percent_decrease(10, 0)
+        val6 = fi.percent_decrease(2, 2)
+        val7 = fi.percent_decrease(5, -5)
+        val8 = fi.percent_decrease(0, -5)
+        self.assertEqual(val4, 100, 'This should be a 100% decrease')
+        self.assertEqual(val5, 100, 'This should be a 100% decrease')
+        self.assertEqual(val6, 0, 'This should be a 0% decrease')
+        self.assertEqual(val7, 200, 'This should be a 200% decrease')
+        self.assertTrue(isnan(val8), 'This should be a NaN')
+
     def test_percent_increase(self):
         val1 = fi.percent_increase(5, 10)
         val2 = fi.percent_increase(10, 12)
@@ -78,7 +101,7 @@ class test_fi(unittest.TestCase):
         val4 = fi.percent_increase(-10, 10)
         val5 = fi.percent_increase(0, 10)
         self.assertEqual(val4, 200, 'This should be a 200% increase')
-        self.assertEqual(val5, 0, 'This should be a 0% increase')
+        self.assertTrue(isnan(val5), 'This should be NaN')
 
     def test_rule_of_72(self):
         # Less accurate, examples 2-4 from:
