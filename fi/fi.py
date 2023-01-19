@@ -66,7 +66,7 @@ def average_daily_spend(money_spent: float, num_days: int) -> float:
     return money_spent / num_days
 
 
-def buy_a_day_of_freedom(annual_spend: float, swr: float = .04) -> Decimal:
+def buy_a_day_of_freedom(annual_spend: float, swr: float = 0.04) -> Decimal:
     """
     Calculate how much it costs to buy a day of freedom based
     on your annual spend and your safe withdrawl rate. Every time
@@ -298,9 +298,9 @@ def redeem_chase_points(points: int) -> dict:
     """
     return {
         'cv': redeem_points(points),
-        'spp': redeem_points(points, .0125),
-        'srp': redeem_points(points, .015),
-        'tpe': redeem_points(points, .02),
+        'spp': redeem_points(points, 0.0125),
+        'srp': redeem_points(points, 0.015),
+        'tpe': redeem_points(points, 0.02),
     }
 
 
@@ -327,7 +327,7 @@ def rule_of_72(interest_rate: float, accurate: bool = False) -> float:
 
     if accurate:
         return 69.3 / interest_rate
-    return 72. / interest_rate
+    return 72.0 / interest_rate
 
 
 def savings_rate(take_home_pay: float, spending: float) -> Decimal:

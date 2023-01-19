@@ -26,7 +26,7 @@ class test_fi(unittest.TestCase):
         )
 
     def test_coast_fi(self):
-        val1 = fi.coast_fi(2000000, .07, 62, 31)
+        val1 = fi.coast_fi(2000000, 0.07, 62, 31)
         val2 = fi.coast_fi(2000000, 0, 62, 31)
 
         # https://www.reddit.com/r/financialindependence/comments/92d35t/what_is_this_coast_number_people_are_talking_about/e34uuxh/
@@ -50,7 +50,7 @@ class test_fi(unittest.TestCase):
     def test_fi_age(self):
         current_age = 20
         years_to_double = fi.rule_of_72(8)
-        interest = .08
+        interest = 0.08
         val1 = fi.fi_age(interest, 0, 400000, 800000, current_age)
 
         self.assertEqual(
@@ -60,8 +60,8 @@ class test_fi(unittest.TestCase):
         )
 
     def test_future_value(self):
-        val1 = fi.future_value(2, .5, 1, 1)
-        val2 = fi.future_value(2, .5, 1, 2)
+        val1 = fi.future_value(2, 0.5, 1, 1)
+        val2 = fi.future_value(2, 0.5, 1, 2)
         self.assertEqual(val1, 3, 'The value should be 3, returned ' + str(val1))
         self.assertEqual(val2, 4.5, 'The value should be 4.5, returned')
 
@@ -174,8 +174,8 @@ class test_fi(unittest.TestCase):
     def test_redeem_points(self):
         points = 50000
         val1 = fi.redeem_points(points)
-        val2 = fi.redeem_points(points, .0125)
-        val3 = fi.redeem_points(points, .015)
+        val2 = fi.redeem_points(points, 0.0125)
+        val3 = fi.redeem_points(points, 0.015)
         self.assertEqual(val1, Decimal(500))
         self.assertEqual(val2, Decimal(625))
         self.assertEqual(val3, Decimal(750))
@@ -203,10 +203,10 @@ class test_fi(unittest.TestCase):
     def test_days_covered_by_fi(self):
         val1 = fi.days_covered_by_fi(40000, 500000)
         val2 = fi.days_covered_by_fi(30000, 750000)
-        val3 = fi.days_covered_by_fi(40000, 500000, .03)
-        val4 = fi.days_covered_by_fi(40000, 500000, .05)
+        val3 = fi.days_covered_by_fi(40000, 500000, 0.03)
+        val4 = fi.days_covered_by_fi(40000, 500000, 0.05)
         val5 = fi.days_covered_by_fi(40000, 0)
-        val6 = fi.days_covered_by_fi(40000, 500000, .02)
+        val6 = fi.days_covered_by_fi(40000, 500000, 0.02)
         self.assertEqual(val1, 182.5)
         self.assertEqual(val2, 365)
         self.assertLess(val3, val1)
@@ -220,18 +220,19 @@ class test_fi(unittest.TestCase):
     def test_buy_a_day_of_freedom(self):
         annual_rent = 2100 * 12
         rent_per_day = Decimal(annual_rent / 365)
-        val1 = fi.buy_a_day_of_freedom(25200, .04)
-        val2 = fi.buy_a_day_of_freedom(12000, .04)
-        val3 = fi.buy_a_day_of_freedom(27375, .04)
+        val1 = fi.buy_a_day_of_freedom(25200, 0.04)
+        val2 = fi.buy_a_day_of_freedom(12000, 0.04)
+        val3 = fi.buy_a_day_of_freedom(27375, 0.04)
         val4 = fi.buy_a_day_of_freedom(36500)
         self.assertEqual(
-            val1, Decimal(rent_per_day / Decimal(.04)).quantize(fi.CENTS, ROUND_HALF_UP)
+            val1,
+            Decimal(rent_per_day / Decimal(0.04)).quantize(fi.CENTS, ROUND_HALF_UP),
         )
         self.assertEqual(
-            val2, Decimal((12000 / 365) / .04).quantize(fi.CENTS, ROUND_HALF_UP)
+            val2, Decimal((12000 / 365) / 0.04).quantize(fi.CENTS, ROUND_HALF_UP)
         )
         self.assertEqual(
-            val3, Decimal((27375 / 365) / .04).quantize(fi.CENTS, ROUND_HALF_UP)
+            val3, Decimal((27375 / 365) / 0.04).quantize(fi.CENTS, ROUND_HALF_UP)
         )
         self.assertEqual(val4, Decimal(2500))
 

@@ -274,18 +274,12 @@ def run_percent_decrease():
         description=description,
         epilog="Example use: percent_decrease 10 5",
     )
-    parser.add_argument(
-        'original_value', help='int or float, the original number'
-    )
+    parser.add_argument('original_value', help='int or float, the original number')
     parser.add_argument(
         'final_value', help='int or float, the final number after all losses'
     )
     args = parser.parse_args()
-    print(
-        fi.percent_decrease(
-            float(args.original_value), float(args.final_value)
-        )
-    )
+    print(fi.percent_decrease(float(args.original_value), float(args.final_value)))
 
 
 def run_percent_increase():
@@ -298,18 +292,12 @@ def run_percent_increase():
         description=description,
         epilog="Example use: percent_increase 5 10",
     )
-    parser.add_argument(
-        'original_value', help='int or float, the original number'
-    )
+    parser.add_argument('original_value', help='int or float, the original number')
     parser.add_argument(
         'final_value', help='int or float, the final number after all gains'
     )
     args = parser.parse_args()
-    print(
-        fi.percent_increase(
-            float(args.original_value), float(args.final_value)
-        )
-    )
+    print(fi.percent_increase(float(args.original_value), float(args.final_value)))
 
 
 def run_redeem_chase_points():
