@@ -64,6 +64,22 @@ class test_fi(unittest.TestCase):
         self.assertEqual(val1, 3, 'The value should be 3, returned ' + str(val1))
         self.assertEqual(val2, 4.5, 'The value should be 4.5, returned')
 
+    def test_percent_increase(self):
+        val1 = fi.percent_increase(5, 10)
+        val2 = fi.percent_increase(10, 12)
+        self.assertEqual(val1, 100, 'This should be a 100% increase')
+        self.assertEqual(val2, 20, 'This should be a 20% increase')
+
+        # Example from:
+        # https://www.omnicalculator.com/math/percentage-increase#how-to-calculate-percent-increase
+        val3 = fi.percent_increase(1250, 1445)
+        self.assertEqual(val3, 15.6, 'This should be a 15.6% increase')
+
+        val4 = fi.percent_increase(-10, 10)
+        val5 = fi.percent_increase(0, 10)
+        self.assertEqual(val4, 200, 'This should be a 200% increase')
+        self.assertEqual(val5, 0, 'This should be a 0% increase')
+
     def test_rule_of_72(self):
         # Less accurate, examples 2-4 from:
         # http://investinganswers.com/financial-dictionary/technical-analysis/rule-72-1615

@@ -224,6 +224,24 @@ def future_value(
     return Decimal(present_value) * (1 + rate_per_period) ** periods
 
 
+def percent_increase(original_value: float, final_value: float) -> float:
+    """
+    Calculate the percentage of growth from one number to another.
+
+    Args:
+        original_value: int or float, the starting number.
+
+        final_value: int or float, the final number after all gains.
+
+    Returns:
+        The increase from one number to another expressed as a percentage.
+    """
+    try:
+        return float(((final_value - original_value) / abs(original_value)) * 100)
+    except (ZeroDivisionError):
+        return float(0)
+
+
 def redeem_points(points: int, rate: float = 0.01) -> Decimal:
     """
     Calculates the value of travel rewards points based on a conversion

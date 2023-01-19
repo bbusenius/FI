@@ -20,6 +20,7 @@ setup(
             'days_covered_by_fi = fi_commands:run_days_covered_by_fi',
             'fi_age = fi_commands:run_fi_age',
             'future_value = fi_commands:run_future_value',
+            'percent_increase = fi_commands:run_percent_increase',
             'redeem_chase_points = fi_commands:run_redeem_chase_points',
             'redeem_points = fi_commands:run_redeem_points',
             'rule_of_72 = fi_commands:run_rule_of_72',

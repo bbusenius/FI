@@ -29,6 +29,7 @@ The following functions are packaged in this library:
 - **days_covered_by_fi**
 - **fi_age**
 - **future_value**
+- **percent_increase**
 - **redeem_points**
 - **redeem_chase_points**
 - **rule_of_72**

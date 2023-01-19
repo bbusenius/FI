@@ -264,6 +264,30 @@ def run_future_value():
     )
 
 
+def run_percent_increase():
+    """
+    Calculates the percentage of growth from one number to another.
+    """
+    description = run_percent_increase.__doc__
+    parser = argparse.ArgumentParser(
+        prog='future_value',
+        description=description,
+        epilog="Example use: percent_increase 5 10",
+    )
+    parser.add_argument(
+        'original_value', help='int or float, the original number'
+    )
+    parser.add_argument(
+        'final_value', help='int or float, the final number after all gains'
+    )
+    args = parser.parse_args()
+    print(
+        fi.percent_increase(
+            float(args.original_value), float(args.final_value)
+        )
+    )
+
+
 def run_redeem_chase_points():
     """
     Calculates the value of Chase Ultimate Rewards points for different
