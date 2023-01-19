@@ -270,7 +270,7 @@ def run_percent_increase():
     """
     description = run_percent_increase.__doc__
     parser = argparse.ArgumentParser(
-        prog='future_value',
+        prog='percent_increase',
         description=description,
         epilog="Example use: percent_increase 5 10",
     )
