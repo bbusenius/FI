@@ -9,7 +9,7 @@ setup(
     author='Brad Busenius',
     author_email='bbusenius@gmail.com',
     packages=find_packages(),
-    py_modules=['fi'],
+    py_modules=['fi', 'fi_commands'],
     entry_points={
         'console_scripts': [
             'annual_cost = fi_commands:run_annual_cost',
