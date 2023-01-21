@@ -18,6 +18,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE. <https://opensource.org/licenses/MIT/>
 
+import warnings
 from decimal import ROUND_HALF_UP, Decimal
 from math import nan
 from typing import List
@@ -223,6 +224,46 @@ def future_value(
     periods = Decimal(periods_per_year) * Decimal(years)
 
     return Decimal(present_value) * (1 + rate_per_period) ** periods
+
+
+def get_percentage(a: float, b: float, i: bool = False, r: bool = False):
+    """
+    Finds the percentage of one number over another.
+
+    Args:
+        a: The number that is a percent, int or float.
+
+        b: The base number that a is a percent of, int or float.
+
+        i: Boolean, True if the user wants the result returned as a whole
+        number. Assumes False.
+
+        r: Boolean, True if the user wants the result rounded. Rounds to the
+        second decimal point on floating point numbers. Assumes False.
+
+    Returns:
+        The argument a as a percentage of b. Throws a warning if integer is set to True
+        and round is set to False.
+    """
+    # Round to the second decimal
+    if i is False and r is True:
+        percentage = round(100.0 * (float(a) / b), 2)
+
+    # Round to the nearest whole number
+    elif (i is True and r is True) or (i is True and r is False):
+        percentage = int(round(100 * (float(a) / b)))
+
+        # A rounded number and an integer were requested
+        if r is False:
+            warnings.warn(
+                "If integer is set to True and Round is set to False, you will still get a rounded number if you pass floating point numbers as arguments."
+            )
+
+    # A precise unrounded decimal
+    else:
+        percentage = 100.0 * (float(a) / b)
+
+    return percentage
 
 
 def percent_decrease(original_value: float, final_value: float) -> float:

@@ -65,6 +65,18 @@ class test_fi(unittest.TestCase):
         self.assertEqual(val1, 3, 'The value should be 3, returned ' + str(val1))
         self.assertEqual(val2, 4.5, 'The value should be 4.5, returned')
 
+    def test_get_percentage(self):
+        val1 = fi.get_percentage(25, 100)
+        val2 = round(fi.get_percentage(159.5078, 28523.34), 4)
+        val3 = round(fi.get_percentage(34.292, 62.1), 2)
+        val4 = fi.get_percentage(34.292, 62.1, False, True)
+        # val5 = fi.get_percentage(34.292, 62.1, True, False)
+        assert val1 == 25, "The value should be 25, returned " + str(val1)
+        assert val2 == 0.5592, "The value should be 0.5592, returned " + str(val2)
+        assert val3 == 55.22, "The value should be 55.22, returned " + str(val3)
+        assert val4 == 55.22, "The value should be 55.22, returned " + str(val4)
+        # assert val5 == 55, "The value should be 55, returned " + str(val5)
+
     def test_percent_decrease(self):
         val1 = fi.percent_decrease(10, 5)
         val2 = fi.percent_decrease(10, 8)

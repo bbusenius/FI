@@ -20,6 +20,7 @@ setup(
             'days_covered_by_fi = fi_commands:run_days_covered_by_fi',
             'fi_age = fi_commands:run_fi_age',
             'future_value = fi_commands:run_future_value',
+            'get_percentage = fi_commands:run_get_percentage',
             'percent_decrease = fi_commands:run_percent_decrease',
             'percent_increase = fi_commands:run_percent_increase',
             'redeem_chase_points = fi_commands:run_redeem_chase_points',
