@@ -45,6 +45,10 @@ All functions can be used in a python application or run from the command-line.
 
 ### Running from the command-line
 
+List available functions:
+
+```FI --help```
+
 To see how to run a function from the command-line, just open a terminal and invoke the command with --help options, e.g.:
 
 ```coast_fi -h``` or ```coast_fi --help```

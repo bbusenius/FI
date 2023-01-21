@@ -38,9 +38,7 @@ def annual_cost(cost: float, used_price: float, years_in_service: float) -> Deci
 
     Args:
         cost: original amount paid for the object
-
         used_price: amount you can sell it for
-
         years_in_service : number of years you've used it
 
     Returns:
@@ -57,7 +55,6 @@ def average_daily_spend(money_spent: float, num_days: int) -> float:
     Args:
         money_spent: the amount of money
         spent.
-
         num_days: the number of days during which the
         spending occurred.
 
@@ -78,7 +75,6 @@ def buy_a_day_of_freedom(annual_spend: float, swr: float = 0.04) -> Decimal:
 
     Args:
         annual_spend: the amount of money you plan to spend in retirement.
-
         swr: your planned safe withdrawl rate. Defaults to 0.04 (4%).
 
     Returns:
@@ -103,11 +99,8 @@ def coast_fi(
     Args:
         target_fi_num: Target FI number, the amount you'll need
         invested in order to live off interest and dividends.
-
         eiar: Expected inflation adjusted return e.g. .07 (7%)
-
         retirement_age: The age you want to retire.
-
         current_age: Your current age.
 
     Returns:
@@ -129,9 +122,7 @@ def cost_per_use(your_cost: float, used_price: float, times_used: float) -> Deci
 
     Args:
         your_cost: amount paid
-
         used_price: amount you can sell it for
-
         times_used: number of times you've used it
 
     Returns:
@@ -151,9 +142,7 @@ def days_covered_by_fi(annual_spend: float, stash: float, wr: float = 0.04) -> f
 
     Args:
         annual_spend: the amount of money you plan to spend in retirement.
-
         stash: the amount of money you've saved.
-
         wr: your planned safe withdrawl rate. Defaults to 0.04 (4%).
 
     Returns:
@@ -175,10 +164,8 @@ def fi_age(eiar: float, asa: float, stash: float, fi_num: float, ca: int) -> int
 
     Args:
         eiar: Expected inflation adjusted return e.g. .07 (7%)
-
         asa: annual savings amount, the amount of money you will
         save towards FI each year.
-
         stash: invested assests, the amount of money you have
         currently saved and invested for FI.
 
@@ -204,11 +191,8 @@ def future_value(
 
     Args:
         present_value: the current quantity of money (principal).
-
         annual_rate: number 0 to 1 e.g., .5 = 50%, the interest rate paid out.
-
         periods_per_year: the number of times money is invested per year.
-
         years: the number of years invested.
 
     Returns:
@@ -226,18 +210,15 @@ def future_value(
     return Decimal(present_value) * (1 + rate_per_period) ** periods
 
 
-def get_percentage(a: float, b: float, i: bool = False, r: bool = False):
+def get_percentage(a: float, b: float, i: bool = False, r: bool = False) -> float:
     """
     Finds the percentage of one number over another.
 
     Args:
         a: The number that is a percent, int or float.
-
         b: The base number that a is a percent of, int or float.
-
         i: Boolean, True if the user wants the result returned as a whole
         number. Assumes False.
-
         r: Boolean, True if the user wants the result rounded. Rounds to the
         second decimal point on floating point numbers. Assumes False.
 
@@ -272,7 +253,6 @@ def percent_decrease(original_value: float, final_value: float) -> float:
 
     Args:
         original_value: int or float, the starting number.
-
         final_value: int or float, the final number after all losses.
 
     Returns:
@@ -290,7 +270,6 @@ def percent_increase(original_value: float, final_value: float) -> float:
 
     Args:
         original_value: int or float, the starting number.
-
         final_value: int or float, the final number after all gains.
 
     Returns:
@@ -310,7 +289,6 @@ def redeem_points(points: int, rate: float = 0.01) -> Decimal:
 
     Args:
         points: the number of awards points to be redeemed.
-
         rate: defaults to 0.01 which is the exchange rate for most points
         to cash (1 cent per point).
 
@@ -355,7 +333,6 @@ def rule_of_72(interest_rate: float, accurate: bool = False) -> float:
     Args:
         interest_rate: float written with the decimal moved two
         places to the left, e.g. 7 for 7%
-
         accurate: Boolean, when set to True the more accurate
         69.3 is used instead of 72.
 
@@ -379,7 +356,6 @@ def savings_rate(take_home_pay: float, spending: float) -> Decimal:
 
     Args:
         take_home_pay: monthly take-home pay
-
         spending: monthly spending
 
     Returns:
@@ -403,7 +379,6 @@ def spending_from_savings(take_home_pay: float, savings: float) -> Decimal:
 
     Args:
         take_home_pay: monthly take-home pay
-
         savings: amount of money saved towards FI
 
     Returns:
@@ -422,9 +397,7 @@ def take_home_pay(
 
     Args:
         gross_pay: gross monthly pay.
-
         employer_match: the 401(k) match from your employer.
-
         taxes_and_fees: taxes and fees deducted from your paycheck.
 
     Returns:

@@ -24,6 +24,17 @@ from decimal import Decimal
 import fi
 
 
+def run_fi():
+    """
+    Describes the module.
+    """
+    description = run_annual_cost.__doc__ + str(help(fi.fi))
+    parser = argparse.ArgumentParser(  # noqa: F841
+        prog='fi modlule',
+        description=description,
+    )
+
+
 def run_annual_cost():
     """
     Calculate the depreciation schedule of things bought.
