@@ -244,6 +244,32 @@ def run_fi_age():
     )
 
 
+def run_fi_number():
+    """
+    Calculates FI number based on planned yearly expenses and withdrawal rate.
+    """
+    description = run_fi_number.__doc__
+    parser = argparse.ArgumentParser(
+        prog='planned_yearly_expenses',
+        description=description,
+        epilog='Example use: fi_number 1000000 4',
+    )
+    parser.add_argument(
+        'planned_yearly_expenses',
+        help='int or float, the amount of money you think you will spend in \
+        retirement on an annual basis',
+    )
+    parser.add_argument(
+        'withdrawal_rate',
+        help='int or float, the rate you expect to withdral money annually \
+        e.g. 4 (for 4%, based on the Trinity Study)',
+    )
+    args = parser.parse_args()
+    print(
+        fi.fi_number(float(args.planned_yearly_expenses), float(args.withdrawal_rate))
+    )
+
+
 def run_future_value():
     """
     Calculates the future value of money invested at an interest rate,

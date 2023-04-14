@@ -28,6 +28,7 @@ The following functions are packaged in this library:
 - **cost_per_use**
 - **days_covered_by_fi**
 - **fi_age**
+- **fi_number**
 - **future_value**
 - **get_percentage**
 - **percent_decrease**

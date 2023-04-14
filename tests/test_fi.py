@@ -59,6 +59,18 @@ class test_fi(unittest.TestCase):
             'Without making payments, the money should double in 9 years',
         )
 
+    def test_fi_number(self):
+        val1 = fi.fi_number(40000, 4)
+        self.assertEqual(val1, 1000000)
+
+        # https://radicalfire.com/your-fi-number/
+        val2 = fi.fi_number(12000, 4)
+        val3 = fi.fi_number(12000, 3.5)
+        val4 = fi.fi_number(24000, 4)
+        self.assertEqual(val2, 300000)
+        self.assertAlmostEqual(val3, 342857, 0)
+        self.assertEqual(val4, 600000)
+
     def test_future_value(self):
         val1 = fi.future_value(2, 0.5, 1, 1)
         val2 = fi.future_value(2, 0.5, 1, 2)

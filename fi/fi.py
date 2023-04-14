@@ -181,6 +181,25 @@ def fi_age(eiar: float, asa: float, stash: float, fi_num: float, ca: int) -> int
         return int(npf.nper(eiar, asa, stash, fi_num) + ca)
 
 
+def fi_number(planned_yearly_expenses: float, withdrawal_rate: float) -> Decimal:
+    """
+    Calculate your FI number based on your planned yearly expenses and
+    withdrawal rate.
+
+    Args:
+        planned_yearly_expenses: the amount of money you think you will
+        spend in retirement on an annual basis.
+        withdrawal_rate: the rate you expect to withdral money annually
+        e.g. 4 (for 4%, based on the Trinity Study).
+
+    Returns:
+        FI number.
+    """
+    return (Decimal(planned_yearly_expenses) * Decimal(100.0)) / Decimal(
+        withdrawal_rate
+    )
+
+
 def future_value(
     present_value: float, annual_rate: float, periods_per_year: int, years: int
 ) -> Decimal:

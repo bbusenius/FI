@@ -20,6 +20,7 @@ setup(
             'days_covered_by_fi = fi_commands:run_days_covered_by_fi',
             'FI = fi_commands:run_fi',
             'fi_age = fi_commands:run_fi_age',
+            'fi_number = fi_commands:run_fi_number',
             'future_value = fi_commands:run_future_value',
             'get_percentage = fi_commands:run_get_percentage',
             'percent_decrease = fi_commands:run_percent_decrease',
