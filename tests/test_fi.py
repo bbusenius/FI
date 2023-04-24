@@ -207,10 +207,10 @@ class test_fi(unittest.TestCase):
     def test_redeem_chase_points(self):
         points = 50000
         cp = fi.redeem_chase_points(points)
-        val1 = cp['cv']
-        val2 = cp['spp']
-        val3 = cp['srp']
-        val4 = cp['tpe']
+        val1 = cp['Cash value']
+        val2 = cp['Sapphire Preferred portal']
+        val3 = cp['Sapphire Reserve portal']
+        val4 = cp['Target partner exchange']
         self.assertEqual(val1, Decimal(500))
         self.assertEqual(val2, Decimal(625))
         self.assertEqual(val3, Decimal(750))
