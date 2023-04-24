@@ -61,7 +61,7 @@ def average_daily_spend(money_spent: float, num_days: int) -> float:
 
 
 def buy_a_day_of_freedom(
-    annual_spend: float, safe_withdrawal_rate: float = 0.04
+    annual_spend: float, safe_withdrawal_rate: float = 4.0
 ) -> Decimal:
     """Calculate how much it costs to buy a day of freedom based on your
     annual spending habits and your safe withdrawl rate. Every time
@@ -72,16 +72,16 @@ def buy_a_day_of_freedom(
 
     Args:
         annual_spend: the amount of money you plan to spend in retirement.
-        safe_withdrawal_rate: your planned safe withdrawl rate. Defaults
-        to 0.04 (4%).
+        safe_withdrawal_rate: your planned safe withdrawl rate expressed
+        as a whole percentage. Defaults to 4 for 4%.
 
     Returns:
         The amount of money it costs to buy 1 day of freedom assuming the
         money is saved and invested.
     """
     return Decimal(
-        average_daily_spend(annual_spend, 365) / safe_withdrawal_rate
-    ).quantize(CENTS, ROUND_HALF_UP)
+        average_daily_spend(annual_spend, 365) / (safe_withdrawal_rate / 100.00)
+    )
 
 
 def coast_fi(
@@ -97,14 +97,15 @@ def coast_fi(
     Args:
         target_fi_num: target FI number, the amount you'll need to invest
         in order to live off interest and dividends.
-        eiar: expected inflation adjusted return e.g. .07 (7%)
+        eiar: expected inflation adjusted return expressed as a whole
+        percentage, e.g. 7 for 7%.
         retirement_age: the age you want to retire.
         current_age: your current age.
 
     Returns:
         CoastFI number
     """
-    return Decimal(target_fi_num) / (Decimal(1) + Decimal(eiar)) ** (
+    return Decimal(target_fi_num) / (Decimal(1) + (Decimal(eiar) / 100)) ** (
         Decimal(retirement_age) - Decimal(current_age)
     )
 
@@ -127,7 +128,7 @@ def cost_per_use(your_cost: float, used_price: float, times_used: float) -> Deci
 
 
 def days_covered_by_fi(
-    annual_spend: float, stash: float, withdrawal_rate: float = 0.04
+    annual_spend: float, stash: float, withdrawal_rate: float = 4
 ) -> float:
     """Calculate the number of days per year that are currently covered by
     your savings. This is a way of seeing where you are on your FI journey.
@@ -139,14 +140,15 @@ def days_covered_by_fi(
     Args:
         annual_spend: the amount of money you plan to spend in retirement.
         stash: the amount of money you've saved.
-        withdrawal_rate: your planned safe withdrawl rate. Defaults to 0.04 (4%).
+        withdrawal_rate: your planned safe withdrawl rate expressed as a
+        whole percentage. Defaults to 4 for 4%.
 
     Returns:
-        The number of days covered by your stash. This is how many days you've
-        already paid for with your savings and the amount of time you could
-        theoretically take off every year if you wanted to.
+        The number of days covered by your stash. This is how many days
+        you've already paid for with your savings and the amount of time
+        you could theoretically take off every year if you wanted to.
     """
-    return (stash * withdrawal_rate) / average_daily_spend(annual_spend, 365)
+    return (stash * (withdrawal_rate / 100)) / average_daily_spend(annual_spend, 365)
 
 
 def fi_age(
@@ -164,7 +166,8 @@ def fi_age(
     what_is_this_coast_number_people_are_talking_about/e36titl/
 
     Args:
-        eiar: Expected inflation adjusted return e.g. .07 (7%).
+        expected_inflation_adjusted_return: Expected inflation adjusted return
+        expressed as a whole percentage, e.g. 7 for 7%.
         annual_savings_amount: annual savings amount, the amount of money you
         save towards FI each year.
         stash: invested assests, the amount of money you have currently saved
@@ -180,7 +183,10 @@ def fi_age(
     with numpy.errstate(divide='ignore'):
         return int(
             npf.nper(
-                expected_inflation_adjusted_return, annual_savings_amount, stash, fi_num
+                (expected_inflation_adjusted_return / 100),
+                annual_savings_amount,
+                stash,
+                fi_num,
             )
             + current_age
         )
@@ -213,7 +219,8 @@ def future_value(
 
     Args:
         present_value: the current quantity of money (principal).
-        annual_rate: number 0 to 1 e.g., .5 = 50%, the interest rate paid out.
+        annual_rate: interest rate expressed as a whole percentage, e.g.
+        5 for 5%, the interest rate paid out.
         periods_per_year: the number of times money is invested per year.
         years: the number of years invested.
 
@@ -224,7 +231,7 @@ def future_value(
     # The nominal interest rate per period (rate) is how much interest you earn
     # during a particular length of time, before accounting for compounding.
     # This is typically expressed as a percentage.
-    rate_per_period = Decimal(annual_rate) / Decimal(periods_per_year)
+    rate_per_period = Decimal(annual_rate / 100) / Decimal(periods_per_year)
 
     # How many periods in the future the calculation is for.
     periods = Decimal(periods_per_year) * Decimal(years)
@@ -299,20 +306,20 @@ def percent_increase(original_value: float, final_value: float) -> float:
         return nan
 
 
-def redeem_points(points: int, rate: float = 0.01) -> Decimal:
+def redeem_points(points: int, rate: float = 1) -> Decimal:
     """Calculates the value of travel rewards points based on a conversion
-    rate. The default rate is 0.01 which is the cash value of awards points
+    rate. The default rate is 1% which is the cash value of awards points
     for most cards.
 
     Args:
         points: the number of awards points to be redeemed.
-        rate: defaults to 0.01 which is the exchange rate for most points
+        rate: defaults to 1 which is the exchange rate for most points
         to cash (1 cent per point).
 
     Returns:
         Dollar amount the points are worth.
     """
-    return Decimal(points * rate).quantize(CENTS, ROUND_HALF_UP)
+    return Decimal(points * (rate / 100)).quantize(CENTS, ROUND_HALF_UP)
 
 
 def redeem_chase_points(points: int) -> dict:
@@ -333,9 +340,9 @@ def redeem_chase_points(points: int) -> dict:
     """
     return {
         'Cash value': redeem_points(points),
-        'Sapphire Preferred portal': redeem_points(points, 0.0125),
-        'Sapphire Reserve portal': redeem_points(points, 0.015),
-        'Target partner exchange': redeem_points(points, 0.02),
+        'Sapphire Preferred portal': redeem_points(points, 1.25),
+        'Sapphire Reserve portal': redeem_points(points, 1.5),
+        'Target partner exchange': redeem_points(points, 2),
     }
 
 
