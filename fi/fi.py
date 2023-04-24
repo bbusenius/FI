@@ -21,15 +21,17 @@
 import warnings
 from decimal import ROUND_HALF_UP, Decimal
 from math import nan
-from typing import List
+from typing import List, NewType
 
 import numpy
 import numpy_financial as npf
 
+Money = NewType('Money', Decimal)
+Percent = NewType('Percent', Decimal)
 CENTS = Decimal('0.01')
 
 
-def annual_cost(cost: float, used_price: float, years_in_service: float) -> Decimal:
+def annual_cost(cost: float, used_price: float, years_in_service: float) -> Money:
     """Calculate the depreciation schedule of things.
 
     Credit: Early Retirement Extreme by Jacob Lund Fisker
@@ -43,10 +45,10 @@ def annual_cost(cost: float, used_price: float, years_in_service: float) -> Deci
     Returns:
         Cost per year.
     """
-    return (Decimal(cost) - Decimal(used_price)) / Decimal(years_in_service)
+    return Money(Decimal(cost) - Decimal(used_price)) / Decimal(years_in_service)
 
 
-def average_daily_spend(money_spent: float, num_days: int) -> float:
+def average_daily_spend(money_spent: float, num_days: int) -> Money:
     """Calculate the average amount of money spent per day over a given
     number of days.
 
@@ -57,12 +59,12 @@ def average_daily_spend(money_spent: float, num_days: int) -> float:
     Returns:
         The amount of money spent per day.
     """
-    return money_spent / num_days
+    return Money(money_spent / num_days)
 
 
 def buy_a_day_of_freedom(
     annual_spend: float, safe_withdrawal_rate: float = 4.0
-) -> Decimal:
+) -> Money:
     """Calculate how much it costs to buy a day of freedom based on your
     annual spending habits and your safe withdrawl rate. Every time
     you save this amount of money, you've covered 1 more day. Once
@@ -79,14 +81,16 @@ def buy_a_day_of_freedom(
         The amount of money it costs to buy 1 day of freedom assuming the
         money is saved and invested.
     """
-    return Decimal(
-        average_daily_spend(annual_spend, 365) / (safe_withdrawal_rate / 100.00)
+    return Money(
+        Decimal(
+            average_daily_spend(annual_spend, 365) / (safe_withdrawal_rate / 100.00)
+        )
     )
 
 
 def coast_fi(
     target_fi_num: float, eiar: float, retirement_age: float, current_age: float
-) -> Decimal:
+) -> Money:
     """Calculate the amount of money you would need to "coast to FI" if you
     were to stop working but never touch your savings.
 
@@ -105,12 +109,14 @@ def coast_fi(
     Returns:
         CoastFI number
     """
-    return Decimal(target_fi_num) / (Decimal(1) + (Decimal(eiar) / 100)) ** (
-        Decimal(retirement_age) - Decimal(current_age)
+    return Money(
+        Decimal(target_fi_num)
+        / (Decimal(1) + (Decimal(eiar) / 100))
+        ** (Decimal(retirement_age) - Decimal(current_age))
     )
 
 
-def cost_per_use(your_cost: float, used_price: float, times_used: float) -> Decimal:
+def cost_per_use(your_cost: float, used_price: float, times_used: float) -> Money:
     """Calculate how much something costed per use.
 
     Credit: Early Retirement Extreme by Jacob Lund Fisker
@@ -192,7 +198,7 @@ def fi_age(
         )
 
 
-def fi_number(planned_yearly_expenses: float, withdrawal_rate: float) -> Decimal:
+def fi_number(planned_yearly_expenses: float, withdrawal_rate: float) -> Money:
     """Calculate your FI number based on your planned yearly expenses and withdrawal
     rate.
 
@@ -205,14 +211,14 @@ def fi_number(planned_yearly_expenses: float, withdrawal_rate: float) -> Decimal
     Returns:
         FI number.
     """
-    return (Decimal(planned_yearly_expenses) * Decimal(100.0)) / Decimal(
+    return Money(Decimal(planned_yearly_expenses) * Decimal(100.0)) / Decimal(
         withdrawal_rate
     )
 
 
 def future_value(
     present_value: float, annual_rate: float, periods_per_year: int, years: int
-) -> Decimal:
+) -> Money:
     """Calculates the future value of money invested at an interest rate,
     x times per year, for a given number of years. Can also be used to
     calculate the future equivalent of money due to inflation.
@@ -236,10 +242,10 @@ def future_value(
     # How many periods in the future the calculation is for.
     periods = Decimal(periods_per_year) * Decimal(years)
 
-    return Decimal(present_value) * (1 + rate_per_period) ** periods
+    return Money(Decimal(present_value) * (1 + rate_per_period) ** periods)
 
 
-def get_percentage(a: float, b: float, i: bool = False, r: bool = False) -> float:
+def get_percentage(a: float, b: float, i: bool = False, r: bool = False) -> Percent:
     """Calculate the percentage that one number is of another.
 
     Args:
@@ -271,10 +277,10 @@ def get_percentage(a: float, b: float, i: bool = False, r: bool = False) -> floa
     else:
         percentage = 100.0 * (float(a) / b)
 
-    return percentage
+    return Percent(percentage)
 
 
-def percent_decrease(original_value: float, final_value: float) -> float:
+def percent_decrease(original_value: float, final_value: float) -> Percent:
     """Calculate the percentage of loss from one number to another.
 
     Args:
@@ -285,12 +291,14 @@ def percent_decrease(original_value: float, final_value: float) -> float:
         The decrease from one number to another expressed as a percentage.
     """
     try:
-        return abs(float(((original_value - final_value) / original_value)) * 100)
+        return Percent(
+            abs(float(((original_value - final_value) / original_value)) * 100)
+        )
     except (ZeroDivisionError):
         return nan
 
 
-def percent_increase(original_value: float, final_value: float) -> float:
+def percent_increase(original_value: float, final_value: float) -> Percent:
     """Calculate the percentage of growth from one number to another.
 
     Args:
@@ -301,12 +309,12 @@ def percent_increase(original_value: float, final_value: float) -> float:
         The increase from one number to another expressed as a percentage.
     """
     try:
-        return float(((final_value - original_value) / abs(original_value)) * 100)
+        return Percent(((final_value - original_value) / abs(original_value)) * 100)
     except (ZeroDivisionError):
         return nan
 
 
-def redeem_points(points: int, rate: float = 1) -> Decimal:
+def redeem_points(points: int, rate: float = 1) -> Money:
     """Calculates the value of travel rewards points based on a conversion
     rate. The default rate is 1% which is the cash value of awards points
     for most cards.
@@ -319,7 +327,7 @@ def redeem_points(points: int, rate: float = 1) -> Decimal:
     Returns:
         Dollar amount the points are worth.
     """
-    return Decimal(points * (rate / 100)).quantize(CENTS, ROUND_HALF_UP)
+    return Money(Decimal(points * (rate / 100)).quantize(CENTS, ROUND_HALF_UP))
 
 
 def redeem_chase_points(points: int) -> dict:
@@ -367,7 +375,7 @@ def rule_of_72(interest_rate: float, accurate: bool = False) -> float:
     return 72.0 / interest_rate
 
 
-def savings_rate(take_home_pay: float, spending: float) -> Decimal:
+def savings_rate(take_home_pay: float, spending: float) -> Percent:
     """Calculate your savings_rate based on take home pay and spending,
     using the formula laid out by Mr. Money Mustache:
     http: // www.mrmoneymustache.com/2015/01/26/calculating-net-worth/
@@ -381,14 +389,14 @@ def savings_rate(take_home_pay: float, spending: float) -> Decimal:
     """
 
     try:
-        return (
+        return Percent(
             (Decimal(take_home_pay) - Decimal(spending)) / (Decimal(take_home_pay))
         ) * Decimal(100)
     except (ZeroDivisionError):
-        return Decimal(0)
+        return Percent(Decimal(0))
 
 
-def spending_from_savings(take_home_pay: float, savings: float) -> Decimal:
+def spending_from_savings(take_home_pay: float, savings: float) -> Money:
     """Calculate your spending based on your take home pay and how much
     you save. This is useful if you use what Paula Pant calls the anti-budget,
     instead of tracking your spending in detail. This number can be used as
@@ -401,12 +409,12 @@ def spending_from_savings(take_home_pay: float, savings: float) -> Decimal:
     Returns:
         The amount of money spent.
     """
-    return Decimal(take_home_pay) - Decimal(savings)
+    return Money(Decimal(take_home_pay) - Decimal(savings))
 
 
 def take_home_pay(
     gross_pay: float, employer_match: float, taxes_and_fees: List[float]
-) -> Decimal:
+) -> Money:
     """Calculate net take-home pay including employer retirement savings match
     using the formula laid out by Mr. Money Mustache:
     http: // www.mrmoneymustache.com/2015/01/26/calculating-net-worth/
@@ -420,4 +428,4 @@ def take_home_pay(
         Your monthly take-home pay.
     """
     taxes_and_fees = [Decimal(item) for item in taxes_and_fees]
-    return (Decimal(gross_pay) + Decimal(employer_match)) - sum(taxes_and_fees)
+    return Money((Decimal(gross_pay) + Decimal(employer_match)) - sum(taxes_and_fees))
