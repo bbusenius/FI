@@ -1,10 +1,26 @@
 # -*- coding: utf-8 -*-
 from setuptools import find_packages, setup
 
+with open('README.md', 'r', encoding='utf-8') as fh:
+    long_description = fh.read()
+    long_description_type = 'text/markdown'
+
+try:
+    import pypandoc
+
+    long_description = pypandoc.convert_text(long_description, 'rst', format='md')
+    long_description = long_description.replace('\r', '')
+    long_description_type = 'text/x-rst'
+except ImportError:
+    pass
+
 setup(
     name='FI',
-    description='A library of common functions used in financial '
-    + 'independence (FI, FIRE) calculations.',
+    description='A library of common functions and command line utility used '
+    + 'to make financial independence calculations.',
+    long_description=long_description,
+    long_description_content_type=long_description_type,
+    python_requires='>=3.10',
     version='0.0.1',
     author='Brad Busenius',
     author_email='bbusenius@gmail.com',

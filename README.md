@@ -1,10 +1,10 @@
 # FI
 
-FI calculations at your fingertips is a library of common functions used in financial independence (FI, FIRE) calculations. All functions can be used in a python application or run from the command-line. If you're a nerdy follower of people like [Mr. Money Mustache](http://www.mrmoneymustache.com/), [ChooseFI](https://www.choosefi.com/), [Paula Pant](https://affordanything.com/a), [GoCurryCracker](https://www.gocurrycracker.com/), [Mad FIentist](https://www.madfientist.com/) and other life-optimizers, this library might be something you'd like.
+FI is a Python library of functions for the financial independence (FI, FIRE) community. Functions can be run as standalone utilities on the command line or used in Python code. The FI library powers the auto-generated site [FI Widgets](https://fi-widgets.com/) which is a GUI representation of the library. It also powers [FI API](https://github.com/bbusenius/FI-API) and is used in [MMM Savings Rate](https://github.com/bbusenius/MMM_Savings_Rate).
 
 ## Installation
 
-This package is pip installable. To get the newest code use one of the following commands. Both should work depending on what kind of an environment you're using. This project requires python3. Use `pip` to install if you're installing into a [Virtualenv](https://virtualenv.pypa.io/en/stable/) otherwise install with `pip3`. If you're a developer and you wish to contribute, see the installation instructions in the **Developers** section.
+This package is pip installable. To get the newest code use one of the commands below. FI requires python3. Use `pip` to install it if you're installing into a [Virtualenv](https://virtualenv.pypa.io/en/stable/) otherwise install with `pip3`. If you're a developer and you wish to contribute, see the installation instructions in the **Developers** section.
 
 ```
 pip install git+https://github.com/bbusenius/FI.git#egg=FI
@@ -40,7 +40,7 @@ The following functions are packaged in this library:
 - **spending_from_savings**
 - **take_home_pay**
 
-All functions can be used in a python application or run from the command-line.
+All functions can be run from the command-line or used in Python directly.
 
 [Full API](https://fi.readthedocs.io/en/latest/source/fi.html)
 
@@ -54,7 +54,7 @@ To see how to run a function from the command-line, just open a terminal and inv
 
 ```coast_fi -h``` or ```coast_fi --help```
 
-This will display the necessary information to run the command.
+This will display instructions on how to run the command.
 
 Running the `coast_fi` command might look something like this:
 
@@ -81,13 +81,14 @@ coast_fi `future_value 800000 .03 1 22` .07 62 40
 
 ## Developers
 
+FI is written with type hints and relies on the built in typing module. This allows FI to be used more robustly in third party applications. Docstrings are considered forward facing since they are sometimes exposed to the public as on [FI Widgets](https://fi-widgets.com/). 
+
 ### Installation for developers
 
-To install for development run:
+To install for development run the following command from the root of the cloned directory:
 ```
-sudo python3 setup.py develop
+pip3 install -e .
 ```
-You will need to re-run this command every time you make changes before you can preview them. If you're testing in a python shell, you'll need to exit and reopen the shell.
 
 ### Run unit tests
 
