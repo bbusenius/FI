@@ -33,7 +33,6 @@ CENTS = Decimal('0.01')
 
 def annual_cost(cost: float, used_price: float, years_in_service: float) -> Money:
     """Calculate the depreciation schedule of things.
-
     Credit: Early Retirement Extreme by Jacob Lund Fisker
     http://a.co/4vgBczW
 
@@ -92,9 +91,7 @@ def coast_fi(
     target_fi_num: float, eiar: float, retirement_age: float, current_age: float
 ) -> Money:
     """Calculate the amount of money you would need to "coast to FI" if you
-    were to stop working but never touch your savings.
-
-    Credit: eseligsohn
+    were to stop working but never touch your savings. Credit: eseligsohn
     https://www.reddit.com/r/financialindependence/comments/92d35t/
     what_is_this_coast_number_people_are_talking_about/e34uuxh/
 
@@ -117,10 +114,8 @@ def coast_fi(
 
 
 def cost_per_use(your_cost: float, used_price: float, times_used: float) -> Money:
-    """Calculate how much something costed per use.
-
-    Credit: Early Retirement Extreme by Jacob Lund Fisker
-    http://a.co/4vgBczW
+    """Calculate how much something costed per use. Credit: Early Retirement
+    Extreme by Jacob Lund Fisker http://a.co/4vgBczW
 
     Args:
         your_cost: amount paid.
@@ -165,11 +160,8 @@ def fi_age(
     current_age: int,
 ) -> int:
     """Calculate the age at which you will reach FIRE based on your current
-    trajectory.
-
-    Credit: eseligsohn
-    https://www.reddit.com/r/financialindependence/comments/92d35t/
-    what_is_this_coast_number_people_are_talking_about/e36titl/
+    trajectory. Credit: eseligsohn https://www.reddit.com/r/financialindependence/
+    comments/92d35t/what_is_this_coast_number_people_are_talking_about/e36titl/
 
     Args:
         expected_inflation_adjusted_return: Expected inflation adjusted return
@@ -378,7 +370,7 @@ def rule_of_72(interest_rate: float, accurate: bool = False) -> float:
 def savings_rate(take_home_pay: float, spending: float) -> Percent:
     """Calculate your savings_rate based on take home pay and spending,
     using the formula laid out by Mr. Money Mustache:
-    http: // www.mrmoneymustache.com/2015/01/26/calculating-net-worth/
+    https://www.mrmoneymustache.com/2015/01/26/calculating-net-worth/
 
     Args:
         take_home_pay: monthly take-home pay.
@@ -417,7 +409,7 @@ def take_home_pay(
 ) -> Money:
     """Calculate net take-home pay including employer retirement savings match
     using the formula laid out by Mr. Money Mustache:
-    http: // www.mrmoneymustache.com/2015/01/26/calculating-net-worth/
+    https://www.mrmoneymustache.com/2015/01/26/calculating-net-worth/
 
     Args:
         gross_pay: gross monthly pay.
