@@ -89,6 +89,14 @@ class test_fi(unittest.TestCase):
         assert val4 == 55.22, "The value should be 55.22, returned " + str(val4)
         # assert val5 == 55, "The value should be 55, returned " + str(val5)
 
+    def test_hours_of_life_energy(self):
+        val1 = fi.hours_of_life_energy(80, 10)
+        val2 = fi.hours_of_life_energy(20, 10)
+        val3 = fi.hours_of_life_energy(0, 0)
+        self.assertEqual(val1, 8)
+        self.assertEqual(val2 * 60, 120)
+        self.assertEqual(val3, 0)
+
     def test_percent_decrease(self):
         val1 = fi.percent_decrease(10, 5)
         val2 = fi.percent_decrease(10, 8)

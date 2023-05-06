@@ -323,6 +323,30 @@ def run_get_percentage():
     print(fi.get_percentage(float(args.a), float(args.b)))
 
 
+def run_hours_of_life_energy():
+    """
+    Calculate the hours of life energy something costs by dividing money spent by your
+    real hourly wage.
+    """
+    description = run_hours_of_life_energy.__doc__
+    parser = argparse.ArgumentParser(
+        prog='hours_of_life_energy',
+        description=description,
+        epilog="Example use: hours_of_life_energy 80 10",
+    )
+    parser.add_argument(
+        'money_spent', help='The amount of money spent or price of something'
+    )
+    parser.add_argument(
+        'real_hourly_wage',
+        help='The true amount of money you earn after work related expenses have been subtracted',
+    )
+    args = parser.parse_args()
+    print(
+        fi.hours_of_life_energy(float(args.money_spent), float(args.real_hourly_wage))
+    )
+
+
 def run_percent_decrease():
     """
     Calculates the percentage of loss from one number to another.

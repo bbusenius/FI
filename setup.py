@@ -11,7 +11,7 @@ try:
     long_description = pypandoc.convert_text(long_description, 'rst', format='md')
     long_description = long_description.replace('\r', '')
     long_description_type = 'text/x-rst'
-except ImportError:
+except (ImportError, OSError):
     pass
 
 setup(
@@ -39,6 +39,7 @@ setup(
             'fi_number = fi_commands:run_fi_number',
             'future_value = fi_commands:run_future_value',
             'get_percentage = fi_commands:run_get_percentage',
+            'hours_of_life_energy = fi_commands:run_hours_of_life_energy',
             'percent_decrease = fi_commands:run_percent_decrease',
             'percent_increase = fi_commands:run_percent_increase',
             'redeem_chase_points = fi_commands:run_redeem_chase_points',

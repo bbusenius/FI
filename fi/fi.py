@@ -272,6 +272,26 @@ def get_percentage(a: float, b: float, i: bool = False, r: bool = False) -> Perc
     return Percent(percentage)
 
 
+def hours_of_life_energy(money_spent: float, real_hourly_wage: float) -> Decimal:
+    """
+    Calculate the hours of life energy something costs by dividing money
+    spent by your real hourly wage. From "Your Money or Your Life" by
+    Vicki Robin and Joe Dominguez, Chapter 3, https://a.co/d/0fBQcbf.
+
+    Args:
+        money_spent: int or float, the amount of money spent or price of something.
+        real_hourly_wage: float, the true amount of money you earn after work
+        related expenses have been subtracted.
+
+    Returns:
+        Hours of life energy you spent to pay for the money spent.
+    """
+    try:
+        return Decimal(money_spent / real_hourly_wage)
+    except (ZeroDivisionError):
+        return Decimal(0)
+
+
 def percent_decrease(original_value: float, final_value: float) -> Percent:
     """Calculate the percentage of loss from one number to another.
 

@@ -31,6 +31,7 @@ The following functions are packaged in this library:
 - **fi_number**
 - **future_value**
 - **get_percentage**
+- **hours_of_life_energy**
 - **percent_decrease**
 - **percent_increase**
 - **redeem_points**
