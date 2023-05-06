@@ -280,8 +280,9 @@ def hours_of_life_energy(money_spent: float, real_hourly_wage: float) -> Decimal
 
     Args:
         money_spent: int or float, the amount of money spent or price of something.
-        real_hourly_wage: float, the true amount of money you earn after work
-        related expenses have been subtracted.
+        real_hourly_wage: float, the true amount of money you earn after adjustments
+        have been made for work related expenses and additional work related time
+        commitments, e.g. commuting, work clothes, time decompressing, etc.
 
     Returns:
         Hours of life energy you spent to pay for the money spent.

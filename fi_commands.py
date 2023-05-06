@@ -339,7 +339,8 @@ def run_hours_of_life_energy():
     )
     parser.add_argument(
         'real_hourly_wage',
-        help='The true amount of money you earn after work related expenses have been subtracted',
+        help='The true amount of money you earn after adjustments have been made for \
+        work related expenses and additional work related time commitments',
     )
     args = parser.parse_args()
     print(
