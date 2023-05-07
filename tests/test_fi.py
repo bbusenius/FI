@@ -4,7 +4,7 @@ Every method should start with "test".
 """
 
 import unittest
-from decimal import ROUND_HALF_UP, Decimal
+from decimal import Decimal
 from math import isnan
 
 import fi
@@ -134,6 +134,10 @@ class test_fi(unittest.TestCase):
         val5 = fi.percent_increase(0, 10)
         self.assertEqual(val4, 200, 'This should be a 200% increase')
         self.assertTrue(isnan(val5), 'This should be NaN')
+
+    def test_real_hourly_wage(self):
+        val1 = fi.real_hourly_wage(40, 1000, 0, 30, 300)
+        self.assertEqual(val1, 10)
 
     def test_rule_of_72(self):
         # Less accurate, examples 2-4 from:

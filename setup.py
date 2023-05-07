@@ -42,6 +42,7 @@ setup(
             'hours_of_life_energy = fi_commands:run_hours_of_life_energy',
             'percent_decrease = fi_commands:run_percent_decrease',
             'percent_increase = fi_commands:run_percent_increase',
+            'real_hourly_wage = fi_commands:run_real_hourly_wage',
             'redeem_chase_points = fi_commands:run_redeem_chase_points',
             'redeem_points = fi_commands:run_redeem_points',
             'rule_of_72 = fi_commands:run_rule_of_72',

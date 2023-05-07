@@ -384,6 +384,49 @@ def run_percent_increase():
     print(fi.percent_increase(float(args.original_value), float(args.final_value)))
 
 
+def run_real_hourly_wage():
+    """
+    Calculate your real hourly wage by adjusting your money paid by
+    subtracting auxiliary work related expenses (e.g. work clothes, cost
+    of commuting, etc.) and by adjusting your hours worked by adding
+    auxiliary work related time committments (e.g. time spent commuting,
+    time spent decompressing, etc.).
+    """
+    description = run_real_hourly_wage.__doc__
+    parser = argparse.ArgumentParser(
+        prog='real_hourly_wage',
+        description=description,
+        epilog="Example use: real_hourly_wage 40 1000 0 30 300",
+    )
+    parser.add_argument('hours_worked', help='float, the number of hours worked')
+    parser.add_argument('money_paid', help='float, how much you were paid')
+    parser.add_argument(
+        'benefits',
+        help='float, the value of employer supplied benefits (401k match, health \
+        insurance, etc.)',
+    )
+    parser.add_argument(
+        'additional_work_related_hours',
+        help='float, additional time spent for work such as time commuting or time \
+        spent on escape entertainment after work',
+    )
+    parser.add_argument(
+        'additional_work_related_expenses',
+        help='float, additional work related expenses such as the cost of commuting, \
+        lunches out, work clothes, etc.',
+    )
+    args = parser.parse_args()
+    print(
+        fi.real_hourly_wage(
+            float(args.hours_worked),
+            float(args.money_paid),
+            float(args.benefits),
+            float(args.additional_work_related_hours),
+            float(args.additional_work_related_expenses),
+        )
+    )
+
+
 def run_redeem_chase_points():
     """
     Calculates the value of Chase Ultimate Rewards points for different

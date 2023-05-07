@@ -34,6 +34,7 @@ The following functions are packaged in this library:
 - **hours_of_life_energy**
 - **percent_decrease**
 - **percent_increase**
+- **real_hourly_wage**
 - **redeem_points**
 - **redeem_chase_points**
 - **rule_of_72**

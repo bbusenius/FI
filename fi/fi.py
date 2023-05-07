@@ -327,6 +327,40 @@ def percent_increase(original_value: float, final_value: float) -> Percent:
         return nan
 
 
+def real_hourly_wage(
+    hours_worked: float,
+    money_paid: float,
+    benefits: float,
+    additional_work_related_hours: float,
+    additional_work_related_expenses: float,
+) -> Money:
+    """
+    Calculate your real hourly wage by adjusting your money paid by
+    subtracting auxiliary work related expenses (e.g. work clothes, cost
+    of commuting, etc.) and by adjusting your hours worked by adding
+    auxiliary work related time committments (e.g. time spent commuting,
+    time spent decompressing, etc.). From "Your Money or Your Life" by
+    Vicki Robin and Joe Dominguez, Chapter 2, https://a.co/d/0fBQcbf.
+
+    Args:
+        hours_worked: the number of hours worked.
+        money_paid: how much you were paid.
+        benefits: the value of employer supplied benefits (401k match, health
+        insurance, etc.).
+        additional_work_related_hours: additional time spent for work such as
+        time commuting or time spent on escape entertainment after work.
+        additional_work_related_expenses: additional work related expenses
+        such as the cost of commuting, lunches out, work clothes, etc.
+
+    Returns:
+        Your real hourly wage adjusted for additional work related time
+        commitments and additional work related expenses.
+    """
+    real_pay = money_paid + benefits - additional_work_related_expenses
+    real_hours = hours_worked + additional_work_related_hours
+    return Money(real_pay / real_hours)
+
+
 def redeem_points(points: int, rate: float = 1) -> Money:
     """Calculates the value of travel rewards points based on a conversion
     rate. The default rate is 1% which is the cash value of awards points
