@@ -483,6 +483,50 @@ def run_redeem_points():
         print(fi.redeem_points(float(args.points)))
 
 
+def run_remaining_life_expectancy():
+    """
+    Calculate the amount of time you have left to live based on averages
+    from the "United States Life Tables, 2013," National Vital Statistics
+    Reports 66, no. 3 (2017): 1–64. This is the same data used in "Your
+    Money or Your Life" by Vicki Robin and Joe Dominguez, Chapter 2,
+    https://a.co/d/0fBQcbf which is the inspiration for this function.
+    """
+    description = run_remaining_life_expectancy.__doc__
+    parser = argparse.ArgumentParser(
+        prog='remaining_life_expectancy',
+        description=description,
+        epilog="Example use: remaining_life_expectancy 45 -t hours -e",
+    )
+    parser.add_argument('your_age', type=int, help='int, your age')
+    parser.add_argument(
+        '-t',
+        '--time_unit',
+        help='str, "hours", "days", "months", or "years"',
+        required=False,
+        default='hours',
+        action='store',
+    )
+    parser.add_argument(
+        '-l',
+        '--less_accurate',
+        dest='more_accurate',
+        help='bool, if set the function will use 365 as the length of a year \
+        to match what Vicki Robin and Joe Dominguez did in "Your Money or Your Life"',
+        required=False,
+        action='store_false',
+    )
+    parser.add_argument(
+        '-e',
+        '--exclude_time_asleep',
+        help='bool, if set to True, the function will assume you lose half your \
+        time to sleep and other mundane tasks',
+        required=False,
+        action='store_true',
+    )
+    args = parser.parse_args()
+    print(fi.remaining_life_expectancy(**vars(args)))
+
+
 def run_rule_of_72():
     """
     Calculate the time it will take for money to double

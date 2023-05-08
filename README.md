@@ -37,6 +37,7 @@ The following functions are packaged in this library:
 - **real_hourly_wage**
 - **redeem_points**
 - **redeem_chase_points**
+- **remaining_life_expectancy**
 - **rule_of_72**
 - **savings_rate**
 - **spending_from_savings**

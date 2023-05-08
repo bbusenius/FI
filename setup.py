@@ -45,6 +45,7 @@ setup(
             'real_hourly_wage = fi_commands:run_real_hourly_wage',
             'redeem_chase_points = fi_commands:run_redeem_chase_points',
             'redeem_points = fi_commands:run_redeem_points',
+            'remaining_life_expectancy = fi_commands:run_remaining_life_expectancy',
             'rule_of_72 = fi_commands:run_rule_of_72',
             'take_home_pay = fi_commands:run_take_home_pay',
             'savings_rate = fi_commands:run_savings_rate',
@@ -54,7 +55,7 @@ setup(
     url='https://github.com/bbusenius/FI',
     license='MIT, see LICENSE.txt',
     include_package_data=True,
-    install_requires=['numpy', 'numpy_financial'],
+    install_requires=['numpy', 'numpy_financial', 'openpyxl', 'pandas'],
     test_suite='tests',
     zip_safe=False,
 )

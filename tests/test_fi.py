@@ -139,6 +139,29 @@ class test_fi(unittest.TestCase):
         val1 = fi.real_hourly_wage(40, 1000, 0, 30, 300)
         self.assertEqual(val1, 10)
 
+    def test_remaining_life_expectancy(self):
+        # From Figure 2-1 in Chapter 2 of "Your Money or Your Life"
+        # by Vicki Robin and Joe Dominguez
+        val1 = fi.remaining_life_expectancy(45, time_unit='years')
+        val2 = fi.remaining_life_expectancy(40, time_unit='years')
+        val3 = fi.remaining_life_expectancy(60, time_unit='years')
+        val4 = fi.remaining_life_expectancy(45, time_unit='hours', more_accurate=False)
+        val5 = fi.remaining_life_expectancy(65, time_unit='hours', more_accurate=False)
+        val6 = fi.remaining_life_expectancy(40, time_unit='hours', more_accurate=False)
+        val7 = fi.remaining_life_expectancy(
+            40, time_unit='hours', more_accurate=False, exclude_time_asleep=True
+        )
+        self.assertAlmostEqual(val1, Decimal(36.1), 1)
+        self.assertAlmostEqual(val2, Decimal(40.7), 1)
+        # The book says 23.3 but this is wrong, the table has 23.2.
+        self.assertAlmostEqual(val3, Decimal(23.2), 1)
+        self.assertAlmostEqual(val4, Decimal(316236), 0)
+        self.assertAlmostEqual(val5, Decimal(169068), 0)
+        self.assertAlmostEqual(val6, Decimal(356532), 0)
+        # The book says "about half your time" and gives 178,000 hours of life energy.
+        # It is not using a precise number.
+        self.assertAlmostEqual(val7, Decimal(178266), 0)
+
     def test_rule_of_72(self):
         # Less accurate, examples 2-4 from:
         # http://investinganswers.com/financial-dictionary/technical-analysis/rule-72-1615

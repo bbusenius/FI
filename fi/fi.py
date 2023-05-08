@@ -18,16 +18,25 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE. <https://opensource.org/licenses/MIT/>
 
+import os
 import warnings
 from decimal import ROUND_HALF_UP, Decimal
 from math import nan
-from typing import List, NewType
+from typing import List, Literal, NewType, TypeVar, Union
 
 import numpy
 import numpy_financial as npf
+import pandas as pd
 
 Money = NewType('Money', Decimal)
 Percent = NewType('Percent', Decimal)
+MeasureOfTime = Literal['hours', 'days', 'months', 'years']
+Time = TypeVar('Time', bound=Decimal)
+Hours = NewType('Hours', Time)
+Days = NewType('Days', Time)
+Months = NewType('Months', Time)
+Years = NewType('Years', Time)
+TimeUnit = Union[Hours, Days, Months, Years]
 CENTS = Decimal('0.01')
 
 
@@ -273,8 +282,7 @@ def get_percentage(a: float, b: float, i: bool = False, r: bool = False) -> Perc
 
 
 def hours_of_life_energy(money_spent: float, real_hourly_wage: float) -> Decimal:
-    """
-    Calculate the hours of life energy something costs by dividing money
+    """Calculate the hours of life energy something costs by dividing money
     spent by your real hourly wage. From "Your Money or Your Life" by
     Vicki Robin and Joe Dominguez, Chapter 3, https://a.co/d/0fBQcbf.
 
@@ -334,8 +342,7 @@ def real_hourly_wage(
     additional_work_related_hours: float,
     additional_work_related_expenses: float,
 ) -> Money:
-    """
-    Calculate your real hourly wage by adjusting your money paid by
+    """Calculate your real hourly wage by adjusting your money paid by
     subtracting auxiliary work related expenses (e.g. work clothes, cost
     of commuting, etc.) and by adjusting your hours worked by adding
     auxiliary work related time committments (e.g. time spent commuting,
@@ -399,6 +406,64 @@ def redeem_chase_points(points: int) -> dict:
         'Sapphire Reserve portal': redeem_points(points, 1.5),
         'Target partner exchange': redeem_points(points, 2),
     }
+
+
+def remaining_life_expectancy(
+    your_age: int,
+    time_unit: MeasureOfTime = 'hours',
+    more_accurate: bool = True,
+    exclude_time_asleep: bool = False,
+) -> TimeUnit:
+    """Calculate the amount of time you have left to live based on averages
+    from the "United States Life Tables, 2013," National Vital Statistics
+    Reports 66, no. 3 (2017): 1–64 which can be found at https://ftp.cdc.gov/pub/health_Statistics/nchs/publications/NVSR/66_03/Table01.xlsx.
+    This is the same data used in "Your Money or Your Life" by Vicki Robin and
+    Joe Dominguez, Chapter 2, https://a.co/d/0fBQcbf which is the inspiration
+    for this function.
+
+    Args:
+        your_age: int, your age.
+        time_unit: str, "hours", "days", "months", or "years".
+        more_accurate: bool, if True, will use 365.2425 as the length of
+        a year instead of the proverbial 365 used by Vicki Robin and Joe
+        Dominguez.
+        exclude_time_asleep: bool, if set to True, the function will
+        assume you lose half your time to sleep and other mundane tasks.
+
+    Returns:
+        The amount of time more on average that you are expected to live
+        based on your current age, how much time you *might* have left.
+    """
+    root_dir = os.path.dirname(os.path.abspath(__file__))
+    spreadsheet = os.path.join(root_dir, 'data', 'Table01.xlsx')
+    life_table = pd.read_excel(
+        spreadsheet, sheet_name='Table 1', skiprows=1, skipfooter=1
+    )
+
+    age_ranges = life_table['Age (years)'].str.split('–', expand=True)
+    age_ranges = age_ranges.applymap(lambda x: pd.to_numeric(x, errors='coerce'))
+    age_ranges.iloc[-1, 0] = float(100)
+    age_ranges.iloc[-1, 1] = float('inf')
+
+    mask = (age_ranges[0] <= your_age) & (your_age < age_ranges[1])
+    life_expectancy = life_table.loc[mask, 'Expectation of life at age x'].iloc[0]
+
+    years = round(Decimal(life_expectancy), 1)
+    year_len = Decimal(365)
+    if more_accurate is True:
+        year_len = Decimal(365.2425)
+
+    if exclude_time_asleep is True:
+        years = years / 2
+    days = years * year_len
+    if time_unit == 'years':
+        return Years(years)
+    elif time_unit == 'months':
+        return Months(years * Decimal(12))
+    elif time_unit == 'days':
+        return Days(days)
+    # Hours
+    return Hours(days * Decimal(24))
 
 
 def rule_of_72(interest_rate: float, accurate: bool = False) -> float:
