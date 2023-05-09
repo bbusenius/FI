@@ -43,7 +43,7 @@ CENTS = Decimal('0.01')
 def annual_cost(cost: float, used_price: float, years_in_service: float) -> Money:
     """Calculate the depreciation schedule of things.
     Credit: Early Retirement Extreme by Jacob Lund Fisker
-    http://a.co/4vgBczW
+    https://a.co/4vgBczW
 
     Args:
         cost: original amount you paid.
@@ -77,8 +77,7 @@ def buy_a_day_of_freedom(
     annual spending habits and your safe withdrawl rate. Every time
     you save this amount of money, you've covered 1 more day. Once
     you have 365 days, you are financially independent. Credit:
-    https://www.reddit.com/r/leanfire/comments/caka4t/weekly_leanfire
-    _discussion_july_08_2019/etfdwg1/
+    https://www.reddit.com/r/leanfire/comments/caka4t/weekly_leanfire_discussion_july_08_2019/etfdwg1/
 
     Args:
         annual_spend: the amount of money you plan to spend in retirement.
@@ -101,8 +100,7 @@ def coast_fi(
 ) -> Money:
     """Calculate the amount of money you would need to "coast to FI" if you
     were to stop working but never touch your savings. Credit: eseligsohn
-    https://www.reddit.com/r/financialindependence/comments/92d35t/
-    what_is_this_coast_number_people_are_talking_about/e34uuxh/
+    https://www.reddit.com/r/financialindependence/comments/92d35t/what_is_this_coast_number_people_are_talking_about/e34uuxh/
 
     Args:
         target_fi_num: target FI number, the amount you'll need to invest
@@ -124,7 +122,7 @@ def coast_fi(
 
 def cost_per_use(your_cost: float, used_price: float, times_used: float) -> Money:
     """Calculate how much something costed per use. Credit: Early Retirement
-    Extreme by Jacob Lund Fisker http://a.co/4vgBczW
+    Extreme by Jacob Lund Fisker https://a.co/4vgBczW
 
     Args:
         your_cost: amount paid.
@@ -144,8 +142,7 @@ def days_covered_by_fi(
     your savings. This is a way of seeing where you are on your FI journey.
     For example, 182.5 days would put you at 50% FI. 365 days would put
     you at 100% FI or full financial independence. Inspired by:
-    https://www.reddit.com/r/leanfire/comments/caka4t/weekly_leanfire
-    _discussion_july_08_2019/etfdwg1/
+    https://www.reddit.com/r/leanfire/comments/caka4t/weekly_leanfire_discussion_july_08_2019/etfdwg1/
 
     Args:
         annual_spend: the amount of money you plan to spend in retirement.
@@ -169,8 +166,7 @@ def fi_age(
     current_age: int,
 ) -> int:
     """Calculate the age at which you will reach FIRE based on your current
-    trajectory. Credit: eseligsohn https://www.reddit.com/r/financialindependence/
-    comments/92d35t/what_is_this_coast_number_people_are_talking_about/e36titl/
+    trajectory. Credit: eseligsohn https://www.reddit.com/r/financialindependence/comments/92d35t/what_is_this_coast_number_people_are_talking_about/e36titl/
 
     Args:
         expected_inflation_adjusted_return: Expected inflation adjusted return
@@ -284,7 +280,7 @@ def get_percentage(a: float, b: float, i: bool = False, r: bool = False) -> Perc
 def hours_of_life_energy(money_spent: float, real_hourly_wage: float) -> Decimal:
     """Calculate the hours of life energy something costs by dividing money
     spent by your real hourly wage. From "Your Money or Your Life" by
-    Vicki Robin and Joe Dominguez, Chapter 3, https://a.co/d/0fBQcbf.
+    Vicki Robin and Joe Dominguez, Chapter 3, https://a.co/d/0fBQcbf
 
     Args:
         money_spent: int or float, the amount of money spent or price of something.
@@ -347,7 +343,7 @@ def real_hourly_wage(
     of commuting, etc.) and by adjusting your hours worked by adding
     auxiliary work related time committments (e.g. time spent commuting,
     time spent decompressing, etc.). From "Your Money or Your Life" by
-    Vicki Robin and Joe Dominguez, Chapter 2, https://a.co/d/0fBQcbf.
+    Vicki Robin and Joe Dominguez, Chapter 2, https://a.co/d/0fBQcbf
 
     Args:
         hours_worked: the number of hours worked.
@@ -416,7 +412,7 @@ def remaining_life_expectancy(
 ) -> TimeUnit:
     """Calculate the amount of time you have left to live based on averages
     from the "United States Life Tables, 2013," National Vital Statistics
-    Reports 66, no. 3 (2017): 1–64 which can be found at https://ftp.cdc.gov/pub/health_Statistics/nchs/publications/NVSR/66_03/Table01.xlsx.
+    Reports 66, no. 3 (2017): 1–64 which can be found at https://ftp.cdc.gov/pub/health_Statistics/nchs/publications/NVSR/66_03/Table01.xlsx
     This is the same data used in "Your Money or Your Life" by Vicki Robin and
     Joe Dominguez, Chapter 2, https://a.co/d/0fBQcbf which is the inspiration
     for this function.
