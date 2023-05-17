@@ -162,7 +162,7 @@ def fi_age(
     expected_inflation_adjusted_return: float,
     annual_savings_amount: float,
     stash: float,
-    fi_num: float,
+    fi_number: float,
     current_age: int,
 ) -> int:
     """Calculate the age at which you will reach FIRE based on your current
@@ -175,14 +175,14 @@ def fi_age(
         save towards FI each year.
         stash: invested assests, the amount of money you have currently saved
         and invested for FI.
-        fi_num: the number you need to reach FI.
+        fi_number: the number you need to reach FI.
         current_age: your current age.
 
     Returns:
         FI age, int, the age at which you will FIRE based on your current
         habits.
     """
-    fi_num = fi_num * -1
+    fi_num = fi_number * -1
     with numpy.errstate(divide='ignore'):
         return int(
             npf.nper(
