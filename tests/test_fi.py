@@ -49,7 +49,7 @@ class test_fi(unittest.TestCase):
 
     def test_fi_age(self):
         current_age = 20
-        years_to_double = fi.rule_of_72(8)
+        years_to_double = fi.rule_of_72(8, False)
         interest = 8
         val1 = fi.fi_age(interest, 0, 400000, 800000, current_age)
 
@@ -165,10 +165,10 @@ class test_fi(unittest.TestCase):
     def test_rule_of_72(self):
         # Less accurate, examples 2-4 from:
         # http://investinganswers.com/financial-dictionary/technical-analysis/rule-72-1615
-        val1 = fi.rule_of_72(8)
-        val2 = fi.rule_of_72(4)
-        val3 = fi.rule_of_72(2)
-        val4 = fi.rule_of_72(3)
+        val1 = fi.rule_of_72(8, False)
+        val2 = fi.rule_of_72(4, False)
+        val3 = fi.rule_of_72(2, False)
+        val4 = fi.rule_of_72(3, False)
         self.assertEqual(val1, 9, 'The money should double in 9 years')
         self.assertEqual(val2, 18, 'The money should double in 18 years')
         self.assertEqual(val3, 36, 'The money should double in 36 years')

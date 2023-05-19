@@ -462,7 +462,7 @@ def remaining_life_expectancy(
     return Hours(days * Decimal(24))
 
 
-def rule_of_72(interest_rate: float, accurate: bool = False) -> float:
+def rule_of_72(interest_rate: float, accurate: bool = True) -> float:
     """Calculate the time it will take for money to double based on a given
     interest rate: Years to double = 72 / Interest Rate.
 
