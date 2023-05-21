@@ -40,6 +40,7 @@ setup(
             'future_value = fi_commands:run_future_value',
             'get_percentage = fi_commands:run_get_percentage',
             'hours_of_life_energy = fi_commands:run_hours_of_life_energy',
+            'monthly_investment_income = fi_commands:run_monthly_investment_income',
             'percent_decrease = fi_commands:run_percent_decrease',
             'percent_increase = fi_commands:run_percent_increase',
             'real_hourly_wage = fi_commands:run_real_hourly_wage',

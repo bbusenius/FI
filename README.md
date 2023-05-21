@@ -32,6 +32,7 @@ The following functions are packaged in this library:
 - **future_value**
 - **get_percentage**
 - **hours_of_life_energy**
+- **monthly_investment_income**
 - **percent_decrease**
 - **percent_increase**
 - **real_hourly_wage**

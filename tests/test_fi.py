@@ -97,6 +97,21 @@ class test_fi(unittest.TestCase):
         self.assertEqual(val2 * 60, 120)
         self.assertEqual(val3, 0)
 
+    def test_monthly_investment_income(self):
+        # From "Your Money or Your Life", Chapter 8
+        val1 = fi.monthly_investment_income(100, 4)
+        val2 = fi.monthly_investment_income(1000, 4)
+        val3 = fi.monthly_investment_income(1500, 4)
+        val4 = fi.monthly_investment_income(900000, 4)
+        val5 = fi.monthly_investment_income(500000, 0)
+        val6 = fi.monthly_investment_income(1000000, 4)
+        self.assertAlmostEqual(val1, Decimal(0.333), 3)
+        self.assertAlmostEqual(val2, Decimal(3.33), 2)
+        self.assertEqual(val3, Decimal(5.00))
+        self.assertEqual(val4, Decimal(3000))
+        self.assertEqual(val5, Decimal(0))
+        self.assertEqual(val6 * 12, Decimal(40000))
+
     def test_percent_decrease(self):
         val1 = fi.percent_decrease(10, 5)
         val2 = fi.percent_decrease(10, 8)

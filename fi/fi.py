@@ -297,6 +297,25 @@ def hours_of_life_energy(money_spent: float, real_hourly_wage: float) -> Decimal
         return Decimal(0)
 
 
+def monthly_investment_income(stash: float, current_interest_rate: float) -> Money:
+    """Calculate how much monthly income you generate from your investments.
+    From "Your Money or Your Life" by Vicki Robin and Joe Dominguez, Chapter 8,
+    https://a.co/d/0fBQcbf
+
+    Args:
+        stash: your capital, the amount of money you have invested.
+        current_interest_rate: the interest rate your money earns expressed as a whole
+        percentage, e.g. 4 for 4%, synonymous with safe withdrawal rate in this context.
+
+    Returns:
+        Monthly investment income, the amount of money you can expect to make
+        from your investments monthly.
+    """
+    return Money(
+        (Decimal(stash) * (Decimal(current_interest_rate) / Decimal(100))) / Decimal(12)
+    )
+
+
 def percent_decrease(original_value: float, final_value: float) -> Percent:
     """Calculate the percentage of loss from one number to another.
 

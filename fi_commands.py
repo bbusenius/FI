@@ -348,6 +348,34 @@ def run_hours_of_life_energy():
     )
 
 
+def run_monthly_investment_income():
+    """
+    Calculate how much monthly income you generate from your investments.
+    From "Your Money or Your Life" by Vicki Robin and Joe Dominguez, Chapter 8,
+    https://a.co/d/0fBQcbf
+    """
+    description = run_monthly_investment_income.__doc__
+    parser = argparse.ArgumentParser(
+        prog='monthly_investment_income',
+        description=description,
+        epilog="Example use: monthly_investment_income 500000 4",
+    )
+    parser.add_argument(
+        'stash', help='Your capital, the amount of money you have invested'
+    )
+    parser.add_argument(
+        'current_interest_rate',
+        help='The interest rate your money earns expressed as a whole percentage, \
+        e.g. 4 for 4%, synonymous with safe withdrawal rate in this context',
+    )
+    args = parser.parse_args()
+    print(
+        fi.monthly_investment_income(
+            float(args.stash), float(args.current_interest_rate)
+        )
+    )
+
+
 def run_percent_decrease():
     """
     Calculates the percentage of loss from one number to another.
