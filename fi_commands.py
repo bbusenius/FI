@@ -262,7 +262,7 @@ def run_fi_number():
     parser.add_argument(
         'withdrawal_rate',
         help='int or float, the rate you expect to withdral money annually \
-        e.g. 4 (for 4%, based on the Trinity Study)',
+        e.g. 4 (for 4%%, based on the Trinity Study)',
     )
     args = parser.parse_args()
     print(
@@ -366,7 +366,7 @@ def run_monthly_investment_income():
     parser.add_argument(
         'current_interest_rate',
         help='The interest rate your money earns expressed as a whole percentage, \
-        e.g. 4 for 4%, synonymous with safe withdrawal rate in this context',
+        e.g. 4 for 4%%, synonymous with safe withdrawal rate in this context',
     )
     args = parser.parse_args()
     print(
