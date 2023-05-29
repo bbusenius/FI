@@ -336,7 +336,7 @@ def opportunity_cost(
         Opportunity cost, the amount of money you might lose over a period of
         time by spending the money rather than investing it.
     """
-    return Money(future_value(cost, interest_rate, 1, time_period) - cost)
+    return Money(future_value(cost, interest_rate, 1, time_period) - Decimal(cost))
 
 
 def percent_decrease(original_value: float, final_value: float) -> Percent:
