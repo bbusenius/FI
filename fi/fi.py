@@ -316,6 +316,29 @@ def monthly_investment_income(stash: float, current_interest_rate: float) -> Mon
     )
 
 
+def opportunity_cost(
+    cost: float, interest_rate: float = 8, time_period: float = 1
+) -> Money:
+    """Calculate the opportunity cost of money you might spend. This is the amount
+    of money you might earn at a given interest rate over a period of time (usually
+    years) if the money were invested instead. From Chapter 4 of "The Simple Path
+    to Wealth: Your road map to financial independence and a rich, free life" by
+    JL Collins, https://a.co/d/9BMocT1
+
+    Args:
+        cost: price or cost of something you are thinking about buying or have
+        bought.
+        interest_rate: the interest rate your money will likely earn if it were
+        invested instead.
+        time_period: a given time period, normally a number of years.
+
+    Returns:
+        Opportunity cost, the amount of money you might lose over a period of
+        time by spending the money rather than investing it.
+    """
+    return Money(future_value(cost, interest_rate, 1, time_period) - cost)
+
+
 def percent_decrease(original_value: float, final_value: float) -> Percent:
     """Calculate the percentage of loss from one number to another.
 

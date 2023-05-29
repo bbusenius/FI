@@ -376,6 +376,39 @@ def run_monthly_investment_income():
     )
 
 
+def run_opportunity_cost():
+    """
+    Calculate the opportunity cost of money you might spend. This is the amount
+    of money you might earn at a given interest rate over a period of time (usually
+    years) if the money were invested instead. From Chapter 4 of "The Simple Path
+    to Wealth: Your road map to financial independence and a rich, free life" by
+    JL Collins, https://a.co/d/9BMocT1
+    """
+    description = run_opportunity_cost.__doc__
+    parser = argparse.ArgumentParser(
+        prog='opportunity_cost',
+        description=description,
+        epilog="Example use: opportunity_cost 20000 8 1",
+    )
+    parser.add_argument(
+        'cost',
+        help='Price or cost of something you are thinking about buying or have bought',
+    )
+    parser.add_argument(
+        'interest_rate',
+        help='The interest rate your money will likely earn if it were invested instead',
+    )
+    parser.add_argument(
+        'time_period', help='A given time period, normally a number of years'
+    )
+    args = parser.parse_args()
+    print(
+        fi.opportunity_cost(
+            Decimal(args.cost), Decimal(args.interest_rate), Decimal(args.time_period)
+        )
+    )
+
+
 def run_percent_decrease():
     """
     Calculates the percentage of loss from one number to another.

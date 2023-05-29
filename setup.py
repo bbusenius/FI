@@ -41,6 +41,7 @@ setup(
             'get_percentage = fi_commands:run_get_percentage',
             'hours_of_life_energy = fi_commands:run_hours_of_life_energy',
             'monthly_investment_income = fi_commands:run_monthly_investment_income',
+            'opportunity_cost = fi_commands:run_opportunity_cost',
             'percent_decrease = fi_commands:run_percent_decrease',
             'percent_increase = fi_commands:run_percent_increase',
             'real_hourly_wage = fi_commands:run_real_hourly_wage',

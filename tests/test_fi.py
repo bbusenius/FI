@@ -112,6 +112,13 @@ class test_fi(unittest.TestCase):
         self.assertEqual(val5, Decimal(0))
         self.assertEqual(val6 * 12, Decimal(40000))
 
+    def test_opportunity_cost(self):
+        # From "The Simple Path to Wealth: Your road map to financial independence and a rich, free life"
+        val1 = fi.opportunity_cost(20000)
+        val2 = fi.opportunity_cost(0)
+        self.assertAlmostEqual(val1, Decimal(1600), 10)
+        self.assertEqual(val2, Decimal(0))
+
     def test_percent_decrease(self):
         val1 = fi.percent_decrease(10, 5)
         val2 = fi.percent_decrease(10, 8)

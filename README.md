@@ -33,6 +33,7 @@ The following functions are packaged in this library:
 - **get_percentage**
 - **hours_of_life_energy**
 - **monthly_investment_income**
+- **opportunity_cost**
 - **percent_decrease**
 - **percent_increase**
 - **real_hourly_wage**
