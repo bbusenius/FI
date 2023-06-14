@@ -37,6 +37,18 @@ class test_fi(unittest.TestCase):
             val2, 2000000, 'Should return the target FI number if interest is 0'
         )
 
+    def test_cost_of_costs(self):
+        val1 = fi.cost_of_costs(100, 0, 0, 10)
+        val2 = fi.cost_of_costs(2, 50, 50, 1)
+        self.assertEqual(val1, Decimal(0))
+        self.assertEqual(val2, Decimal(1))
+        # Page 47 of "The Little Book of Common Sense Investing"
+        # Stretching out the timeline longer than this doesn't match
+        # Bogle's examples. I'm pretty sure this is because he's
+        # rounding (a lot by the looks of it).
+        val2 = fi.cost_of_costs(10000, 7, 2, 1)
+        self.assertAlmostEqual(val2, Decimal(200))
+
     def test_cost_per_use(self):
         # Example from Early Retirement Extreme
         args = (75, 15, 15)
@@ -46,6 +58,11 @@ class test_fi(unittest.TestCase):
         self.assertEqual(
             val1, fi.annual_cost(*args), 'Should return the same as annual_cost'
         )
+
+    def test_expected_gross_return(self):
+        # Pages 102-105 of "The Little Book of Common Sense Investing"
+        val1 = fi.expected_gross_return(4, 3.1, 60, 40)
+        self.assertAlmostEqual(val1, 3.6, 1)
 
     def test_fi_age(self):
         current_age = 20
@@ -96,6 +113,11 @@ class test_fi(unittest.TestCase):
         self.assertEqual(val1, 8)
         self.assertEqual(val2 * 60, 120)
         self.assertEqual(val3, 0)
+
+    def test_likely_real_return(self):
+        # Pages 105-106 of "The Little Book of Common Sense Investing"
+        val1 = fi.likely_real_return(3.6, 1.5, 2)
+        self.assertAlmostEqual(val1, 0.1, 15)
 
     def test_monthly_investment_income(self):
         # From "Your Money or Your Life", Chapter 8
@@ -156,6 +178,16 @@ class test_fi(unittest.TestCase):
         val5 = fi.percent_increase(0, 10)
         self.assertEqual(val4, 200, 'This should be a 200% increase')
         self.assertTrue(isnan(val5), 'This should be NaN')
+
+    def test_percent_return_for_percent(self):
+        val1 = fi.percent_return_for_percent(100, 50)
+        val2 = fi.percent_return_for_percent(100, 25)
+        val3 = fi.percent_return_for_percent(0, 35)
+        val4 = fi.percent_return_for_percent(0, 0)
+        self.assertEqual(val1, Decimal(50))
+        self.assertEqual(val2, Decimal(25))
+        self.assertEqual(val3, Decimal(0))
+        self.assertEqual(val4, Decimal(0))
 
     def test_real_hourly_wage(self):
         val1 = fi.real_hourly_wage(40, 1000, 0, 30, 300)
@@ -272,6 +304,20 @@ class test_fi(unittest.TestCase):
         self.assertEqual(val2, Decimal(625))
         self.assertEqual(val3, Decimal(750))
         self.assertEqual(val4, Decimal(1000))
+
+    def test_stock_returns(self):
+        # From page 97-99 of "The Little Book of Common Sense Investing"
+        val1 = fi.stock_returns(2, 4, -2)
+        val2 = fi.stock_returns(2, 4, 1.5)
+        self.assertEqual(val1, Decimal(4))
+        self.assertEqual(val2, Decimal(7.5))
+
+    def test_turnover_costs(self):
+        # From page 55 of "The Little Book of Common Sense Investing"
+        val1 = fi.turnover_costs(50)
+        val2 = fi.turnover_costs(10)
+        self.assertAlmostEqual(val1, Decimal(0.5), 15)
+        self.assertAlmostEqual(val2, Decimal(0.1), 15)
 
     def test_average_daily_spend(self):
         val1 = fi.average_daily_spend(100, 10)

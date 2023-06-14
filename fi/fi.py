@@ -120,6 +120,40 @@ def coast_fi(
     )
 
 
+def cost_of_costs(
+    money_invested: float,
+    interest_rate: float,
+    investment_costs: float,
+    time_period: float,
+) -> Money:
+    """Calculate the "tyranny of compounding costs" as laid out by Jack Bogle
+    on pages 47-49 of "The Little Book of Common Sense Investing". This is how
+    much your investing expenses cost you over time. According to Jack Bogle
+    there are three primary sources of costs: 1. The fund's expense ratio, 2.
+    The sales charge paid on each purchase of shares (loads), and 3. The cost
+    of the purchase and sale of securities within a fund (turnover costs).
+    https://a.co/d/7mVz5Ud
+
+    Args:
+        money_invested: principal, dollar amount.
+        interest_rate: expected annual return expressed as a whole percentage.
+        investment_costs: annual investment costs expressed as a whole
+        percentage. This could simply be a fund's expense ratio, however, more
+        accurate input might include turnover costs, loads, and any other fees.
+        time_period: investing time horizon, how long the investment will be
+        held, should be a number of years.
+
+    Returns:
+        Dollar amount, how much your investment expenses costed (or will cost)
+        you over the lifetime of an investment, the "tyranny of compounding
+        costs".
+    """
+    real_rate = interest_rate - investment_costs
+    gross = future_value(money_invested, interest_rate, 1, time_period)
+    net = future_value(money_invested, real_rate, 1, time_period)
+    return Money(gross - net)
+
+
 def cost_per_use(your_cost: float, used_price: float, times_used: float) -> Money:
     """Calculate how much something costed per use. Credit: Early Retirement
     Extreme by Jacob Lund Fisker https://a.co/4vgBczW
@@ -156,6 +190,34 @@ def days_covered_by_fi(
         you could theoretically take off every year if you wanted to.
     """
     return (stash * (withdrawal_rate / 100)) / average_daily_spend(annual_spend, 365)
+
+
+def expected_gross_return(
+    expected_return_from_stocks: float,
+    expected_bond_yield: float,
+    percent_in_stocks: float,
+    percent_in_bonds: float,
+) -> Percent:
+    """Model the expected gross nominal annual return of a stock and bond
+    portfolio before investment costs, based on Jonh C. Bogle's forumla
+    on p. 102-104 of "The Little Book of Common Sense Investing".
+    https://a.co/d/7mVz5Ud
+
+    Args:
+        expected_return_from_stocks: expected stock market return expressed
+        as a whole percentage (can be calculated with stock_returns).
+        expected_bond_yield: bond yield expressed as a whole percentage.
+        percent_in_stocks: percentage of the portfolio in stocks expressed as
+        a whole percentage.
+        percent_in_bonds: percentage of the portfolio in bonds expressed as a
+        whole percentage.
+
+    Returns:
+        Expected return from a portfolio made up of stocks and bonds.
+    """
+    bonds = percent_return_for_percent(expected_bond_yield, percent_in_bonds)
+    stocks = percent_return_for_percent(expected_return_from_stocks, percent_in_stocks)
+    return Percent(sum([stocks, bonds]))
 
 
 def fi_age(
@@ -297,6 +359,29 @@ def hours_of_life_energy(money_spent: float, real_hourly_wage: float) -> Decimal
         return Decimal(0)
 
 
+def likely_real_return(
+    nominal_gross_return: float, investment_costs: float, inflation: float
+) -> Percent:
+    """Model the likely return of a portfolio using the relentless rules of humble
+    artithmetic as explained by Jack Bogle on page 105 or "The Little Book of Common
+    Sense Investing". https://a.co/d/7mVz5Ud
+
+
+    Args:
+        nominal_gross_return: expected gross return expressed as a whole percentage
+        (can be calculated by expected_gross_return).
+        investment_costs: fees and investment costs expressed as a whole percentage.
+        inflation: inflation rate expressed as a whole percentage.
+
+    Returns:
+        The likely real return of a portfolio after investing costs and inflation
+        have been taken out.
+    """
+    nominal_net_return = nominal_gross_return - investment_costs
+    real_annual_return = nominal_net_return - inflation
+    return Percent(real_annual_return)
+
+
 def monthly_investment_income(stash: float, current_interest_rate: float) -> Money:
     """Calculate how much monthly income you generate from your investments.
     From "Your Money or Your Life" by Vicki Robin and Joe Dominguez, Chapter 8,
@@ -371,6 +456,27 @@ def percent_increase(original_value: float, final_value: float) -> Percent:
         return Percent(((final_value - original_value) / abs(original_value)) * 100)
     except (ZeroDivisionError):
         return nan
+
+
+def percent_return_for_percent(
+    percent_return: float, percentage_of_portfolio: float
+) -> Percent:
+    """Calculate the percent of a potential return to attribute to a
+    percentage of a portfolio. This function is used in modeling projected
+    returns for portfolios of different asset classes.
+
+    Args:
+        percent_return: the expected percent return expressed as a whole
+        percentage.
+        percentage_of_portfolio: the percentage of your portfolio that
+        the return applies to.
+
+    Returns:
+        Given a % return for an asset class, this function will return the
+        percent returned for that asset class as it represents x% of a
+        portfolio.
+    """
+    return Percent((percent_return / 100) * percentage_of_portfolio)
 
 
 def real_hourly_wage(
@@ -562,6 +668,36 @@ def spending_from_savings(take_home_pay: float, savings: float) -> Money:
     return Money(Decimal(take_home_pay) - Decimal(savings))
 
 
+def stock_returns(
+    dividend_yield: float, earnings_growth: float, change_in_pe: float
+) -> Percent:
+    """Model the expectation of stock returns for the next decade  based on
+    Jack Bogle's formula using the sources of stock returns presented on pages
+    97-105 of "The Little Book of Common Sense Investing". Bogle believes that
+    stock returns come from stock dividends, earnings growth (tied to GDP) and
+    swings in the P/E multiple (speculative return). Bond returns come from
+    the interest a bond pays. https://a.co/d/7mVz5Ud
+
+    Args:
+        dividend_yield: percentage that stocks are currently yielding. Bogle
+        used the S&P 500 or Total Stock Market Index.
+        earnings_growth: percentage you think stocks will grow per year. Bogle
+        notes that this has typically been at the nominal growth rate of GDP
+        (4-5% per year) which has a 0.98% correlation with corporate profits.
+        change_in_pe: negative or positive percentage of change in today's
+        P/E multiple. This number represents the "speculative return".
+
+    Returns:
+        The percentage you might expect to earn on an annual basis given the
+        current state of the market. This number has no factual basis and is
+        not a prediction. It should not be taken as a certainty or advice.
+        It's just an educated guess based on common sense.
+    """
+    return Percent(
+        sum([Decimal(dividend_yield), Decimal(earnings_growth), Decimal(change_in_pe)])
+    )
+
+
 def take_home_pay(
     gross_pay: float, employer_match: float, taxes_and_fees: List[float]
 ) -> Money:
@@ -579,3 +715,20 @@ def take_home_pay(
     """
     taxes_and_fees = [Decimal(item) for item in taxes_and_fees]
     return Money((Decimal(gross_pay) + Decimal(employer_match)) - sum(taxes_and_fees))
+
+
+def turnover_costs(turnover_rate: float) -> Percent:
+    """Make an educated guess at the cost of portfolio turnover using the rule of
+    thumb presented by Jack Bogle on page 55 of "The Little Book of Common Sense
+    Investing". https://a.co/d/7mVz5Ud
+
+    Args:
+        turnover_rate: turnover rate of an index or mutual fund. This can normally
+        be found with the normal characteristics and data on the fund's web page.
+
+    Returns:
+        What the turnover might cost based on Jack Bogle's rule of thumb. This
+        is not a precise number. It's an educated guess and could be subject to
+        change as systems change with technology in the future.
+    """
+    return Percent(Decimal(0.01) * Decimal(turnover_rate))

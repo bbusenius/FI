@@ -144,6 +144,53 @@ def run_coast_fi():
     )
 
 
+def run_cost_of_costs():
+    """
+    Calculate the "tyranny of compounding costs" as laid out by Jack Bogle
+    on pages 47-49 of "The Little Book of Common Sense Investing". This is how
+    much your investing expenses cost you over time. According to Jack Bogle
+    there are three primary sources of costs: 1. The fund's expense ratio, 2.
+    The sales charge paid on each purchase of shares (loads), and 3. The cost
+    of the purchase and sale of securities within a fund (turnover costs).
+    https://a.co/d/7mVz5Ud
+    """
+    description = run_cost_of_costs.__doc__
+    parser = argparse.ArgumentParser(
+        prog='cost_of_costs',
+        description=description,
+        epilog="Example use: cost_of_costs 10000 7 2 50",
+    )
+    parser.add_argument(
+        'money_invested',
+        help='principal, dollar amount',
+    )
+    parser.add_argument(
+        'interest_rate', help='expected annual return expressed as a whole percentage'
+    )
+    parser.add_argument(
+        'investment_costs',
+        help='annual investment costs expressed as a whole percentage. This could simply \
+        be a fund\'s expense ratio, however, more accurate input might include turnover \
+        costs, loads, and any other fees',
+    )
+    parser.add_argument(
+        'time_period',
+        help='investing time horizon, how long the investment will be held, \
+        should be a number of years',
+    )
+
+    args = parser.parse_args()
+
+    print(
+        fi.cost_of_costs(
+            Decimal(args.money_invested),
+            Decimal(args.interest_rate),
+            Decimal(args.investment_costs),
+            Decimal(args.time_period),
+        )
+    )
+
+
 def run_cost_per_use():
     """
     Calculate how much something has costed while considering
@@ -205,6 +252,48 @@ def run_days_covered_by_fi():
         )
     else:
         print(fi.days_covered_by_fi(float(args.annual_spend), float(args.stash)))
+
+
+def run_expected_gross_return():
+    """
+    Model the expected gross nominal annual return of a stock and bond
+    portfolio before investment costs, based on Jonh C. Bogle's forumla
+    on p. 102-104 of "The Little Book of Common Sense Investing".
+    https://a.co/d/7mVz5Ud
+    """
+    description = run_expected_gross_return.__doc__
+    parser = argparse.ArgumentParser(
+        prog='expected_gross_return',
+        description=description,
+        epilog='Example use: expected_gross_return 4 3.1 60 40',
+    )
+    parser.add_argument(
+        'expected_return_from_stocks',
+        help='expected stock \
+        market return expressed as a whole percentage(can be calculated with \
+        stock_returns)',
+    )
+    parser.add_argument(
+        'expected_bond_yield', help='bond yield expressed as a whole percentage'
+    )
+    parser.add_argument(
+        'percent_in_stocks',
+        help='percentage of the portfolio in stocks expressed as a whole percentage',
+    )
+    parser.add_argument(
+        'percent_in_bonds',
+        help='percentage of the portfolio in bonds expressed as a whole percentage',
+    )
+
+    args = parser.parse_args()
+    print(
+        fi.expected_gross_return(
+            float(args.expected_return_from_stocks),
+            float(args.expected_bond_yield),
+            float(args.percent_in_stocks),
+            float(args.percent_in_bonds),
+        )
+    )
 
 
 def run_fi_age():
@@ -348,6 +437,41 @@ def run_hours_of_life_energy():
     )
 
 
+def run_likely_real_return():
+    """
+    Model the likely return of a portfolio using the relentless rules of humble
+    artithmetic as explained by Jack Bogle on page 105 or "The Little Book of Common
+    Sense Investing". https://a.co/d/7mVz5Ud
+    """
+    description = run_likely_real_return.__doc__
+    parser = argparse.ArgumentParser(
+        prog='likely_real_return',
+        description=description,
+        epilog="Example use: likely_real_return 3.6 1.5 2",
+    )
+    parser.add_argument(
+        'nominal_gross_return',
+        help='expected gross return expressed as a whole percentage \
+        (can be calculated by expected_gross_return)',
+    )
+    parser.add_argument(
+        'investment_costs',
+        help='fees and investment costs expressed as a whole percentage',
+    )
+    parser.add_argument(
+        'inflation',
+        help='inflation rate expressed as a whole percentage',
+    )
+    args = parser.parse_args()
+    print(
+        fi.likely_real_return(
+            float(args.nominal_gross_return),
+            float(args.investment_costs),
+            float(args.inflation),
+        )
+    )
+
+
 def run_monthly_investment_income():
     """
     Calculate how much monthly income you generate from your investments.
@@ -443,6 +567,34 @@ def run_percent_increase():
     )
     args = parser.parse_args()
     print(fi.percent_increase(float(args.original_value), float(args.final_value)))
+
+
+def run_percent_return_for_percent():
+    """
+    Calculate the percent of a potential return to attribute to a
+    percentage of a portfolio. This function is used in modeling projected
+    returns for portfolios of different asset classes.
+    """
+    description = run_percent_return_for_percent.__doc__
+    parser = argparse.ArgumentParser(
+        prog='percent_return_for_percent',
+        description=description,
+        epilog="Example use: percent_return_for_percent 100 50",
+    )
+    parser.add_argument(
+        'percent_return',
+        help='the expected percent return expressed as a whole percentage',
+    )
+    parser.add_argument(
+        'percentage_of_portfolio',
+        help='the percentage of your portfolio that the return applies to',
+    )
+    args = parser.parse_args()
+    print(
+        fi.percent_return_for_percent(
+            float(args.percent_return), float(args.percentage_of_portfolio)
+        )
+    )
 
 
 def run_real_hourly_wage():
@@ -648,12 +800,49 @@ def run_spending_from_savings():
     parser = argparse.ArgumentParser(
         prog='spending_from_savings',
         description=description,
-        epilog="example use: spending_from_savings 5000 2750",
+        epilog="Example use: spending_from_savings 5000 2750",
     )
     parser.add_argument('take_home_pay', help='float or int, monthly take-home pay')
     parser.add_argument('savings', help='float or int, amount of money saved')
     args = parser.parse_args()
     print(fi.spending_from_savings(args.take_home_pay, args.savings))
+
+
+def run_stock_returns():
+    """
+    Model the expectation of stock returns for the next decade  based on
+    Jack Bogle's formula using the sources of stock returns presented on pages
+    97-105 of "The Little Book of Common Sense Investing". Bogle believes that
+    stock returns come from stock dividends, earnings growth (tied to GDP) and
+    swings in the P/E multiple (speculative return). Bond returns come from
+    the interest a bond pays. https://a.co/d/7mVz5Ud
+    """
+    description = run_stock_returns.__doc__
+    parser = argparse.ArgumentParser(
+        prog='stock_returns',
+        description=description,
+        epilog="Example use: stock_returns 2 4 -2",
+    )
+    parser.add_argument(
+        'dividend_yield',
+        help='percentage that stocks are \
+        currently yielding. Bogle used the S&P 500 or Total Stock Market Index',
+    )
+    parser.add_argument(
+        'earnings_growth',
+        help='percentage you think stocks will grow per year. Bogle notes that \
+        this has typically been at the nominal growth rate of GDP (4-5%% per year) \
+        which has a 0.98%% correlation with corporate profits',
+    )
+    parser.add_argument(
+        'change_in_pe',
+        help='negative or positive percentage of change in today\'s P/E multiple. \
+        This number represents the "speculative return"',
+    )
+    args = parser.parse_args()
+    print(
+        fi.stock_returns(args.dividend_yield, args.earnings_growth, args.change_in_pe)
+    )
 
 
 def run_take_home_pay():
@@ -679,3 +868,24 @@ def run_take_home_pay():
     args = parser.parse_args()
     taxes = [Decimal(item) for item in args.taxes_and_fees.split(' ')]
     print(fi.take_home_pay(args.gross_pay, args.employer_match, taxes))
+
+
+def run_turnover_costs():
+    """
+    Make an educated guess at the cost of portfolio turnover using the rule of
+    thumb presented by Jack Bogle on page 55 of "The Little Book of Common Sense
+    Investing". https://a.co/d/7mVz5Ud
+    """
+    description = run_turnover_costs.__doc__
+    parser = argparse.ArgumentParser(
+        prog='turnover_costs',
+        description=description,
+        epilog="Example use: turnover_costs 40",
+    )
+    parser.add_argument(
+        'turnover_rate',
+        help='turnover rate of an index or mutual fund. This can normally be found \
+        with the normal characteristics and data on the fund\'s web page',
+    )
+    args = parser.parse_args()
+    print(fi.turnover_costs(args.turnover_rate))
