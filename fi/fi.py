@@ -482,7 +482,7 @@ def percent_return_for_percent(
 def pot_score(
     median_starting_salary: float, hourly_minimum_wage: float, total_tuition_cost: float
 ) -> Money:
-    """Pay-Over-Tuition: evaluate whether a degree is worth it by calculating
+    """Calculate Pay-Over-Tuition to evaluate whether a degree is worth it to see
     how much you can expect to raise your annual earning power per dollar spent
     on the degree. Credit for this calculation goes to Kristy Shen and Bryce Leung
     https://a.co/d/6k3t1oH
