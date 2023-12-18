@@ -479,6 +479,34 @@ def percent_return_for_percent(
     return Percent((percent_return / 100) * percentage_of_portfolio)
 
 
+def pot_score(
+    median_starting_salary: float, hourly_minimum_wage: float, total_tuition_cost: float
+) -> Money:
+    """Pay-Over-Tuition: evaluate whether a degree is worth it by calculating
+    how much you can expect to raise your annual earning power per dollar spent
+    on the degree. Credit for this calculation goes to Kristy Shen and Bryce Leung
+    https://a.co/d/6k3t1oH
+
+    Args:
+        median_starting_salary: the median annual starting salary for the job a
+        given degree will pay in the state where you plan to live.
+
+        hourly_minimum_wage: the hourly minimum wage in the state where you plan
+        to live.
+
+        total_tuition_cost: the total cost of tuition for a given degree.
+
+    Returns:
+        The amount of money you will earn (or lose) over the minimum wage per
+        dollar spent on a degree.
+    """
+    annual_minimum_wage = (Decimal(hourly_minimum_wage) * Decimal(40)) * Decimal(52)
+    pot = (Decimal(median_starting_salary) - annual_minimum_wage) / Decimal(
+        total_tuition_cost
+    )
+    return Money(pot)
+
+
 def real_hourly_wage(
     hours_worked: float,
     money_paid: float,

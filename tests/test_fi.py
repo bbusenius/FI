@@ -189,6 +189,12 @@ class test_fi(unittest.TestCase):
         self.assertEqual(val3, Decimal(0))
         self.assertEqual(val4, Decimal(0))
 
+    def test_pot_score(self):
+        val1 = fi.pot_score(27000, 11, 42600)
+        val2 = fi.pot_score(72330, 11, 42600)
+        self.assertAlmostEqual(val1, Decimal(0.1), 1)
+        self.assertAlmostEqual(val2, Decimal(1.2), 1)
+
     def test_real_hourly_wage(self):
         val1 = fi.real_hourly_wage(40, 1000, 0, 30, 300)
         self.assertEqual(val1, 10)

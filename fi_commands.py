@@ -597,6 +597,41 @@ def run_percent_return_for_percent():
     )
 
 
+def run_pot_score():
+    """
+    Pay-Over-Tuition: evaluate whether a degree is worth it by calculating
+    how much you can expect to raise your annual earning power per dollar spent
+    on the degree.
+    """
+    description = run_pot_score.__doc__
+    parser = argparse.ArgumentParser(
+        prog='pot_score',
+        description=description,
+        epilog="Example use: pot_score 27000 11 42600",
+    )
+    parser.add_argument(
+        'median_starting_salary',
+        help='median annual starting salary for the job you will get with \
+        the degree where you plan to live',
+    )
+    parser.add_argument(
+        'hourly_minimum_wage',
+        help='hourly minimum wage in the state where you plan to live',
+    )
+    parser.add_argument(
+        'total_tuition_cost',
+        help='the total cost of tuition for a given degree',
+    )
+    args = parser.parse_args()
+    print(
+        fi.pot_score(
+            float(args.median_starting_salary),
+            float(args.hourly_minimum_wage),
+            float(args.total_tuition_cost),
+        )
+    )
+
+
 def run_real_hourly_wage():
     """
     Calculate your real hourly wage by adjusting your money paid by
