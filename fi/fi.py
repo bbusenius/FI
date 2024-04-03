@@ -481,10 +481,10 @@ def percent_return_for_percent(
 
 def pot_score(
     median_starting_salary: float, hourly_minimum_wage: float, total_tuition_cost: float
-) -> Money:
+) -> Decimal:
     """Calculate Pay-Over-Tuition to evaluate whether a degree is worth it to see
     how much you can expect to raise your annual earning power per dollar spent
-    on the degree. Credit for this calculation goes to Kristy Shen and Bryce Leung
+    on a degree. Credit for this calculation goes to Kristy Shen and Bryce Leung
     https://a.co/d/6k3t1oH
 
     Args:
@@ -497,14 +497,19 @@ def pot_score(
         total_tuition_cost: the total cost of tuition for a given degree.
 
     Returns:
-        The amount of money you will earn (or lose) over the minimum wage per
-        dollar spent on a degree.
+        Pay-Over-Tuition, a score for comparing degrees between various possible
+        career paths. Though expressed as a decimal, the POT score correlates to
+        money, e.g. a POT score of 1.3 will return $1.30 for every dollar spent
+        on tuition, every year after graduation, assuming you earn an average salary
+        in your chosen profession. Multiply the full cost of a degree (tuition) by
+        the POT score to see how much money you will earn above minimum wage, per
+        year, after graduation.
     """
     annual_minimum_wage = (Decimal(hourly_minimum_wage) * Decimal(40)) * Decimal(52)
     pot = (Decimal(median_starting_salary) - annual_minimum_wage) / Decimal(
         total_tuition_cost
     )
-    return Money(pot)
+    return pot
 
 
 def real_hourly_wage(
