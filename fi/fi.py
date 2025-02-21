@@ -618,7 +618,7 @@ def remaining_life_expectancy(
     )
 
     age_ranges = life_table['Age (years)'].str.split('–', expand=True)
-    age_ranges = age_ranges.applymap(lambda x: pd.to_numeric(x, errors='coerce'))
+    age_ranges = age_ranges.map(lambda x: pd.to_numeric(x, errors='coerce'))
     age_ranges.iloc[-1, 0] = float(100)
     age_ranges.iloc[-1, 1] = float('inf')
 
