@@ -362,14 +362,15 @@ def run_fi_number():
 def run_future_value():
     """
     Calculates the future value of money invested at an interest rate,
-    x times per year, for a given number of years. Can also be used to
-    calculate the future equivalent of money due to inflation.
+    compounded x times per year, for a given number of years, with optional
+    annual drawdowns. Can also be used to calculate the future equivalent of
+    money due to inflation.
     """
     description = run_future_value.__doc__
     parser = argparse.ArgumentParser(
         prog='future_value',
         description=description,
-        epilog="Example use: future_value 800000 .03 1 20",
+        epilog="Example use: future_value 800000 .03 1 20 --drawdown 40000",
     )
     parser.add_argument(
         'present_value', help='int or float, the current quantity of money, principal'
@@ -382,10 +383,20 @@ def run_future_value():
         'periods_per_year', help='int, the number of times money is invested per year'
     )
     parser.add_argument('years', help='int, the number of years invested')
+    parser.add_argument(
+        '--drawdown',
+        type=float,
+        default=0,
+        help='float, optional fixed amount withdrawn annually (default: 0)',
+    )
     args = parser.parse_args()
     print(
         fi.future_value(
-            args.present_value, args.annual_rate, args.periods_per_year, args.years
+            float(args.present_value),
+            float(args.annual_rate),
+            int(args.periods_per_year),
+            int(args.years),
+            float(args.drawdown),
         )
     )
 

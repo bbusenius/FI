@@ -276,32 +276,49 @@ def fi_number(planned_yearly_expenses: float, withdrawal_rate: float) -> Money:
 
 
 def future_value(
-    present_value: float, annual_rate: float, periods_per_year: int, years: int
+    present_value: float,
+    annual_rate: float,
+    periods_per_year: int,
+    years: int,
+    drawdown: float = 0,
 ) -> Money:
     """Calculates the future value of money invested at an interest rate,
-    x times per year, for a given number of years. Can also be used to
-    calculate the future equivalent of money due to inflation.
+    compounded x times per year, for a given number of years, with optional
+    annual drawdowns. Can also be used to calculate the future equivalent of
+    money due to inflation.
 
     Args:
         present_value: the current quantity of money (principal).
-        annual_rate: interest rate expressed as a whole percentage, e.g.
-        5 for 5%, the interest rate paid out.
-        periods_per_year: the number of times money is invested per year.
+        annual_rate: interest rate expressed as a whole percentage, e.g., 5 for 5%.
+        periods_per_year: the number of times money is compounded per year.
         years: the number of years invested.
+        drawdown: Optional fixed amount withdrawn annually at the end of
+        each year after growth. Defaults to 0.
 
     Returns:
-        The future value of the money invested with compound interest.
+        The future value of the money invested with compound interest, adjusted
+        for annual drawdowns if specified.
     """
+    pv = Decimal(present_value)
+    rate_per_period = Decimal(annual_rate) / Decimal(100) / Decimal(periods_per_year)
+    drawdown_amount = Decimal(drawdown)
 
-    # The nominal interest rate per period (rate) is how much interest you earn
-    # during a particular length of time, before accounting for compounding.
-    # This is typically expressed as a percentage.
-    rate_per_period = Decimal(annual_rate / 100) / Decimal(periods_per_year)
+    # Optimization: use efficient formula when no drawdown
+    if drawdown_amount == 0:
+        periods = Decimal(periods_per_year) * Decimal(years)
+        return Money(pv * (Decimal(1) + rate_per_period) ** periods)
 
-    # How many periods in the future the calculation is for.
-    periods = Decimal(periods_per_year) * Decimal(years)
+    # Year-by-year calculation when drawdown is present
+    yearly_growth_factor = (Decimal(1) + rate_per_period) ** Decimal(periods_per_year)
 
-    return Money(Decimal(present_value) * (1 + rate_per_period) ** periods)
+    for year in range(years):
+        pv = pv * yearly_growth_factor
+        pv -= drawdown_amount
+        if pv <= Decimal(0):
+            pv = Decimal(0)
+            break  # Exit early if portfolio is depleted
+
+    return Money(pv)
 
 
 def get_percentage(a: float, b: float, i: bool = False, r: bool = False) -> Percent:
@@ -355,7 +372,7 @@ def hours_of_life_energy(money_spent: float, real_hourly_wage: float) -> Decimal
     """
     try:
         return Decimal(money_spent / real_hourly_wage)
-    except (ZeroDivisionError):
+    except ZeroDivisionError:
         return Decimal(0)
 
 
@@ -438,7 +455,7 @@ def percent_decrease(original_value: float, final_value: float) -> Percent:
         return Percent(
             abs(float(((original_value - final_value) / original_value)) * 100)
         )
-    except (ZeroDivisionError):
+    except ZeroDivisionError:
         return nan
 
 
@@ -454,7 +471,7 @@ def percent_increase(original_value: float, final_value: float) -> Percent:
     """
     try:
         return Percent(((final_value - original_value) / abs(original_value)) * 100)
-    except (ZeroDivisionError):
+    except ZeroDivisionError:
         return nan
 
 
@@ -681,7 +698,7 @@ def savings_rate(take_home_pay: float, spending: float) -> Percent:
         return Percent(
             (Decimal(take_home_pay) - Decimal(spending)) / (Decimal(take_home_pay))
         ) * Decimal(100)
-    except (ZeroDivisionError):
+    except ZeroDivisionError:
         return Percent(Decimal(0))
 
 

@@ -89,10 +89,38 @@ class test_fi(unittest.TestCase):
         self.assertEqual(val4, 600000)
 
     def test_future_value(self):
+        # Test without drawdown
         val1 = fi.future_value(2, 50, 1, 1)
         val2 = fi.future_value(2, 50, 1, 2)
         self.assertEqual(val1, 3, 'The value should be 3, returned ' + str(val1))
         self.assertEqual(val2, 4.5, 'The value should be 4.5, returned')
+
+        # Test with drawdown parameter explicitly set to 0 (should match above)
+        val3 = fi.future_value(2, 50, 1, 1, 0)
+        val4 = fi.future_value(2, 50, 1, 2, 0)
+        self.assertEqual(val3, val1, 'Explicit drawdown=0 should match default')
+        self.assertEqual(val4, val2, 'Explicit drawdown=0 should match default')
+
+        # Test with actual drawdown
+        val5 = fi.future_value(100000, 7, 1, 5, 10000)
+        self.assertAlmostEqual(
+            float(val5),
+            82747.78,
+            places=2,
+            msg='Drawdown calculation should be approximately correct',
+        )
+
+        # Test portfolio depletion
+        val6 = fi.future_value(50000, 5, 1, 10, 20000)
+        self.assertEqual(
+            val6, 0, 'Portfolio should be depleted with excessive drawdown'
+        )
+
+        # Test edge case: drawdown equals growth
+        val7 = fi.future_value(100000, 10, 1, 3, 11000)
+        self.assertGreater(
+            val7, 0, 'Portfolio should have positive value with balanced drawdown'
+        )
 
     def test_get_percentage(self):
         val1 = fi.get_percentage(25, 100)
