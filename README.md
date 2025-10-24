@@ -21,37 +21,37 @@ Pass the -e flag to retain the editable source.
 
 The following functions are packaged in this library:
 
-- **annual_cost**
-- **average_daily_spend**
-- **buy_a_day_of_freedom**
-- **coast_fi**
-- **cost_of_costs**
-- **cost_per_use**
-- **days_covered_by_fi**
-- **expected_gross_return**
-- **fi_age**
-- **fi_number**
-- **future_value**
-- **get_percentage**
-- **hours_of_life_energy**
-- **likely_real_return**
-- **monthly_investment_income**
-- **opportunity_cost**
-- **percent_decrease**
-- **percent_increase**
-- **percent_return_for_percent**
-- **pot_score**
-- **price_to_rent**
-- **real_hourly_wage**
-- **redeem_points**
-- **redeem_chase_points**
-- **remaining_life_expectancy**
-- **rule_of_72**
-- **savings_rate**
-- **spending_from_savings**
-- **stock_returns**
-- **take_home_pay**
-- **turnover_costs**
+- `annual_cost`
+- `average_daily_spend`
+- `buy_a_day_of_freedom`
+- `coast_fi`
+- `cost_of_costs`
+- `cost_per_use`
+- `days_covered_by_fi`
+- `expected_gross_return`
+- `fi_age`
+- `fi_number`
+- `future_value`
+- `get_percentage`
+- `hours_of_life_energy`
+- `likely_real_return`
+- `monthly_investment_income`
+- `opportunity_cost`
+- `percent_decrease`
+- `percent_increase`
+- `percent_return_for_percent`
+- `pot_score`
+- `price_to_rent`
+- `real_hourly_wage`
+- `redeem_points`
+- `redeem_chase_points`
+- `remaining_life_expectancy`
+- `rule_of_72`
+- `savings_rate`
+- `spending_from_savings`
+- `stock_returns`
+- `take_home_pay`
+- `turnover_costs`
 
 All functions can be run from the command-line or used in Python directly.
 
