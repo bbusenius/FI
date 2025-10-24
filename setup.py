@@ -49,6 +49,7 @@ setup(
             'percent_increase = fi_commands:run_percent_increase',
             'percent_return_for_percent = fi_commands:run_percent_return_for_percent',
             'pot_score = fi_commands:run_pot_score',
+            'price_to_rent = fi_commands:run_price_to_rent',
             'real_hourly_wage = fi_commands:run_real_hourly_wage',
             'redeem_chase_points = fi_commands:run_redeem_chase_points',
             'redeem_points = fi_commands:run_redeem_points',

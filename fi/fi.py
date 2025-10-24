@@ -529,6 +529,26 @@ def pot_score(
     return pot
 
 
+def price_to_rent(cost_of_home: float, annual_rent: float) -> Decimal:
+    """Calculate the price-to-rent ratio to help determine whether buying or
+    renting makes more financial sense in a given market. A lower ratio suggests
+    buying may be more favorable, while a higher ratio suggests renting may be
+    more favorable. Credit: Paula Pant, "The FIIRE Framework", ChooseFI Podcast
+    Episode 568. Formula explanation:
+    https://affordanything.com/is-renting-better-than-buying-should-i-rent-or-buy/
+
+    Args:
+        cost_of_home: the purchase price of the home.
+        annual_rent: the total annual rent for a comparable property.
+
+    Returns:
+        The price-to-rent ratio. A ratio of 15 or less generally favors buying,
+        16-20 is a gray area, and 21+ generally favors renting. These are rough
+        guidelines and individual circumstances vary.
+    """
+    return Decimal(cost_of_home) / Decimal(annual_rent)
+
+
 def real_hourly_wage(
     hours_worked: float,
     money_paid: float,

@@ -41,6 +41,7 @@ The following functions are packaged in this library:
 - **percent_increase**
 - **percent_return_for_percent**
 - **pot_score**
+- **price_to_rent**
 - **real_hourly_wage**
 - **redeem_points**
 - **redeem_chase_points**

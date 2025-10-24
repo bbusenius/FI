@@ -643,6 +643,34 @@ def run_pot_score():
     )
 
 
+def run_price_to_rent():
+    """
+    Calculate the price-to-rent ratio to help determine whether buying or
+    renting makes more financial sense in a given market.
+    """
+    description = run_price_to_rent.__doc__
+    parser = argparse.ArgumentParser(
+        prog='price_to_rent',
+        description=description,
+        epilog="Example use: price_to_rent 300000 18000",
+    )
+    parser.add_argument(
+        'cost_of_home',
+        help='the purchase price of the home',
+    )
+    parser.add_argument(
+        'annual_rent',
+        help='the total annual rent for a comparable property',
+    )
+    args = parser.parse_args()
+    print(
+        fi.price_to_rent(
+            float(args.cost_of_home),
+            float(args.annual_rent),
+        )
+    )
+
+
 def run_real_hourly_wage():
     """
     Calculate your real hourly wage by adjusting your money paid by

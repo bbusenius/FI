@@ -223,6 +223,17 @@ class test_fi(unittest.TestCase):
         self.assertAlmostEqual(val1, Decimal(0.1), 1)
         self.assertAlmostEqual(val2, Decimal(1.2), 1)
 
+    def test_price_to_rent(self):
+        # Example: $300,000 home, $18,000/year rent = ratio of 16.67 (gray area)
+        val1 = fi.price_to_rent(300000, 18000)
+        # Example: $450,000 home, $30,000/year rent = ratio of 15 (favors buying)
+        val2 = fi.price_to_rent(450000, 30000)
+        # Example: $500,000 home, $20,000/year rent = ratio of 25 (favors renting)
+        val3 = fi.price_to_rent(500000, 20000)
+        self.assertAlmostEqual(val1, Decimal(16.67), 2)
+        self.assertEqual(val2, 15)
+        self.assertEqual(val3, 25)
+
     def test_real_hourly_wage(self):
         val1 = fi.real_hourly_wage(40, 1000, 0, 30, 300)
         self.assertEqual(val1, 10)
