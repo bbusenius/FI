@@ -162,6 +162,20 @@ class test_fi(unittest.TestCase):
         self.assertEqual(val5, Decimal(0))
         self.assertEqual(val6 * 12, Decimal(40000))
 
+    def test_net_operating_income(self):
+        # Example: $30,000 rental income minus $12,000, $2,000, $1,500 in expenses
+        val1 = fi.net_operating_income(30000, [12000, 2000, 1500])
+        # Example: $24,000 rental income minus $8,000, $1,200 in expenses
+        val2 = fi.net_operating_income(24000, [8000, 1200])
+        # Example: No expenses
+        val3 = fi.net_operating_income(30000, [])
+        # Example: Expenses equal income (break even)
+        val4 = fi.net_operating_income(20000, [20000])
+        self.assertEqual(val1, 14500)
+        self.assertEqual(val2, 14800)
+        self.assertEqual(val3, 30000)
+        self.assertEqual(val4, 0)
+
     def test_opportunity_cost(self):
         # From "The Simple Path to Wealth: Your road map to financial independence and a rich, free life"
         val1 = fi.opportunity_cost(20000)
@@ -404,6 +418,20 @@ class test_fi(unittest.TestCase):
         self.assertAlmostEqual(val2, Decimal((12000 / 365) / 0.04), 5)
         self.assertAlmostEqual(val3, Decimal((27375 / 365) / 0.04), 5)
         self.assertEqual(val4, Decimal(2500))
+
+    def test_cap_rate(self):
+        # Example: $300,000 property with $18,000 NOI = 6% cap rate
+        val1 = fi.cap_rate(18000, 300000)
+        # Example: $500,000 property with $40,000 NOI = 8% cap rate
+        val2 = fi.cap_rate(40000, 500000)
+        # Example: $200,000 property with $10,000 NOI = 5% cap rate
+        val3 = fi.cap_rate(10000, 200000)
+        # Zero division test
+        val4 = fi.cap_rate(10000, 0)
+        self.assertEqual(val1, 6)
+        self.assertEqual(val2, 8)
+        self.assertEqual(val3, 5)
+        self.assertEqual(val4, 0)
 
 
 # Run all tests

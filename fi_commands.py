@@ -113,6 +113,34 @@ def run_buy_a_day_of_freedom():
         print(fi.buy_a_day_of_freedom(annual_spend))
 
 
+def run_cap_rate():
+    """
+    Calculate the capitalization rate (cap rate) of an income-producing property
+    to measure annual return on investment.
+    """
+    description = run_cap_rate.__doc__
+    parser = argparse.ArgumentParser(
+        prog='cap_rate',
+        description=description,
+        epilog="Example use: cap_rate 18000 300000",
+    )
+    parser.add_argument(
+        'net_operating_income',
+        help='annual net operating income (NOI) from the property',
+    )
+    parser.add_argument(
+        'purchase_price',
+        help='the purchase price or current market value of the property',
+    )
+    args = parser.parse_args()
+    print(
+        fi.cap_rate(
+            float(args.net_operating_income),
+            float(args.purchase_price),
+        )
+    )
+
+
 def run_coast_fi():
     """
     Calculate your CoastFI number. The number at which you
@@ -507,6 +535,37 @@ def run_monthly_investment_income():
     print(
         fi.monthly_investment_income(
             float(args.stash), float(args.current_interest_rate)
+        )
+    )
+
+
+def run_net_operating_income():
+    """
+    Calculate the net operating income (NOI) of a rental property.
+    NOI is annual rental income minus operating expenses (not including mortgage).
+    """
+    description = run_net_operating_income.__doc__
+    parser = argparse.ArgumentParser(
+        prog='net_operating_income',
+        description=description,
+        epilog="Example use: net_operating_income 30000 12000 2000 1500",
+    )
+    parser.add_argument(
+        'annual_rental_income',
+        help='total annual rental income from the property',
+    )
+    parser.add_argument(
+        'operating_expenses',
+        nargs='+',
+        help='annual operating expenses (property taxes, insurance, maintenance, etc.). \
+        Multiple values separated by spaces. Do NOT include mortgage payments.',
+    )
+    args = parser.parse_args()
+    expenses = [float(expense) for expense in args.operating_expenses]
+    print(
+        fi.net_operating_income(
+            float(args.annual_rental_income),
+            expenses,
         )
     )
 

@@ -24,6 +24,7 @@ The following functions are packaged in this library:
 - `annual_cost`
 - `average_daily_spend`
 - `buy_a_day_of_freedom`
+- `cap_rate`
 - `coast_fi`
 - `cost_of_costs`
 - `cost_per_use`
@@ -36,6 +37,7 @@ The following functions are packaged in this library:
 - `hours_of_life_energy`
 - `likely_real_return`
 - `monthly_investment_income`
+- `net_operating_income`
 - `opportunity_cost`
 - `percent_decrease`
 - `percent_increase`

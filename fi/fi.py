@@ -95,6 +95,31 @@ def buy_a_day_of_freedom(
     )
 
 
+def cap_rate(net_operating_income: float, purchase_price: float) -> Percent:
+    """Calculate the capitalization rate (cap rate) of an income-producing
+    property. Cap rate measures the annual return on investment based on the
+    property's net operating income. A higher cap rate generally indicates
+    a better return, but may also indicate higher risk. Credit: Paula Pant,
+    "What is Cap Rate? A Guide to Capitalization Rates"
+    https://affordanything.com/income-property/
+
+    Args:
+        net_operating_income: the property's annual net operating income (NOI).
+        Use the net_operating_income() function to calculate this.
+        purchase_price: the purchase price (or current market value) of the
+        property.
+
+    Returns:
+        The capitalization rate as a percentage. Typical cap rates range from
+        4-10% depending on market and risk factors. Higher cap rates suggest
+        higher returns but potentially higher risk.
+    """
+    try:
+        return Percent((Decimal(net_operating_income) / Decimal(purchase_price)) * 100)
+    except ZeroDivisionError:
+        return Percent(Decimal(0))
+
+
 def coast_fi(
     target_fi_num: float, eiar: float, retirement_age: float, current_age: float
 ) -> Money:
@@ -416,6 +441,29 @@ def monthly_investment_income(stash: float, current_interest_rate: float) -> Mon
     return Money(
         (Decimal(stash) * (Decimal(current_interest_rate) / Decimal(100))) / Decimal(12)
     )
+
+
+def net_operating_income(
+    annual_rental_income: float, operating_expenses: List[float]
+) -> Money:
+    """Calculate the net operating income (NOI) of a rental property.
+    NOI is the total annual rental income minus all operating expenses,
+    but does NOT include mortgage payments. Credit: Paula Pant,
+    "What is Cap Rate? A Guide to Capitalization Rates"
+    https://affordanything.com/income-property/
+
+    Args:
+        annual_rental_income: total annual rental income from the property.
+        operating_expenses: list of annual operating expenses including
+        property taxes, insurance, maintenance, vacancy losses, property
+        management fees, HOA fees, utilities (if paid by owner), etc.
+        Do NOT include mortgage payments.
+
+    Returns:
+        The net operating income (NOI) for the property.
+    """
+    expenses = [Decimal(expense) for expense in operating_expenses]
+    return Money(Decimal(annual_rental_income) - sum(expenses))
 
 
 def opportunity_cost(
