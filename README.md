@@ -96,7 +96,51 @@ coast_fi `future_value 800000 .03 1 22` .07 62 40
 
 ## Developers
 
-FI is written with type hints and relies on the built in typing module. This allows FI to be used more robustly in third party applications. Docstrings are considered forward facing since they are sometimes exposed to the public as on [FI Widgets](https://fi-widgets.com/). 
+FI is written with type hints and relies on the built in typing module. This allows FI to be used more robustly in third party applications. Docstrings are considered forward facing since they are sometimes exposed to the public as on [FI Widgets](https://fi-widgets.com/).
+
+### Docstring Format
+
+FI uses **markdown-formatted docstrings** to serve two audiences:
+
+1. **End users** viewing documentation on [FI Widgets](https://fi-widgets.com/) (rendered as HTML)
+2. **Developers** using Python's `help()` function (displayed as plain text)
+
+#### Format Requirements
+
+All function docstrings must follow this format:
+
+```python
+def function_name(param1: float, param2: float) -> Money:
+    """Brief description of what the function does.
+    Credit: [Source Title](https://example.com) (if applicable)
+
+    ### Args:
+    - **param1**: description of the first parameter.
+    - **param2**: description of the second parameter.
+
+    ### Returns:
+    Return description.
+    """
+```
+
+#### Style Guidelines
+
+- **Headers**: Use `### Args:` and `### Returns:` (h3 headers with colons)
+- **Parameters**: Use list format: `- **param_name**:` (dash, space, bold name, colon outside bold)
+- **Links**: Use `[Link Text](https://url)` for all URLs
+- **Indentation**: Use base indentation (4 spaces) for all docstring content for Python readability
+- **Citations**: Include book/article links when crediting sources
+- **Lists**: Parameters render as bulleted lists (`<ul>` with `<li>` tags) on the website
+
+#### Why Markdown?
+
+- **Clean rendering**: Markdown converts to semantic HTML for the website (proper lists, headers, links)
+- **Readable as text**: Still looks good in terminal `help()` output
+- **Standard format**: Widely recognized by developers
+- **Consistent**: One format serves multiple contexts (web, CLI, docs, MCP tools)
+- **Simple processing**: Parsed with `inspect.cleandoc()` + `markdown.markdown()` - no complex transformations
+
+The docstrings are parsed by [FI-API](https://github.com/bbusenius/FI-API) using Python's `markdown` library and displayed on FI Widgets. This approach provides rich formatting on the web while maintaining readability for developers.
 
 ### Installation for developers
 

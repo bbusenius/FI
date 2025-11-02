@@ -42,16 +42,15 @@ CENTS = Decimal('0.01')
 
 def annual_cost(cost: float, used_price: float, years_in_service: float) -> Money:
     """Calculate the depreciation schedule of things.
-    Credit: Early Retirement Extreme by Jacob Lund Fisker
-    https://a.co/4vgBczW
+    Credit: [Early Retirement Extreme](https://a.co/4vgBczW) by Jacob Lund Fisker
 
-    Args:
-        cost: original amount you paid.
-        used_price: amount you can sell it for.
-        years_in_service: number of years you've used it.
+    ### Args:
+    - **cost**: original amount you paid.
+    - **used_price**: amount you can sell it for.
+    - **years_in_service**: number of years you've used it.
 
-    Returns:
-        Cost per year.
+    ### Returns:
+    Cost per year.
     """
     return Money(Decimal(cost) - Decimal(used_price)) / Decimal(years_in_service)
 
@@ -60,12 +59,12 @@ def average_daily_spend(money_spent: float, num_days: int) -> Money:
     """Calculate the average amount of money spent per day over a given
     number of days.
 
-    Args:
-        money_spent: the amount of money spent.
-        num_days: the number of days during which the spending occurred.
+    ### Args:
+    - **money_spent**: the amount of money spent.
+    - **num_days**: the number of days during which the spending occurred.
 
-    Returns:
-        The amount of money spent per day.
+    ### Returns:
+    The amount of money spent per day.
     """
     return Money(money_spent / num_days)
 
@@ -76,17 +75,17 @@ def buy_a_day_of_freedom(
     """Calculate how much it costs to buy a day of freedom based on your
     annual spending habits and your safe withdrawl rate. Every time
     you save this amount of money, you've covered 1 more day. Once
-    you have 365 days, you are financially independent. Credit:
-    https://www.reddit.com/r/leanfire/comments/caka4t/weekly_leanfire_discussion_july_08_2019/etfdwg1/
+    you have 365 days, you are financially independent.
+    Credit: [r/leanfire discussion](https://www.reddit.com/r/leanfire/comments/caka4t/weekly_leanfire_discussion_july_08_2019/etfdwg1/)
 
-    Args:
-        annual_spend: the amount of money you plan to spend in retirement.
-        safe_withdrawal_rate: your planned safe withdrawl rate expressed
-        as a whole percentage. Defaults to 4 for 4%.
+    ### Args:
+    - **annual_spend**: the amount of money you plan to spend in retirement.
+    - **safe_withdrawal_rate**: your planned safe withdrawl rate expressed
+    as a whole percentage. Defaults to 4 for 4%.
 
-    Returns:
-        The amount of money it costs to buy 1 day of freedom assuming the
-        money is saved and invested.
+    ### Returns:
+    The amount of money it costs to buy 1 day of freedom assuming the
+    money is saved and invested.
     """
     return Money(
         Decimal(
@@ -99,20 +98,19 @@ def cap_rate(net_operating_income: float, purchase_price: float) -> Percent:
     """Calculate the capitalization rate (cap rate) of an income-producing
     property. Cap rate measures the annual return on investment based on the
     property's net operating income. A higher cap rate generally indicates
-    a better return, but may also indicate higher risk. Credit: Paula Pant,
-    "What is Cap Rate? A Guide to Capitalization Rates"
-    https://affordanything.com/income-property/
+    a better return, but may also indicate higher risk.
+    Credit: Paula Pant: [What is Cap Rate? A Guide to Capitalization Rates](https://affordanything.com/income-property/)
 
-    Args:
-        net_operating_income: the property's annual net operating income (NOI).
-        Use the net_operating_income() function to calculate this.
-        purchase_price: the purchase price (or current market value) of the
-        property.
+    ### Args:
+    - **net_operating_income**: the property's annual net operating income (NOI).
+    Use the net_operating_income() function to calculate this.
+    - **purchase_price**: the purchase price (or current market value) of the
+    property.
 
-    Returns:
-        The capitalization rate as a percentage. Typical cap rates range from
-        4-10% depending on market and risk factors. Higher cap rates suggest
-        higher returns but potentially higher risk.
+    ### Returns:
+    The capitalization rate as a percentage. Typical cap rates range from
+    4-10% depending on market and risk factors. Higher cap rates suggest
+    higher returns but potentially higher risk.
     """
     try:
         return Percent((Decimal(net_operating_income) / Decimal(purchase_price)) * 100)
@@ -124,19 +122,19 @@ def coast_fi(
     target_fi_num: float, eiar: float, retirement_age: float, current_age: float
 ) -> Money:
     """Calculate the amount of money you would need to "coast to FI" if you
-    were to stop working but never touch your savings. Credit: eseligsohn
-    https://www.reddit.com/r/financialindependence/comments/92d35t/what_is_this_coast_number_people_are_talking_about/e34uuxh/
+    were to stop working but never touch your savings.
+    Credit: [eseligsohn on r/financialindependence](https://www.reddit.com/r/financialindependence/comments/92d35t/what_is_this_coast_number_people_are_talking_about/e34uuxh/)
 
-    Args:
-        target_fi_num: target FI number, the amount you'll need to invest
-        in order to live off interest and dividends.
-        eiar: expected inflation adjusted return expressed as a whole
-        percentage, e.g. 7 for 7%.
-        retirement_age: the age you want to retire.
-        current_age: your current age.
+    ### Args:
+    - **target_fi_num**: target FI number, the amount you'll need to invest
+    in order to live off interest and dividends.
+    - **eiar**: expected inflation adjusted return expressed as a whole
+    percentage, e.g. 7 for 7%.
+    - **retirement_age**: the age you want to retire.
+    - **current_age**: your current age.
 
-    Returns:
-        CoastFI number
+    ### Returns:
+    CoastFI number
     """
     return Money(
         Decimal(target_fi_num)
@@ -152,26 +150,25 @@ def cost_of_costs(
     time_period: float,
 ) -> Money:
     """Calculate the "tyranny of compounding costs" as laid out by Jack Bogle
-    on pages 47-49 of "The Little Book of Common Sense Investing". This is how
-    much your investing expenses cost you over time. According to Jack Bogle
+    on pages 47-49 of [The Little Book of Common Sense Investing](https://a.co/d/7mVz5Ud).
+    This is how much your investing expenses cost you over time. According to Jack Bogle
     there are three primary sources of costs: 1. The fund's expense ratio, 2.
     The sales charge paid on each purchase of shares (loads), and 3. The cost
     of the purchase and sale of securities within a fund (turnover costs).
-    https://a.co/d/7mVz5Ud
 
-    Args:
-        money_invested: principal, dollar amount.
-        interest_rate: expected annual return expressed as a whole percentage.
-        investment_costs: annual investment costs expressed as a whole
-        percentage. This could simply be a fund's expense ratio, however, more
-        accurate input might include turnover costs, loads, and any other fees.
-        time_period: investing time horizon, how long the investment will be
-        held, should be a number of years.
+    ### Args:
+    - **money_invested**: principal, dollar amount.
+    - **interest_rate**: expected annual return expressed as a whole percentage.
+    - **investment_costs**: annual investment costs expressed as a whole
+    percentage. This could simply be a fund's expense ratio, however, more
+    accurate input might include turnover costs, loads, and any other fees.
+    - **time_period**: investing time horizon, how long the investment will be
+    held, should be a number of years.
 
-    Returns:
-        Dollar amount, how much your investment expenses costed (or will cost)
-        you over the lifetime of an investment, the "tyranny of compounding
-        costs".
+    ### Returns:
+    Dollar amount, how much your investment expenses costed (or will cost)
+    you over the lifetime of an investment, the "tyranny of compounding
+    costs".
     """
     real_rate = interest_rate - investment_costs
     gross = future_value(money_invested, interest_rate, 1, time_period)
@@ -180,16 +177,16 @@ def cost_of_costs(
 
 
 def cost_per_use(your_cost: float, used_price: float, times_used: float) -> Money:
-    """Calculate how much something costed per use. Credit: Early Retirement
-    Extreme by Jacob Lund Fisker https://a.co/4vgBczW
+    """Calculate how much something costed per use.
+    Credit: [Early Retirement Extreme](https://a.co/4vgBczW) by Jacob Lund Fisker
 
-    Args:
-        your_cost: amount paid.
-        used_price: amount you can sell it for.
-        times_used: number of times you've used it.
+    ### Args:
+    - **your_cost**: amount paid.
+    - **used_price**: amount you can sell it for.
+    - **times_used**: number of times you've used it.
 
-    Returns:
-        The amount something has costed per use.
+    ### Returns:
+    The amount something has costed per use.
     """
     return annual_cost(your_cost, used_price, times_used)
 
@@ -200,19 +197,19 @@ def days_covered_by_fi(
     """Calculate the number of days per year that are currently covered by
     your savings. This is a way of seeing where you are on your FI journey.
     For example, 182.5 days would put you at 50% FI. 365 days would put
-    you at 100% FI or full financial independence. Inspired by:
-    https://www.reddit.com/r/leanfire/comments/caka4t/weekly_leanfire_discussion_july_08_2019/etfdwg1/
+    you at 100% FI or full financial independence.
+    Inspired by: [r/leanfire discussion](https://www.reddit.com/r/leanfire/comments/caka4t/weekly_leanfire_discussion_july_08_2019/etfdwg1/)
 
-    Args:
-        annual_spend: the amount of money you plan to spend in retirement.
-        stash: the amount of money you've saved.
-        withdrawal_rate: your planned safe withdrawl rate expressed as a
-        whole percentage. Defaults to 4 for 4%.
+    ### Args:
+    - **annual_spend**: the amount of money you plan to spend in retirement.
+    - **stash**: the amount of money you've saved.
+    - **withdrawal_rate**: your planned safe withdrawl rate expressed as a
+    whole percentage. Defaults to 4 for 4%.
 
-    Returns:
-        The number of days covered by your stash. This is how many days
-        you've already paid for with your savings and the amount of time
-        you could theoretically take off every year if you wanted to.
+    ### Returns:
+    The number of days covered by your stash. This is how many days
+    you've already paid for with your savings and the amount of time
+    you could theoretically take off every year if you wanted to.
     """
     return (stash * (withdrawal_rate / 100)) / average_daily_spend(annual_spend, 365)
 
@@ -225,20 +222,19 @@ def expected_gross_return(
 ) -> Percent:
     """Model the expected gross nominal annual return of a stock and bond
     portfolio before investment costs, based on Jonh C. Bogle's forumla
-    on p. 102-104 of "The Little Book of Common Sense Investing".
-    https://a.co/d/7mVz5Ud
+    on p. 102-104 of [The Little Book of Common Sense Investing](https://a.co/d/7mVz5Ud).
 
-    Args:
-        expected_return_from_stocks: expected stock market return expressed
-        as a whole percentage (can be calculated with stock_returns).
-        expected_bond_yield: bond yield expressed as a whole percentage.
-        percent_in_stocks: percentage of the portfolio in stocks expressed as
-        a whole percentage.
-        percent_in_bonds: percentage of the portfolio in bonds expressed as a
-        whole percentage.
+    ### Args:
+    - **expected_return_from_stocks**: expected stock market return expressed
+    as a whole percentage (can be calculated with stock_returns).
+    - **expected_bond_yield**: bond yield expressed as a whole percentage.
+    - **percent_in_stocks**: percentage of the portfolio in stocks expressed as
+    a whole percentage.
+    - **percent_in_bonds**: percentage of the portfolio in bonds expressed as a
+    whole percentage.
 
-    Returns:
-        Expected return from a portfolio made up of stocks and bonds.
+    ### Returns:
+    Expected return from a portfolio made up of stocks and bonds.
     """
     bonds = percent_return_for_percent(expected_bond_yield, percent_in_bonds)
     stocks = percent_return_for_percent(expected_return_from_stocks, percent_in_stocks)
@@ -253,21 +249,21 @@ def fi_age(
     current_age: int,
 ) -> int:
     """Calculate the age at which you will reach FIRE based on your current
-    trajectory. Credit: eseligsohn https://www.reddit.com/r/financialindependence/comments/92d35t/what_is_this_coast_number_people_are_talking_about/e36titl/
+    trajectory.
+    Credit: [eseligsohn on r/financialindependence](https://www.reddit.com/r/financialindependence/comments/92d35t/what_is_this_coast_number_people_are_talking_about/e36titl/)
 
-    Args:
-        expected_inflation_adjusted_return: Expected inflation adjusted return
-        expressed as a whole percentage, e.g. 7 for 7%.
-        annual_savings_amount: annual savings amount, the amount of money you
-        save towards FI each year.
-        stash: invested assests, the amount of money you have currently saved
-        and invested for FI.
-        fi_number: the number you need to reach FI.
-        current_age: your current age.
+    ### Args:
+    - **expected_inflation_adjusted_return**: Expected inflation adjusted return
+    expressed as a whole percentage, e.g. 7 for 7%.
+    - **annual_savings_amount**: annual savings amount, the amount of money you
+    save towards FI each year.
+    - **stash**: invested assests, the amount of money you have currently saved
+    and invested for FI.
+    - **fi_number**: the number you need to reach FI.
+    - **current_age**: your current age.
 
-    Returns:
-        FI age, int, the age at which you will FIRE based on your current
-        habits.
+    ### Returns:
+    FI age, int, the age at which you will FIRE based on your current habits.
     """
     fi_num = fi_number * -1
     with numpy.errstate(divide='ignore'):
@@ -286,14 +282,14 @@ def fi_number(planned_yearly_expenses: float, withdrawal_rate: float) -> Money:
     """Calculate your FI number based on your planned yearly expenses and withdrawal
     rate.
 
-    Args:
-        planned_yearly_expenses: the amount of money you think you will spend in
-        retirement on an annual basis.
-        withdrawal_rate: the rate you expect to withdral money annually e.g. 4
-        (for 4%, based on the Trinity Study).
+    ### Args:
+    - **planned_yearly_expenses**: the amount of money you think you will spend in
+    retirement on an annual basis.
+    - **withdrawal_rate**: the rate you expect to withdral money annually e.g. 4
+    (for 4%, based on the Trinity Study).
 
-    Returns:
-        FI number.
+    ### Returns:
+    FI number.
     """
     return Money(Decimal(planned_yearly_expenses) * Decimal(100.0)) / Decimal(
         withdrawal_rate
@@ -312,17 +308,17 @@ def future_value(
     annual drawdowns. Can also be used to calculate the future equivalent of
     money due to inflation.
 
-    Args:
-        present_value: the current quantity of money (principal).
-        annual_rate: interest rate expressed as a whole percentage, e.g., 5 for 5%.
-        periods_per_year: the number of times money is compounded per year.
-        years: the number of years invested.
-        drawdown: Optional fixed amount withdrawn annually at the end of
-        each year after growth. Defaults to 0.
+    ### Args:
+    - **present_value**: the current quantity of money (principal).
+    - **annual_rate**: interest rate expressed as a whole percentage, e.g., 5 for 5%.
+    - **periods_per_year**: the number of times money is compounded per year.
+    - **years**: the number of years invested.
+    - **drawdown**: Optional fixed amount withdrawn annually at the end of
+    each year after growth. Defaults to 0.
 
-    Returns:
-        The future value of the money invested with compound interest, adjusted
-        for annual drawdowns if specified.
+    ### Returns:
+    The future value of the money invested with compound interest, adjusted
+    for annual drawdowns if specified.
     """
     pv = Decimal(present_value)
     rate_per_period = Decimal(annual_rate) / Decimal(100) / Decimal(periods_per_year)
@@ -349,16 +345,16 @@ def future_value(
 def get_percentage(a: float, b: float, i: bool = False, r: bool = False) -> Percent:
     """Calculate the percentage that one number is of another.
 
-    Args:
-        a: the lesser number.
-        b: the greater number that the lesser number is a percentage of.
-        i: bool, True if the user wants the result returned as a whole number.
-        r: bool, True if the user wants the result rounded. Rounds to the
-        second decimal point.
+    ### Args:
+    - **a**: the lesser number.
+    - **b**: the greater number that the lesser number is a percentage of.
+    - **i**: bool, True if the user wants the result returned as a whole number.
+    - **r**: bool, True if the user wants the result rounded. Rounds to the
+    second decimal point.
 
-    Returns:
-        Argument a as a percentage of b. Throws a warning if integer is set to
-        True and round is set to False.
+    ### Returns:
+    Argument a as a percentage of b. Throws a warning if integer is set to
+    True and round is set to False.
     """
     # Round to the second decimal
     if i is False and r is True:
@@ -383,17 +379,17 @@ def get_percentage(a: float, b: float, i: bool = False, r: bool = False) -> Perc
 
 def hours_of_life_energy(money_spent: float, real_hourly_wage: float) -> Decimal:
     """Calculate the hours of life energy something costs by dividing money
-    spent by your real hourly wage. From "Your Money or Your Life" by
-    Vicki Robin and Joe Dominguez, Chapter 3, https://a.co/d/0fBQcbf
+    spent by your real hourly wage.
+    From [Your Money or Your Life](https://a.co/d/0fBQcbf) by Vicki Robin and Joe Dominguez, Chapter 3
 
-    Args:
-        money_spent: int or float, the amount of money spent or price of something.
-        real_hourly_wage: float, the true amount of money you earn after adjustments
-        have been made for work related expenses and additional work related time
-        commitments, e.g. commuting, work clothes, time decompressing, etc.
+    ### Args:
+    - **money_spent**: int or float, the amount of money spent or price of something.
+    - **real_hourly_wage**: float, the true amount of money you earn after adjustments
+    have been made for work related expenses and additional work related time
+    commitments, e.g. commuting, work clothes, time decompressing, etc.
 
-    Returns:
-        Hours of life energy you spent to pay for the money spent.
+    ### Returns:
+    Hours of life energy you spent to pay for the money spent.
     """
     try:
         return Decimal(money_spent / real_hourly_wage)
@@ -405,19 +401,18 @@ def likely_real_return(
     nominal_gross_return: float, investment_costs: float, inflation: float
 ) -> Percent:
     """Model the likely return of a portfolio using the relentless rules of humble
-    artithmetic as explained by Jack Bogle on page 105 or "The Little Book of Common
-    Sense Investing". https://a.co/d/7mVz5Ud
+    artithmetic as explained by Jack Bogle on page 105 of
+    [The Little Book of Common Sense Investing](https://a.co/d/7mVz5Ud).
 
+    ### Args:
+    - **nominal_gross_return**: expected gross return expressed as a whole percentage
+    (can be calculated by expected_gross_return).
+    - **investment_costs**: fees and investment costs expressed as a whole percentage.
+    - **inflation**: inflation rate expressed as a whole percentage.
 
-    Args:
-        nominal_gross_return: expected gross return expressed as a whole percentage
-        (can be calculated by expected_gross_return).
-        investment_costs: fees and investment costs expressed as a whole percentage.
-        inflation: inflation rate expressed as a whole percentage.
-
-    Returns:
-        The likely real return of a portfolio after investing costs and inflation
-        have been taken out.
+    ### Returns:
+    The likely real return of a portfolio after investing costs and inflation
+    have been taken out.
     """
     nominal_net_return = nominal_gross_return - investment_costs
     real_annual_return = nominal_net_return - inflation
@@ -426,17 +421,16 @@ def likely_real_return(
 
 def monthly_investment_income(stash: float, current_interest_rate: float) -> Money:
     """Calculate how much monthly income you generate from your investments.
-    From "Your Money or Your Life" by Vicki Robin and Joe Dominguez, Chapter 8,
-    https://a.co/d/0fBQcbf
+    From [Your Money or Your Life](https://a.co/d/0fBQcbf) by Vicki Robin and Joe Dominguez, Chapter 8
 
-    Args:
-        stash: your capital, the amount of money you have invested.
-        current_interest_rate: the interest rate your money earns expressed as a whole
-        percentage, e.g. 4 for 4%, synonymous with safe withdrawal rate in this context.
+    ### Args:
+    - **stash**: your capital, the amount of money you have invested.
+    - **current_interest_rate**: the interest rate your money earns expressed as a whole
+    percentage, e.g. 4 for 4%, synonymous with safe withdrawal rate in this context.
 
-    Returns:
-        Monthly investment income, the amount of money you can expect to make
-        from your investments monthly.
+    ### Returns:
+    Monthly investment income, the amount of money you can expect to make
+    from your investments monthly.
     """
     return Money(
         (Decimal(stash) * (Decimal(current_interest_rate) / Decimal(100))) / Decimal(12)
@@ -448,19 +442,18 @@ def net_operating_income(
 ) -> Money:
     """Calculate the net operating income (NOI) of a rental property.
     NOI is the total annual rental income minus all operating expenses,
-    but does NOT include mortgage payments. Credit: Paula Pant,
-    "What is Cap Rate? A Guide to Capitalization Rates"
-    https://affordanything.com/income-property/
+    but does NOT include mortgage payments.
+    Credit: Paula Pant, [What is Cap Rate? A Guide to Capitalization Rates](https://affordanything.com/income-property/)
 
-    Args:
-        annual_rental_income: total annual rental income from the property.
-        operating_expenses: list of annual operating expenses including
-        property taxes, insurance, maintenance, vacancy losses, property
-        management fees, HOA fees, utilities (if paid by owner), etc.
-        Do NOT include mortgage payments.
+    ### Args:
+    - **annual_rental_income**: total annual rental income from the property.
+    - **operating_expenses**: list of annual operating expenses including
+    property taxes, insurance, maintenance, vacancy losses, property
+    management fees, HOA fees, utilities (if paid by owner), etc.
+    Do NOT include mortgage payments.
 
-    Returns:
-        The net operating income (NOI) for the property.
+    ### Returns:
+    The net operating income (NOI) for the property.
     """
     expenses = [Decimal(expense) for expense in operating_expenses]
     return Money(Decimal(annual_rental_income) - sum(expenses))
@@ -471,20 +464,19 @@ def opportunity_cost(
 ) -> Money:
     """Calculate the opportunity cost of money you might spend. This is the amount
     of money you might earn at a given interest rate over a period of time (usually
-    years) if the money were invested instead. From Chapter 4 of "The Simple Path
-    to Wealth: Your road map to financial independence and a rich, free life" by
-    JL Collins, https://a.co/d/9BMocT1
+    years) if the money were invested instead.
+    From [The Simple Path to Wealth](https://a.co/d/9BMocT1) by JL Collins, Chapter 4
 
-    Args:
-        cost: price or cost of something you are thinking about buying or have
-        bought.
-        interest_rate: the interest rate your money will likely earn if it were
-        invested instead.
-        time_period: a given time period, normally a number of years.
+    ### Args:
+    - **cost**: price or cost of something you are thinking about buying or have
+    bought.
+    - **interest_rate**: the interest rate your money will likely earn if it were
+    invested instead.
+    - **time_period**: a given time period, normally a number of years.
 
-    Returns:
-        Opportunity cost, the amount of money you might lose over a period of
-        time by spending the money rather than investing it.
+    ### Returns:
+    Opportunity cost, the amount of money you might lose over a period of
+    time by spending the money rather than investing it.
     """
     return Money(future_value(cost, interest_rate, 1, time_period) - Decimal(cost))
 
@@ -492,12 +484,12 @@ def opportunity_cost(
 def percent_decrease(original_value: float, final_value: float) -> Percent:
     """Calculate the percentage of loss from one number to another.
 
-    Args:
-        original_value: int or float, the starting number.
-        final_value: int or float, the final number after all losses.
+    ### Args:
+    - **original_value**: int or float, the starting number.
+    - **final_value**: int or float, the final number after all losses.
 
-    Returns:
-        The decrease from one number to another expressed as a percentage.
+    ### Returns:
+    The decrease from one number to another expressed as a percentage.
     """
     try:
         return Percent(
@@ -510,12 +502,12 @@ def percent_decrease(original_value: float, final_value: float) -> Percent:
 def percent_increase(original_value: float, final_value: float) -> Percent:
     """Calculate the percentage of growth from one number to another.
 
-    Args:
-        original_value: int or float, the starting number.
-        final_value: int or float, the final number after all gains.
+    ### Args:
+    - **original_value**: int or float, the starting number.
+    - **final_value**: int or float, the final number after all gains.
 
-    Returns:
-        The increase from one number to another expressed as a percentage.
+    ### Returns:
+    The increase from one number to another expressed as a percentage.
     """
     try:
         return Percent(((final_value - original_value) / abs(original_value)) * 100)
@@ -530,16 +522,16 @@ def percent_return_for_percent(
     percentage of a portfolio. This function is used in modeling projected
     returns for portfolios of different asset classes.
 
-    Args:
-        percent_return: the expected percent return expressed as a whole
-        percentage.
-        percentage_of_portfolio: the percentage of your portfolio that
-        the return applies to.
+    ### Args:
+    - **percent_return**: the expected percent return expressed as a whole
+    percentage.
+    - **percentage_of_portfolio**: the percentage of your portfolio that
+    the return applies to.
 
-    Returns:
-        Given a % return for an asset class, this function will return the
-        percent returned for that asset class as it represents x% of a
-        portfolio.
+    ### Returns:
+    Given a % return for an asset class, this function will return the
+    percent returned for that asset class as it represents x% of a
+    portfolio.
     """
     return Percent((percent_return / 100) * percentage_of_portfolio)
 
@@ -549,26 +541,24 @@ def pot_score(
 ) -> Decimal:
     """Calculate Pay-Over-Tuition to evaluate whether a degree is worth it to see
     how much you can expect to raise your annual earning power per dollar spent
-    on a degree. Credit for this calculation goes to Kristy Shen and Bryce Leung
-    https://a.co/d/6k3t1oH
+    on a degree.
+    Credit: [Quit Like a Millionaire](https://a.co/d/6k3t1oH) by Kristy Shen and Bryce Leung
 
-    Args:
-        median_starting_salary: the median annual starting salary for the job a
-        given degree will pay in the state where you plan to live.
+    ### Args:
+    - **median_starting_salary**: the median annual starting salary for the job a
+    given degree will pay in the state where you plan to live.
+    - **hourly_minimum_wage**: the hourly minimum wage in the state where you plan
+    to live.
+    - **total_tuition_cost**: the total cost of tuition for a given degree.
 
-        hourly_minimum_wage: the hourly minimum wage in the state where you plan
-        to live.
-
-        total_tuition_cost: the total cost of tuition for a given degree.
-
-    Returns:
-        Pay-Over-Tuition, a score for comparing degrees between various possible
-        career paths. Though expressed as a decimal, the POT score correlates to
-        money, e.g. a POT score of 1.3 will return $1.30 for every dollar spent
-        on tuition, every year after graduation, assuming you earn an average salary
-        in your chosen profession. Multiply the full cost of a degree (tuition) by
-        the POT score to see how much money you will earn above minimum wage, per
-        year, after graduation.
+    ### Returns:
+    Pay-Over-Tuition, a score for comparing degrees between various possible
+    career paths. Though expressed as a decimal, the POT score correlates to
+    money, e.g. a POT score of 1.3 will return $1.30 for every dollar spent
+    on tuition, every year after graduation, assuming you earn an average salary
+    in your chosen profession. Multiply the full cost of a degree (tuition) by
+    the POT score to see how much money you will earn above minimum wage, per
+    year, after graduation.
     """
     annual_minimum_wage = (Decimal(hourly_minimum_wage) * Decimal(40)) * Decimal(52)
     pot = (Decimal(median_starting_salary) - annual_minimum_wage) / Decimal(
@@ -582,17 +572,17 @@ def price_to_rent(cost_of_home: float, annual_rent: float) -> Decimal:
     renting makes more financial sense in a given market. A lower ratio suggests
     buying may be more favorable, while a higher ratio suggests renting may be
     more favorable. Credit: Paula Pant, "The FIIRE Framework", ChooseFI Podcast
-    Episode 568. Formula explanation:
-    https://affordanything.com/is-renting-better-than-buying-should-i-rent-or-buy/
+    Episode 568.
+    [Formula explanation](https://affordanything.com/is-renting-better-than-buying-should-i-rent-or-buy/)
 
-    Args:
-        cost_of_home: the purchase price of the home.
-        annual_rent: the total annual rent for a comparable property.
+    ### Args:
+    - **cost_of_home**: the purchase price of the home.
+    - **annual_rent**: the total annual rent for a comparable property.
 
-    Returns:
-        The price-to-rent ratio. A ratio of 15 or less generally favors buying,
-        16-20 is a gray area, and 21+ generally favors renting. These are rough
-        guidelines and individual circumstances vary.
+    ### Returns:
+    The price-to-rent ratio. A ratio of 15 or less generally favors buying,
+    16-20 is a gray area, and 21+ generally favors renting. These are rough
+    guidelines and individual circumstances vary.
     """
     return Decimal(cost_of_home) / Decimal(annual_rent)
 
@@ -608,22 +598,22 @@ def real_hourly_wage(
     subtracting auxiliary work related expenses (e.g. work clothes, cost
     of commuting, etc.) and by adjusting your hours worked by adding
     auxiliary work related time committments (e.g. time spent commuting,
-    time spent decompressing, etc.). From "Your Money or Your Life" by
-    Vicki Robin and Joe Dominguez, Chapter 2, https://a.co/d/0fBQcbf
+    time spent decompressing, etc.).
+    From [Your Money or Your Life](https://a.co/d/0fBQcbf) by Vicki Robin and Joe Dominguez, Chapter 2
 
-    Args:
-        hours_worked: the number of hours worked.
-        money_paid: how much you were paid.
-        benefits: the value of employer supplied benefits (401k match, health
-        insurance, etc.).
-        additional_work_related_hours: additional time spent for work such as
-        time commuting or time spent on escape entertainment after work.
-        additional_work_related_expenses: additional work related expenses
-        such as the cost of commuting, lunches out, work clothes, etc.
+    ### Args:
+    - **hours_worked**: the number of hours worked.
+    - **money_paid**: how much you were paid.
+    - **benefits**: the value of employer supplied benefits (401k match, health
+    insurance, etc.).
+    - **additional_work_related_hours**: additional time spent for work such as
+    time commuting or time spent on escape entertainment after work.
+    - **additional_work_related_expenses**: additional work related expenses
+    such as the cost of commuting, lunches out, work clothes, etc.
 
-    Returns:
-        Your real hourly wage adjusted for additional work related time
-        commitments and additional work related expenses.
+    ### Returns:
+    Your real hourly wage adjusted for additional work related time
+    commitments and additional work related expenses.
     """
     real_pay = money_paid + benefits - additional_work_related_expenses
     real_hours = hours_worked + additional_work_related_hours
@@ -635,32 +625,32 @@ def redeem_points(points: int, rate: float = 1) -> Money:
     rate. The default rate is 1% which is the cash value of awards points
     for most cards.
 
-    Args:
-        points: the number of awards points to be redeemed.
-        rate: defaults to 1 which is the exchange rate for most points
-        to cash (1 cent per point).
+    ### Args:
+    - **points**: the number of awards points to be redeemed.
+    - **rate**: defaults to 1 which is the exchange rate for most points
+    to cash (1 cent per point).
 
-    Returns:
-        Dollar amount the points are worth.
+    ### Returns:
+    Dollar amount the points are worth.
     """
     return Money(Decimal(points * (rate / 100)).quantize(CENTS, ROUND_HALF_UP))
 
 
 def redeem_chase_points(points: int) -> dict:
     """Calculates the value of Chase Ultimate Rewards points for different
-    exchange scenarios. Based on the ChooseFI Sweet Redemption article:
-    https://www.choosefi.com/travel-rewards-part-3-sweet-redemption/
+    exchange scenarios.
+    Based on the [ChooseFI Sweet Redemption article](https://www.choosefi.com/travel-rewards-part-3-sweet-redemption/)
 
-    Args:
-        points: number of Ultimate Rewards points to redeem.
+    ### Args:
+    - **points**: number of Ultimate Rewards points to redeem.
 
-    Returns:
-        A dictionary containing common Chase Ultimate Rewards redemption
-        scenarios including cash value, Sapphire Preferred portal, Sapphire
-        Reserve portal and target partner exchange (the guideline for direct
-        transfer of points to Chase Ultimate Reward partners such as United
-        Airlines). Target partner exchange is the aspirational goal for an
-        exchange with a partner, not a guarantee.
+    ### Returns:
+    A dictionary containing common Chase Ultimate Rewards redemption
+    scenarios including cash value, Sapphire Preferred portal, Sapphire
+    Reserve portal and target partner exchange (the guideline for direct
+    transfer of points to Chase Ultimate Reward partners such as United
+    Airlines). Target partner exchange is the aspirational goal for an
+    exchange with a partner, not a guarantee.
     """
     return {
         'Cash value': redeem_points(points),
@@ -677,24 +667,23 @@ def remaining_life_expectancy(
     exclude_time_asleep: bool = False,
 ) -> TimeUnit:
     """Calculate the amount of time you have left to live based on averages
-    from the "United States Life Tables, 2013," National Vital Statistics
-    Reports 66, no. 3 (2017): 1–64 which can be found at https://ftp.cdc.gov/pub/health_Statistics/nchs/publications/NVSR/66_03/Table01.xlsx
-    This is the same data used in "Your Money or Your Life" by Vicki Robin and
-    Joe Dominguez, Chapter 2, https://a.co/d/0fBQcbf which is the inspiration
-    for this function.
+    from the [United States Life Tables, 2013](https://ftp.cdc.gov/pub/health_Statistics/nchs/publications/NVSR/66_03/Table01.xlsx),
+    National Vital Statistics Reports 66, no. 3 (2017): 1–64.
+    This is the same data used in [Your Money or Your Life](https://a.co/d/0fBQcbf) by Vicki Robin and
+    Joe Dominguez, Chapter 2, which is the inspiration for this function.
 
-    Args:
-        your_age: int, your age.
-        time_unit: str, "hours", "days", "months", or "years".
-        more_accurate: bool, if True, will use 365.2425 as the length of
-        a year instead of the proverbial 365 used by Vicki Robin and Joe
-        Dominguez.
-        exclude_time_asleep: bool, if set to True, the function will
-        assume you lose half your time to sleep and other mundane tasks.
+    ### Args:
+    - **your_age**: int, your age.
+    - **time_unit**: str, "hours", "days", "months", or "years".
+    - **more_accurate**: bool, if True, will use 365.2425 as the length of
+    a year instead of the proverbial 365 used by Vicki Robin and Joe
+    Dominguez.
+    - **exclude_time_asleep**: bool, if set to True, the function will
+    assume you lose half your time to sleep and other mundane tasks.
 
-    Returns:
-        The amount of time more on average that you are expected to live
-        based on your current age, how much time you *might* have left.
+    ### Returns:
+    The amount of time more on average that you are expected to live
+    based on your current age, how much time you *might* have left.
     """
     root_dir = os.path.dirname(os.path.abspath(__file__))
     spreadsheet = os.path.join(root_dir, 'data', 'Table01.xlsx')
@@ -732,14 +721,14 @@ def rule_of_72(interest_rate: float, accurate: bool = True) -> float:
     """Calculate the time it will take for money to double based on a given
     interest rate: Years to double = 72 / Interest Rate.
 
-    Args:
-        interest_rate: float written as a whole percentage, e.g. 7 for 7%.
-        accurate: Boolean, when set to True the more accurate 69.3 is used
-        instead of 72.
+    ### Args:
+    - **interest_rate**: float written as a whole percentage, e.g. 7 for 7%.
+    - **accurate**: Boolean, when set to True the more accurate 69.3 is used
+    instead of 72.
 
-    Returns:
-        The number of years it will take for money to double based on an
-        interest rate.
+    ### Returns:
+    The number of years it will take for money to double based on an
+    interest rate.
     """
     if interest_rate == 0:
         return float('inf')
@@ -751,15 +740,14 @@ def rule_of_72(interest_rate: float, accurate: bool = True) -> float:
 
 def savings_rate(take_home_pay: float, spending: float) -> Percent:
     """Calculate your savings_rate based on take home pay and spending,
-    using the formula laid out by Mr. Money Mustache:
-    https://www.mrmoneymustache.com/2015/01/26/calculating-net-worth/
+    using the [formula laid out by Mr. Money Mustache](https://www.mrmoneymustache.com/2015/01/26/calculating-net-worth/).
 
-    Args:
-        take_home_pay: monthly take-home pay.
-        spending: monthly spending.
+    ### Args:
+    - **take_home_pay**: monthly take-home pay.
+    - **spending**: monthly spending.
 
-    Returns:
-        your monthly savings rate expressed as a percentage.
+    ### Returns:
+    Your monthly savings rate expressed as a percentage.
     """
 
     try:
@@ -776,12 +764,12 @@ def spending_from_savings(take_home_pay: float, savings: float) -> Money:
     instead of tracking your spending in detail. This number can be used as
     input for the savings_rate function.
 
-    Args:
-        take_home_pay: monthly take-home pay.
-        savings: amount of money saved towards FI.
+    ### Args:
+    - **take_home_pay**: monthly take-home pay.
+    - **savings**: amount of money saved towards FI.
 
-    Returns:
-        The amount of money spent.
+    ### Returns:
+    The amount of money spent.
     """
     return Money(Decimal(take_home_pay) - Decimal(savings))
 
@@ -789,27 +777,27 @@ def spending_from_savings(take_home_pay: float, savings: float) -> Money:
 def stock_returns(
     dividend_yield: float, earnings_growth: float, change_in_pe: float
 ) -> Percent:
-    """Model the expectation of stock returns for the next decade  based on
+    """Model the expectation of stock returns for the next decade based on
     Jack Bogle's formula using the sources of stock returns presented on pages
-    97-105 of "The Little Book of Common Sense Investing". Bogle believes that
-    stock returns come from stock dividends, earnings growth (tied to GDP) and
+    97-105 of [The Little Book of Common Sense Investing](https://a.co/d/7mVz5Ud).
+    Bogle believes that stock returns come from stock dividends, earnings growth (tied to GDP) and
     swings in the P/E multiple (speculative return). Bond returns come from
-    the interest a bond pays. https://a.co/d/7mVz5Ud
+    the interest a bond pays.
 
-    Args:
-        dividend_yield: percentage that stocks are currently yielding. Bogle
-        used the S&P 500 or Total Stock Market Index.
-        earnings_growth: percentage you think stocks will grow per year. Bogle
-        notes that this has typically been at the nominal growth rate of GDP
-        (4-5% per year) which has a 0.98% correlation with corporate profits.
-        change_in_pe: negative or positive percentage of change in today's
-        P/E multiple. This number represents the "speculative return".
+    ### Args:
+    - **dividend_yield**: percentage that stocks are currently yielding. Bogle
+    used the S&P 500 or Total Stock Market Index.
+    - **earnings_growth**: percentage you think stocks will grow per year. Bogle
+    notes that this has typically been at the nominal growth rate of GDP
+    (4-5% per year) which has a 0.98% correlation with corporate profits.
+    - **change_in_pe**: negative or positive percentage of change in today's
+    P/E multiple. This number represents the "speculative return".
 
-    Returns:
-        The percentage you might expect to earn on an annual basis given the
-        current state of the market. This number has no factual basis and is
-        not a prediction. It should not be taken as a certainty or advice.
-        It's just an educated guess based on common sense.
+    ### Returns:
+    The percentage you might expect to earn on an annual basis given the
+    current state of the market. This number has no factual basis and is
+    not a prediction. It should not be taken as a certainty or advice.
+    It's just an educated guess based on common sense.
     """
     return Percent(
         sum([Decimal(dividend_yield), Decimal(earnings_growth), Decimal(change_in_pe)])
@@ -820,16 +808,15 @@ def take_home_pay(
     gross_pay: float, employer_match: float, taxes_and_fees: List[float]
 ) -> Money:
     """Calculate net take-home pay including employer retirement savings match
-    using the formula laid out by Mr. Money Mustache:
-    https://www.mrmoneymustache.com/2015/01/26/calculating-net-worth/
+    using the [formula laid out by Mr. Money Mustache](https://www.mrmoneymustache.com/2015/01/26/calculating-net-worth/).
 
-    Args:
-        gross_pay: gross monthly pay.
-        employer_match: the 401(k) match from your employer.
-        taxes_and_fees: taxes and fees deducted from your paycheck.
+    ### Args:
+    - **gross_pay**: gross monthly pay.
+    - **employer_match**: the 401(k) match from your employer.
+    - **taxes_and_fees**: taxes and fees deducted from your paycheck.
 
-    Returns:
-        Your monthly take-home pay.
+    ### Returns:
+    Your monthly take-home pay.
     """
     taxes_and_fees = [Decimal(item) for item in taxes_and_fees]
     return Money((Decimal(gross_pay) + Decimal(employer_match)) - sum(taxes_and_fees))
@@ -837,16 +824,16 @@ def take_home_pay(
 
 def turnover_costs(turnover_rate: float) -> Percent:
     """Make an educated guess at the cost of portfolio turnover using the rule of
-    thumb presented by Jack Bogle on page 55 of "The Little Book of Common Sense
-    Investing". https://a.co/d/7mVz5Ud
+    thumb presented by Jack Bogle on page 55 of
+    [The Little Book of Common Sense Investing](https://a.co/d/7mVz5Ud).
 
-    Args:
-        turnover_rate: turnover rate of an index or mutual fund. This can normally
-        be found with the normal characteristics and data on the fund's web page.
+    ### Args:
+    - **turnover_rate**: turnover rate of an index or mutual fund. This can normally
+    be found with the normal characteristics and data on the fund's web page.
 
-    Returns:
-        What the turnover might cost based on Jack Bogle's rule of thumb. This
-        is not a precise number. It's an educated guess and could be subject to
-        change as systems change with technology in the future.
+    ### Returns:
+    What the turnover might cost based on Jack Bogle's rule of thumb. This
+    is not a precise number. It's an educated guess and could be subject to
+    change as systems change with technology in the future.
     """
     return Percent(Decimal(0.01) * Decimal(turnover_rate))
