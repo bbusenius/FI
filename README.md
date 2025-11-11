@@ -1,6 +1,6 @@
 # FI
 
-FI is a Python library of functions for the financial independence (FI, FIRE) community. Functions can be run as standalone utilities on the command line or used in Python code. The FI library powers the auto-generated site [FI Widgets](https://fi-widgets.com/) which is a GUI representation of the library. It also powers [FI API](https://github.com/bbusenius/FI-API) and is used in [MMM Savings Rate](https://github.com/bbusenius/MMM_Savings_Rate).
+FI is a Python library of functions for the financial independence (FI, FIRE) community. Functions can be run as standalone utilities on the command line or used in Python code. The FI library powers the auto-generated site [FI Widgets](https://fi-widgets.com/), a GUI representation of the library. It powers [FI MCP](https://github.com/bbusenius/FI-MCP) and [FI API](https://github.com/bbusenius/FI-API). It's also used in [MMM Savings Rate](https://github.com/bbusenius/MMM_Savings_Rate).
 
 ## Installation
 
