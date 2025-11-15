@@ -285,8 +285,8 @@ def fi_number(planned_yearly_expenses: float, withdrawal_rate: float) -> Money:
     ### Args:
     - **planned_yearly_expenses**: the amount of money you think you will spend in
     retirement on an annual basis.
-    - **withdrawal_rate**: the rate you expect to withdral money annually e.g. 4
-    (for 4%, based on the Trinity Study).
+    - **withdrawal_rate**: the rate you expect to withdral money annually e.g. 4 for
+    4%, based on the [Trinity Study](https://www.aaii.com/journal/199802/feature.pdf).
 
     ### Returns:
     FI number.
