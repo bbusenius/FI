@@ -37,6 +37,7 @@ The following functions are packaged in this library:
 - `hours_of_life_energy`
 - `likely_real_return`
 - `monthly_investment_income`
+- `monthly_payment`
 - `net_operating_income`
 - `opportunity_cost`
 - `percent_decrease`
@@ -53,6 +54,7 @@ The following functions are packaged in this library:
 - `spending_from_savings`
 - `stock_returns`
 - `take_home_pay`
+- `total_interest`
 - `turnover_costs`
 
 All functions can be run from the command-line or used in Python directly.
