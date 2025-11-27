@@ -162,6 +162,34 @@ class test_fi(unittest.TestCase):
         self.assertEqual(val5, Decimal(0))
         self.assertEqual(val6 * 12, Decimal(40000))
 
+    def test_monthly_payment(self):
+        # 30-year mortgage at 6%, $200k principal
+        # Known value: ~$1,199.10/month
+        val1 = fi.monthly_payment(200000, 6, 30)
+        self.assertAlmostEqual(val1, Decimal('1199.10'), 0)
+
+        # 15-year mortgage at 4%, $150k principal
+        # Known value: ~$1,109.53/month
+        val2 = fi.monthly_payment(150000, 4, 15)
+        self.assertAlmostEqual(val2, Decimal('1109.53'), 0)
+
+        # 0% interest edge case - should be simple division
+        val3 = fi.monthly_payment(12000, 0, 5)
+        self.assertEqual(val3, Decimal('200.00'))  # 12000 / 60 months
+
+    def test_total_interest(self):
+        # Same 30-year mortgage at 6%: should pay ~$231,676 in interest
+        val1 = fi.total_interest(200000, 6, 30)
+        self.assertAlmostEqual(val1, Decimal('231676'), -3)
+
+        # 15-year mortgage at 4%: should pay ~$49,716 in interest
+        val2 = fi.total_interest(150000, 4, 15)
+        self.assertAlmostEqual(val2, Decimal('49716'), -3)
+
+        # 0% interest - should be exactly 0
+        val3 = fi.total_interest(12000, 0, 5)
+        self.assertEqual(val3, Decimal('0.00'))
+
     def test_net_operating_income(self):
         # Example: $30,000 rental income minus $12,000, $2,000, $1,500 in expenses
         val1 = fi.net_operating_income(30000, [12000, 2000, 1500])

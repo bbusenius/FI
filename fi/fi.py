@@ -437,6 +437,26 @@ def monthly_investment_income(stash: float, current_interest_rate: float) -> Mon
     )
 
 
+def monthly_payment(principal: float, annual_rate: float, years: float) -> Money:
+    """Calculate the monthly payment for a loan using standard amortization. For a
+    full amortization schedule showing the complete payment breakdown, visit the
+    [ChooseFI Amortization Calculator](https://choosefi.com/amoritization-calculator/).
+
+    ### Args:
+    - **principal**: the loan amount.
+    - **annual_rate**: the annual interest rate expressed as a whole percentage (e.g., 5 for 5%).
+    - **years**: the loan term in years.
+
+    ### Returns:
+    The monthly payment amount.
+    """
+    monthly_rate = annual_rate / 100 / 12
+    nper = years * 12
+    # npf.pmt returns negative value (outflow), so negate it
+    payment = -npf.pmt(monthly_rate, nper, principal)
+    return Money(Decimal(str(payment)))
+
+
 def net_operating_income(
     annual_rental_income: float, operating_expenses: List[float]
 ) -> Money:
@@ -820,6 +840,24 @@ def take_home_pay(
     """
     taxes_and_fees = [Decimal(item) for item in taxes_and_fees]
     return Money((Decimal(gross_pay) + Decimal(employer_match)) - sum(taxes_and_fees))
+
+
+def total_interest(principal: float, annual_rate: float, years: float) -> Money:
+    """Calculate the total interest paid over the life of a loan. For a full amortization
+    schedule showing the complete payment breakdown, visit the
+    [ChooseFI Amortization Calculator](https://choosefi.com/amoritization-calculator/).
+
+    ### Args:
+    - **principal**: the loan amount.
+    - **annual_rate**: the annual interest rate expressed as a whole percentage (e.g., 5 for 5%).
+    - **years**: the loan term in years.
+
+    ### Returns:
+    The total interest paid over the life of the loan.
+    """
+    monthly = monthly_payment(principal, annual_rate, years)
+    total_paid = monthly * Decimal(years * 12)
+    return Money(total_paid - Decimal(principal))
 
 
 def turnover_costs(turnover_rate: float) -> Percent:

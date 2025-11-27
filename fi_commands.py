@@ -539,6 +539,31 @@ def run_monthly_investment_income():
     )
 
 
+def run_monthly_payment():
+    """
+    Calculate the monthly payment for a loan using standard amortization.
+    For a full amortization schedule, see https://choosefi.com/amoritization-calculator/
+    """
+    description = run_monthly_payment.__doc__
+    parser = argparse.ArgumentParser(
+        prog='monthly_payment',
+        description=description,
+        epilog="Example use: monthly_payment 200000 6 30",
+    )
+    parser.add_argument('principal', help='The loan amount')
+    parser.add_argument(
+        'annual_rate',
+        help='The annual interest rate expressed as a whole percentage (e.g., 5 for 5%%)',
+    )
+    parser.add_argument('years', help='The loan term in years')
+    args = parser.parse_args()
+    print(
+        fi.monthly_payment(
+            float(args.principal), float(args.annual_rate), float(args.years)
+        )
+    )
+
+
 def run_net_operating_income():
     """
     Calculate the net operating income (NOI) of a rental property.
@@ -1001,6 +1026,31 @@ def run_take_home_pay():
     args = parser.parse_args()
     taxes = [Decimal(item) for item in args.taxes_and_fees.split(' ')]
     print(fi.take_home_pay(args.gross_pay, args.employer_match, taxes))
+
+
+def run_total_interest():
+    """
+    Calculate the total interest paid over the life of a loan.
+    For a full amortization schedule, see https://choosefi.com/amoritization-calculator/
+    """
+    description = run_total_interest.__doc__
+    parser = argparse.ArgumentParser(
+        prog='total_interest',
+        description=description,
+        epilog="Example use: total_interest 200000 6 30",
+    )
+    parser.add_argument('principal', help='The loan amount')
+    parser.add_argument(
+        'annual_rate',
+        help='The annual interest rate expressed as a whole percentage (e.g., 5 for 5%%)',
+    )
+    parser.add_argument('years', help='The loan term in years')
+    args = parser.parse_args()
+    print(
+        fi.total_interest(
+            float(args.principal), float(args.annual_rate), float(args.years)
+        )
+    )
 
 
 def run_turnover_costs():

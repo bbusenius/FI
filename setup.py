@@ -45,6 +45,7 @@ setup(
             'hours_of_life_energy = fi_commands:run_hours_of_life_energy',
             'likely_real_return = fi_commands:run_likely_real_return',
             'monthly_investment_income = fi_commands:run_monthly_investment_income',
+            'monthly_payment = fi_commands:run_monthly_payment',
             'net_operating_income = fi_commands:run_net_operating_income',
             'opportunity_cost = fi_commands:run_opportunity_cost',
             'percent_decrease = fi_commands:run_percent_decrease',
@@ -61,6 +62,7 @@ setup(
             'take_home_pay = fi_commands:run_take_home_pay',
             'savings_rate = fi_commands:run_savings_rate',
             'spending_from_savings = fi_commands:run_spending_from_savings',
+            'total_interest = fi_commands:run_total_interest',
             'turnover_costs = fi_commands:run_turnover_costs',
         ]
     },
